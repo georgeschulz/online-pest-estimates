@@ -1,0 +1,41 @@
+#hero {
+    max-width: 100vw;
+    overflow-x: hidden;
+    height: 100vh;
+}
+
+.hero-img {
+    height: 80vh;
+    overflow-y: hidden;
+}
+
+@media screen and (min-width: 1501px) {
+    .hero-img-small {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 1500px) {
+    .hero-img img {
+        height: 100%;
+        right: 100px;
+        min-width: 1500px;
+    } 
+    .hero-img-large {
+        display: none;
+    }
+}
+
+.hero-features-row {
+    position: absolute;
+    top: 70vh;
+    height: 20vh;
+    z-index: 10;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+
+.hero-feature-row-item {
+    width: 25%;
+}
