@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "server": "nodemon ./server/app.js localhost 4000"
+    "server": "nodemon ./server/app.js localhost 4000",
+    "start": "cd server && npm install && node app.js",
+    "heroku-postbuild": "cd client && npm install && npm run build"
   },
   "author": "",
   "license": "ISC",
