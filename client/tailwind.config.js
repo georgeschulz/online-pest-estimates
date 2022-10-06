@@ -13,7 +13,9 @@ module.exports = {
         'primary': '#6A77D9',
         'light': '#F7F7F7',
         'pink': '#F1E2E9',
-        'dark': '#464646'
+        'dark': '#464646',
+        'matte': '#393939',
+        'lightmatte': '#7C7A7A'
       }
     },
   },

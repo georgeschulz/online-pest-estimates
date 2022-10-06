@@ -3,7 +3,7 @@ function BenefitBox({headline, benefit, icon}) {
         <div className='hero-feature-row-item w-1/4 max-w-md'>
             <div className="img-icon-container absolute w-1/4 flex justify-center max-w-md">
                 <div className="icon-background bg-primary h-32 w-32 rounded-full flex justify-center items-center">
-                    <img src={icon} className="h-16 absolute" />
+                    <img src={icon} className="h-16 absolute" alt="icon" />
                 </div>
             </div>
             <div className='bg-light feature-item-text mt-16 pt-16 pb-10 px-10 shadow shadow-slate-600'>

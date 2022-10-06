@@ -1,0 +1,9 @@
+.gradient-background {
+    position: absolute;
+    top: -20%;
+    height: 120%;    
+    background-color: #6A77D9;
+    background-image: radial-gradient(66.64% 66.64% at 66.86% 62.09%, #cdacbb 0%, #cdacbb 26.88%, rgba(179, 201, 204, 0) 100%) ;
+    opacity: 0.6;
+    z-index: 0;
+}

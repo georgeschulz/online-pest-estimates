@@ -23,8 +23,8 @@ function HomePage() {
         <div>
             <div id="hero" className='mb-10'>
                 <div className='hero-img absolute'>
-                    <img src={hero} className="hero-img-large" />
-                    <img src={heroSmall} className="hero-img-small" />
+                    <img src={hero} alt="" className="hero-img-large" />
+                    <img src={heroSmall} alt="" className="hero-img-small" />
                 </div>
                 <header>
                     <nav className="flex justify-between  px-4 py-3 absolute w-full">
@@ -76,7 +76,7 @@ function HomePage() {
                                     <p>The truth is that your customers aren’t waiting for you, they’re shopping for a solution. To win in this cut-throat envirornment, you need to be the first to help a customer get a solution to their problem.</p>
                                 </div>
                                 <div className='flex justify-center w-1/2'>
-                                    <img src={cheetahPic} style={{ 'width': '350px' }} className="w-200px" />
+                                    <img src={cheetahPic} alt="A cheetah" style={{ 'width': '350px' }} className="w-200px" />
                                 </div>
                             </div>
                         </section>
@@ -84,7 +84,7 @@ function HomePage() {
                             <h2 className='text-4xl text-center font-semibold mt-24'>What To Do</h2>
                             <div className="flex px-8 py-12 items-center">
                                 <div className='flex justify-center w-1/2'>
-                                    <img src={widgetTile} style={{ 'width': '350px' }} className="w-200px" />
+                                    <img src={widgetTile} alt="Widget demo" style={{ 'width': '350px' }} className="w-200px" />
                                 </div>
                                 <div className='px-10 w-1/2'>
                                     <h3 className='text-2xl font-semibold mb-6'>Customers Want to Shop Around. Let them buy.</h3>
@@ -111,7 +111,7 @@ function HomePage() {
                                     <p>That’s it. You’re ready to close more sales, cheaper.</p>
                                 </div>
                                 <div className='flex justify-center w-1/2'>
-                                    <img src={widgetParameters} style={{ 'width': '350px' }} className="w-200px" />
+                                    <img src={widgetParameters} alt="A demo of the widget calculating pricing" style={{ 'width': '350px' }} className="w-200px" />
                                 </div>
                             </div>
                         </section>
@@ -128,7 +128,7 @@ function HomePage() {
                                     {benefits.map(benefit => {
                                         return (
                                             <div className='flex mb-3'>
-                                                <img src={check} className="w-8 h-8" />
+                                                <img src={check} alt="" className="w-8 h-8" />
                                                 <p className='my-1 text-lg'>{benefit}</p>
                                             </div>
                                         );
