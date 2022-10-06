@@ -913,6 +913,11 @@ video {
   padding-right: 2.25rem;
 }
 
+.px-16 {
+  padding-left: 4rem;
+  padding-right: 4rem;
+}
+
 .pl-5 {
   padding-left: 1.25rem;
 }
@@ -931,6 +936,10 @@ video {
 
 .pb-10 {
   padding-bottom: 2.5rem;
+}
+
+.pr-8 {
+  padding-right: 2rem;
 }
 
 .text-center {

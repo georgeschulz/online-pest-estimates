@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import ScrollToTop from './components/scrollToTop/scrollToTop.js';
 import HomePage from './pages/home';
 import Signup from './pages/signup';
+import Login from './pages/login';
 
 function App() {
   return (
@@ -11,7 +12,7 @@ function App() {
       <ScrollToTop>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/login" element={<p>Login</p>} />
+          <Route path="/login" element={<Login />} />
           <Route path="/signup/1" element={<Signup />} />
           <Route path="/signup/2" element={<p>Business Congif</p>} />
           <Route path="/widgets" element={<p>Widgets</p>} />
