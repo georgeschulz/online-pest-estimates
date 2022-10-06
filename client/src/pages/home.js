@@ -34,13 +34,13 @@ function HomePage() {
                         </div>
                         <div className='w-48 flex justify-between items-center'>
                             <Link to="/login" className='font-poppins'>Login</Link>
-                            <Link to="/signup/1" className='bg-primary text-white px-4 py-1 shadow-sm rounded	shadow-slate-500 font-poppins'>Get Started</Link>
+                            <Link to="/signup/1" className='bg-primary text-white px-6 py-1 shadow-sm rounded	shadow-slate-500 font-poppins'>Get Started</Link>
                         </div>
                     </nav>
                 </header>
                 <div className="absolute inset-y-48 right-0 w-1/2 px-10 font-poppins">
                     <h1 className='text-8xl font-bold mb-5'>Survival of the Fastest</h1>
-                    <h2 className='text-4xl font-bold leading-relaxed'>Easily Provide Customer Pest Control Quotes Online To Win More Sales</h2>
+                    <h2 className='text-4xl font-bold leading-relaxed'>Easily Provide Custom Pest Control Quotes Online To Win More Sales</h2>
                 </div>
 
                 <div className="hero-features-row">
