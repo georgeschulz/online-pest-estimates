@@ -5,6 +5,7 @@ import LargeButton from "../components/buttons/button";
 import googleIcon from '../assets/google-logo.png'
 import SingleLineText from "../components/Inputs/SingleLineText";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 function Signup() {
     const [userName, setUserName] = useState('');
@@ -17,13 +18,15 @@ function Signup() {
                     <img src={confetti} className="mb-8 w-24" />
                     <p className="font-poppins text-6xl font-bold mb-6">Signup</p>
                     <p className="text-2xl font-roboto text-lightmatte">Let’s start by setting up a login for your account. You and coworkers can login into your widget dashboard to create and update pricing widgets.</p>
-
-                    <div id="signup-local-form" className="w-3/5">
+                    <div id="signup-local-form" className="w-3/5 py-10">
                         <LargeButton size={5} isPrimary={false} className="mb-4">
                             <img src={googleIcon} className="w-6 h-6 mr-2"/>
-                            <span>Sign In with Google</span>
+                            <span>Sign Up with Google</span>
                         </LargeButton>
-                        <br />
+                        <div className="line-container flex justify-center w-full my-10">
+                            <div className="absolute horizontal-line h-1 border-b mb-4 w-7/12 border-lightgray"></div>
+                            <p className="relative bg-white text-xl bottom-2 w-72 text-center">Or Sign Up With Email</p>
+                        </div>
                         <SingleLineText
                             name="username"
                             label="Username" 
@@ -40,8 +43,10 @@ function Signup() {
                             setState={setPassword}
                             helper="********"
                         />
-                        
-                        <LargeButton size={5} isPrimary={true}>Login</LargeButton>
+                        <br />
+                        <LargeButton size={5} isPrimary={true}>Create Account</LargeButton>
+                        <br />
+                        <p><b>Already have an account?</b> <u><Link to="/login">Go to Login</Link></u></p>
                     </div>
                 </div>
             </TwoColumnLayout>
