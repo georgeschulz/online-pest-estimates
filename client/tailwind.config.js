@@ -15,7 +15,8 @@ module.exports = {
         'pink': '#F1E2E9',
         'dark': '#464646',
         'matte': '#393939',
-        'lightmatte': '#7C7A7A'
+        'lightmatte': '#7C7A7A',
+        'lightgray': '#B9B9B9'
       }
     },
   },

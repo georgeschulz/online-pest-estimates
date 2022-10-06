@@ -1,10 +1,15 @@
 import TwoColumnLayout from "../components/TwoColumnLayout/TwoColumnLayout";
 import GradientBackground from "../components/GradientBackground/GradientBackground";
 import confetti from '../assets/confetti.png'
-import LargeButton from "../components/LargeButton/LargeButton";
+import LargeButton from "../components/buttons/button";
 import googleIcon from '../assets/google-logo.png'
+import SingleLineText from "../components/Inputs/SingleLineText";
+import { useState } from "react";
 
 function Signup() {
+    const [userName, setUserName] = useState('');
+    const [password, setPassword] = useState('');
+
     return (
         <div>
             <TwoColumnLayout background={<GradientBackground />}>
@@ -18,6 +23,24 @@ function Signup() {
                             <img src={googleIcon} className="w-6 h-6 mr-2"/>
                             <span>Sign In with Google</span>
                         </LargeButton>
+                        <br />
+                        <SingleLineText
+                            name="username"
+                            label="Username" 
+                            type="text"
+                            state={userName}
+                            setState={setUserName}
+                            helper="georgeschulz33@gmail.com"
+                        />
+                        <SingleLineText
+                            name="password"
+                            label="Password" 
+                            type="password"
+                            state={password}
+                            setState={setPassword}
+                            helper="********"
+                        />
+                        
                         <LargeButton size={5} isPrimary={true}>Login</LargeButton>
                     </div>
                 </div>
