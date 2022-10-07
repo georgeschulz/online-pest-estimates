@@ -3,13 +3,22 @@ import LargeButton from "../components/buttons/button";
 import googleIcon from '../assets/google-logo.png'
 import SingleLineText from "../components/Inputs/SingleLineText";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import TwoColumnForm from "../components/layout/TwoColumnForm/TwoColumnForm";
 import DividingHeader from "../components/layout/DividingHeader/DividingHeader";
 
 function Signup() {
     const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
+
+    const navigate = useNavigate();
+
+    //handle form submissions
+    const onSubmit = () => {
+        if(userName && password) {
+            navigate('/signup/2');
+        }
+    }
 
     return (
         <div>
@@ -40,7 +49,7 @@ function Signup() {
                     helper="********"
                 />
                 <br />
-                <LargeButton size={5} isPrimary={true}>Create Account</LargeButton>
+                <LargeButton handleClick={onSubmit} size={5} isPrimary={true}>Create Account</LargeButton>
                 <br />
                 <p><b>Already have an account?</b> <u><Link to="/login">Go to Login</Link></u></p>
             </TwoColumnForm>

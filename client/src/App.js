@@ -5,6 +5,7 @@ import ScrollToTop from './components/scrollToTop/scrollToTop.js';
 import HomePage from './pages/home';
 import Signup from './pages/signup';
 import Login from './pages/login';
+import Biz from './pages/biz';
 
 function App() {
   return (
@@ -14,7 +15,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup/1" element={<Signup />} />
-          <Route path="/signup/2" element={<p>Business Congif</p>} />
+          <Route path="/signup/2" element={<Biz />} />
           <Route path="/widgets" element={<p>Widgets</p>} />
           <Route path="*" element={<p>404 Not Found</p>} />
         </Routes>

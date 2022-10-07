@@ -1,12 +1,11 @@
-function SingleLineText({name, label, type = 'text', state = "", setState, helper }) {
+function SingleLineText({name, label, type = 'text', state = "", setState, helper, showLabel = true}) {
     return (
         <div className="input-group mb-6">
-            <label 
+            {showLabel && (<label 
                 for={name}
-                className="text-xl font-roboto font-semibold ml-6"
-            >
+                className="text-xl font-roboto font-semibold ml-6">
                 {label}
-            </label>
+            </label>)}
             <input
                 name={name} 
                 type={type} 
