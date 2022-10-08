@@ -7,7 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import TwoColumnForm from "../components/layout/TwoColumnForm/TwoColumnForm";
 import DividingHeader from "../components/layout/DividingHeader/DividingHeader";
 import { useDispatch, useSelector } from 'react-redux';
-import { selectIsAuth, signUpLocal } from '../redux/authSlice';
+import { selectIsAuth, signUpLocal, signInGoogle } from '../redux/authSlice';
 
 function Signup() {
     const [email, setEmail] = useState('');
@@ -31,7 +31,7 @@ function Signup() {
                 header="Signup"
                 instructions="Let’s start by setting up a login for your account. You and coworkers can login into your widget dashboard to create and update pricing widgets."
             >
-                <LargeButton size={5} isPrimary={false} className="mb-4">
+                <LargeButton size={5} isPrimary={false} className="mb-4" handleClick={() => dispatch(signInGoogle())}>
                     <img src={googleIcon} className="w-6 h-6 mr-2" />
                     <span>Sign Up with Google</span>
                 </LargeButton>

@@ -13,3 +13,7 @@ export const onLogout = async () => {
 export const onSignup = async (email, password) => {
     return await axios.post(`${endpoint}/auth/register`, {email, password});
 }
+
+export const onGoogleSignIn = async () => {
+    return await axios.get(`${endpoint}/auth/login-google`);
+}

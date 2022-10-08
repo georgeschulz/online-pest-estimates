@@ -6,7 +6,7 @@ import { selectUser } from "../redux/authSlice";
 function Widgets() {
     const dispatch = useDispatch();
     const user = useSelector(selectUser);
-    
+
     return (
         <div className="p-10">
             <b className="text-xl">WIDGETS SCREEN</b>

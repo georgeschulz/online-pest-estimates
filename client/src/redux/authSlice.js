@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { onLogin, onLogout, onSignup } from "../api/authApi";
+import { onLogin, onLogout, onSignup, onGoogleSignIn } from "../api/authApi";
 import { getUser } from "../api/userApi";
 
 const userAuthFromLocalStorage = () => {
@@ -37,6 +37,14 @@ export const signUpLocal = createAsyncThunk(
     async(signupData, thunkAPI) => {
         const { email, password } = signupData;
         const response = await onSignup(email, password);
+        return response.data;
+    }
+)
+
+export const signInGoogle = createAsyncThunk(
+    'user/signin-google',
+    async(thunkAPI) => {
+        const response = await onGoogleSignIn();
         return response.data;
     }
 )
