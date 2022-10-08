@@ -3,5 +3,5 @@ import axios from 'axios';
 axios.defaults.withCredentials = true;
 
 export const onLogin = async (email, password) => {
-    return await axios.post(`${endpoint}/auth/login`, {email: email, password: password});
+    return await axios.post(`${endpoint}/auth/login`, {email, password});
 }

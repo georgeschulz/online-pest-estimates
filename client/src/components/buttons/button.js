@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function LargeButton({children, isPrimary = true, size = 1, className = "", handleClick = () => {}}) {
+function LargeButton({children, isPrimary = true, size = 1, className = "", handleClick = () => {}}, isPending = false) {
     const [color, setColor] = useState((isPrimary ? 'bg-primary' : 'bg-white'));
     const [border, setBorder] = useState((isPrimary ? '' : 'border border-lightmatte'));
     const [fontColor, setFontColor] = useState((isPrimary ? 'text-white' : 'text-matte'));
@@ -33,7 +33,7 @@ function LargeButton({children, isPrimary = true, size = 1, className = "", hand
             ${buttonSize}
             ${className}
             `}>
-                {children}
+                {isPending ? children : 'Loading...'}
             </p>
     )
 }

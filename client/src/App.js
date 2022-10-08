@@ -17,10 +17,10 @@ function App() {
     <Router>
       <ScrollToTop>
         <Routes>
-          <Route path="/" element={<HomePage />} />
           <Route path="/terms" element={<Terms />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route element={<RestrictedRoutes />}>
+            <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup/1" element={<Signup />} />
           </Route>

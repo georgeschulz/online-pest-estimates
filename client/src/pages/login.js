@@ -6,23 +6,16 @@ import googleIcon from '../assets/google-logo.png'
 import DividingHeader from "../components/layout/DividingHeader/DividingHeader";
 import SingleLineText from "../components/Inputs/SingleLineText";
 import { Link } from "react-router-dom";
-import { onLogin } from "../api/login";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { selectLoginError, selectLoginIsPending } from "../redux/authSlice";
 import { authorize } from "../redux/authSlice";
 
 function Login() {
-    const [userName, setUserName] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const dispatch = useDispatch();
-
-    const handleSubmit = async () => {
-        try {
-            const response = await onLogin(userName, password);
-            dispatch(authorize());
-        } catch (err) {
-            console.log(err.response.data)
-        }
-    }
+    const loginError = useSelector(selectLoginError)
+    const loginIsPending = useSelector(selectLoginIsPending);
 
     return (
         <TwoColumnForm
@@ -39,8 +32,8 @@ function Login() {
                 name="username"
                 label="Username"
                 type="text"
-                state={userName}
-                setState={setUserName}
+                state={email}
+                setState={setEmail}
                 helper="georgeschulz33@gmail.com"
             />
             <SingleLineText
@@ -52,7 +45,8 @@ function Login() {
                 helper="********"
             />
             <br />
-            <LargeButton size={5} isPrimary={true} handleClick={() => handleSubmit()}>Login</LargeButton>
+            {loginError}
+            <LargeButton size={5} isPrimary={true} handleClick={() => dispatch(authorize({email, password}))} isPending={loginIsPending}>Login</LargeButton>
             <br />
             <p><b>Don't have an account yet?</b> <u><Link to="/signup/1">Get Started Here</Link></u></p>
         </TwoColumnForm>
