@@ -62,7 +62,18 @@ const signupLocal = async (req, res) => {
     }      
 }
 
+const logout = (req, res, next) => {
+    req.logout((err) => {
+        if(err) {
+            next(err)
+        } else {
+            res.status(200).send({ message: 'User has been logged out', data: {}})
+        }
+    })
+}
+
 module.exports = {
     signupLocal,
-    signinLocal
+    signinLocal,
+    logout
 }

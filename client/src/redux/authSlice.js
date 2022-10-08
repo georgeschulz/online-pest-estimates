@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { onLogin } from "../api/login";
+import { onLogin, onLogout } from "../api/authApi";
 
 const userAuthFromLocalStorage = () => {
     const isAuth = localStorage.getItem('isAuth');
@@ -15,18 +15,20 @@ export const authorize = createAsyncThunk(
     }
 )
 
+export const deauthorize = createAsyncThunk(
+    'auth/logout',
+    async(thunkAPI) => {
+        const response = await onLogout();
+        return response.data;
+    }
+)
+
 const authSlice = createSlice({
     name: 'auth',
     initialState: {
         isAuth: userAuthFromLocalStorage(),
         loginError: null,
         loginIsPending: false
-    },
-    reducers: {
-        deauthorize: (state) => {
-            localStorage.removeItem('isAuth');
-            state.isAuth = false;
-        }
     },
     extraReducers: (builder) => {
         //handle login api states
@@ -49,11 +51,16 @@ const authSlice = createSlice({
         builder.addCase(authorize.pending, (state, action) => {
             state.loginIsPending = true;
         })
+
+        //logout API
+        builder.addCase(deauthorize.fulfilled, (state, action) => {
+            state.isAuth = false;
+            localStorage.removeItem('isAuth');
+        })
     }
 })
 
 export const selectIsAuth = state => state.auth.isAuth;
 export const selectLoginError = state => state.auth.loginError;
 export const selectLoginIsPending = state => state.auth.loginIsPending;
-export const { deauthorize } = authSlice.actions;
 export default authSlice.reducer;
