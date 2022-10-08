@@ -5,7 +5,8 @@ const port = process.env.PORT;
 const db = require('./model/db');
 const path = require('path');
 const passport = require('passport');
-const session = require('express-session')
+const session = require('express-session');
+const store = require('./helpers/session');
 
 //routers
 const authRouter = require('./routes/auth');
@@ -14,6 +15,7 @@ app.use(express.static('../client/build'));
 
 //express session
 app.use(session({
+    store: store,
     secret: process.env.SESSIONSECRET,
     cookie: {
         maxAge: 172000000,
