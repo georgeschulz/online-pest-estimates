@@ -7,14 +7,18 @@ import DividingHeader from "../components/layout/DividingHeader/DividingHeader";
 import SingleLineText from "../components/Inputs/SingleLineText";
 import { Link } from "react-router-dom";
 import { onLogin } from "../api/login";
+import { useDispatch } from "react-redux";
+import { authorize } from "../redux/authSlice";
 
 function Login() {
     const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
+    const dispatch = useDispatch();
 
     const handleSubmit = async () => {
         try {
             const response = await onLogin(userName, password);
+            dispatch(authorize());
         } catch (err) {
             console.log(err.response.data)
         }
