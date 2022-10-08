@@ -9,3 +9,7 @@ export const onLogin = async (email, password) => {
 export const onLogout = async () => {
     return await axios.post(`${endpoint}/auth/logout`);
 }
+
+export const onSignup = async (email, password) => {
+    return await axios.post(`${endpoint}/auth/register`, {email, password});
+}

@@ -11,6 +11,7 @@ const cors = require('cors');
 
 //routers
 const authRouter = require('./routes/auth');
+const userRouter = require('./routes/user')
 
 app.use(cors({ credentials: true, origin: 'http://localhost:3000' }))
 app.use(express.static('../client/build'));
@@ -36,6 +37,7 @@ app.use(passport.session());
 require('./controllers/auth');
 
 app.use('/auth', express.json(), authRouter);
+app.use('/user', userRouter);
 
 //general path for getting static pages
 app.get("/*", (req, res) => {

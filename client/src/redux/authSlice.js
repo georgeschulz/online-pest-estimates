@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { onLogin, onLogout } from "../api/authApi";
+import { onLogin, onLogout, onSignup } from "../api/authApi";
+import { getUser } from "../api/userApi";
 
 const userAuthFromLocalStorage = () => {
     const isAuth = localStorage.getItem('isAuth');
@@ -23,12 +24,31 @@ export const deauthorize = createAsyncThunk(
     }
 )
 
+export const getLoggedInUser = createAsyncThunk(
+    'user/getLoggedInUser',
+    async (thunkAPI) => {
+        const response = await getUser();
+        return response.data;
+    }
+)
+
+export const signUpLocal = createAsyncThunk(
+    'user/signup',
+    async(signupData, thunkAPI) => {
+        const { email, password } = signupData;
+        const response = await onSignup(email, password);
+        return response.data;
+    }
+)
+
 const authSlice = createSlice({
     name: 'auth',
     initialState: {
         isAuth: userAuthFromLocalStorage(),
         loginError: null,
-        loginIsPending: false
+        loginIsPending: false,
+        user: {},
+        isSetup: false
     },
     extraReducers: (builder) => {
         //handle login api states
@@ -37,6 +57,7 @@ const authSlice = createSlice({
             state.loginError = null;
             state.isAuth = true
             localStorage.setItem('isAuth', true)
+            state.user = action.payload.data;
         });
 
         builder.addCase(authorize.rejected, (state, action) => {
@@ -57,10 +78,17 @@ const authSlice = createSlice({
             state.isAuth = false;
             localStorage.removeItem('isAuth');
         })
+
+        //signup API
+        builder.addCase(signUpLocal.fulfilled, (state, action) => {
+            state.isAuth = true;
+            state.user = action.payload.data;
+        })
     }
 })
 
 export const selectIsAuth = state => state.auth.isAuth;
 export const selectLoginError = state => state.auth.loginError;
 export const selectLoginIsPending = state => state.auth.loginIsPending;
+export const selectUser = state => state.auth.user;
 export default authSlice.reducer;

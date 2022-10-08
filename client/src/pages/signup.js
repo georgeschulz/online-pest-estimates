@@ -2,23 +2,27 @@ import confetti from '../assets/confetti.png'
 import LargeButton from "../components/buttons/button";
 import googleIcon from '../assets/google-logo.png'
 import SingleLineText from "../components/Inputs/SingleLineText";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import TwoColumnForm from "../components/layout/TwoColumnForm/TwoColumnForm";
 import DividingHeader from "../components/layout/DividingHeader/DividingHeader";
+import { useDispatch, useSelector } from 'react-redux';
+import { selectIsAuth, signUpLocal } from '../redux/authSlice';
 
 function Signup() {
-    const [userName, setUserName] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
+    const dispatch = useDispatch();
     const navigate = useNavigate();
+    const isAuth = useSelector(selectIsAuth);
 
-    //handle form submissions
-    const onSubmit = () => {
-        if(userName && password) {
-            navigate('/signup/2');
+    useEffect(() => {
+        if(isAuth) {
+            navigate('/signup/2')
         }
-    }
+    }, [dispatch])
+
 
     return (
         <div>
@@ -36,8 +40,8 @@ function Signup() {
                     name="username"
                     label="Username"
                     type="text"
-                    state={userName}
-                    setState={setUserName}
+                    state={email}
+                    setState={setEmail}
                     helper="georgeschulz33@gmail.com"
                 />
                 <SingleLineText
@@ -49,7 +53,7 @@ function Signup() {
                     helper="********"
                 />
                 <br />
-                <LargeButton handleClick={onSubmit} size={5} isPrimary={true}>Create Account</LargeButton>
+                <LargeButton handleClick={() => dispatch(signUpLocal({email, password}))} size={5} isPrimary={true}>Create Account</LargeButton>
                 <br />
                 <p><b>Already have an account?</b> <u><Link to="/login">Go to Login</Link></u></p>
             </TwoColumnForm>

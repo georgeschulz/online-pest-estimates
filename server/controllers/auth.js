@@ -42,20 +42,34 @@ passport.deserializeUser(async function(user_id, done) {
 })
 
 const signinLocal = async (req, res) => {
-    res.status(200).send({message: 'Successfully logged in'});
+    try {
+        const user = await getUserById(req.user.userId);
+        res.status(200).send({message: 'Successfully logged in', data: user });
+    } catch (err) {
+        res.status(400).send({message: 'Could not find the user details after logging in', data: {}})
+    }
+    
 }
 
-const signupLocal = async (req, res) => {
+const signupLocal = async (req, res, next) => {
     try {
         const { email, password } = req.body;
         const salt = await bcrypt.genSalt(8);
         const hash = await bcrypt.hash(password, salt);
-        const user = await createUser(email, hash);
+        const users = await createUser(email, hash);
         
-        res.status(201).send({
-            message: 'Sucessfully created user',
-            data: user
-        })
+        req.login({ userId: users[0].user_id }, async (err) => {
+            if(err) {
+                console.log(err)
+            } else {
+                //get the user
+                const user = await getUserById(users[0].user_id) 
+                res.status(201).send({
+                    message: 'User created',
+                    data: user
+                });
+            }
+        }) 
     } catch(err) {
         res.status(401).send({message: 'Failed to create user', data: {}})
         console.log(err);
