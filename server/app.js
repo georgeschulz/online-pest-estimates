@@ -5,7 +5,11 @@ const port = process.env.PORT;
 const db = require('./model/db');
 const path = require('path');
 
+//routers
+const authRouter = require('./routes/auth');
+
 app.use(express.static('../client/build'))
+app.use('/auth', express.json(), authRouter);
 
 //general path for getting static pages
 app.get("/*", (req, res) => {
