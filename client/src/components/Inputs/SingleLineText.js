@@ -2,7 +2,7 @@ function SingleLineText({name, label, type = 'text', state = "", setState, helpe
     return (
         <div className="input-group mb-6">
             {showLabel && (<label 
-                for={name}
+                htmlFor={name}
                 className="text-xl font-roboto font-semibold ml-6">
                 {label}
             </label>)}

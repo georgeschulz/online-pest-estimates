@@ -6,10 +6,19 @@ import googleIcon from '../assets/google-logo.png'
 import DividingHeader from "../components/layout/DividingHeader/DividingHeader";
 import SingleLineText from "../components/Inputs/SingleLineText";
 import { Link } from "react-router-dom";
+import { onLogin } from "../api/login";
 
 function Login() {
     const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
+
+    const handleSubmit = async () => {
+        try {
+            const response = await onLogin(userName, password);
+        } catch (err) {
+            console.log(err.response.data)
+        }
+    }
 
     return (
         <TwoColumnForm
@@ -39,7 +48,7 @@ function Login() {
                 helper="********"
             />
             <br />
-            <LargeButton size={5} isPrimary={true}>Login</LargeButton>
+            <LargeButton size={5} isPrimary={true} handleClick={() => handleSubmit()}>Login</LargeButton>
             <br />
             <p><b>Don't have an account yet?</b> <u><Link to="/signup/1">Get Started Here</Link></u></p>
         </TwoColumnForm>

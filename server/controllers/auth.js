@@ -8,7 +8,7 @@ const getAuthCredentials = require('../model/getAuthCredentials');
 passport.use(new LocalStrategy(
     {usernameField: 'email', passwordField: 'password'},
     async function verify(username, password, cb) {
-    try {
+    try {        
         const user = await getAuthCredentials(username);
         if(user.length <= 0) {
             return cb(null, false, { message: 'Incorrect username or password' })

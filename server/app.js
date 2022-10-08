@@ -7,10 +7,12 @@ const path = require('path');
 const passport = require('passport');
 const session = require('express-session');
 const store = require('./helpers/session');
+const cors = require('cors');
 
 //routers
 const authRouter = require('./routes/auth');
 
+app.use(cors({ credentials: true, origin: 'http://localhost:3000' }))
 app.use(express.static('../client/build'));
 
 //express session
