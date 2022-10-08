@@ -15,7 +15,7 @@ function Login() {
         <TwoColumnForm
             emoji={clapping}
             header="Login"
-            descripton=""
+            instructions="Welcome back! Please login with either Google or your email. Please make sure to use the login type that you used before."
         >
             <LargeButton size={5} isPrimary={false} className="mb-4">
                 <img src={googleIcon} className="w-6 h-6 mr-2" />

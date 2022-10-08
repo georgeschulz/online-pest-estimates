@@ -15,7 +15,7 @@ function Biz() {
         <TwoColumnForm 
             emoji={confetti}
             header="Your Business"
-            instructions="Tell us a little bit about your business to create your widgets."
+            instructions="Tell us a little bit about your business to create your widgets. Don't worry. You can change these settings later in the Settings tab. Click the color circles to open the color picker."
         >
             <SingleLineText
                 name="bussiness-name"

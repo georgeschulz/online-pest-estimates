@@ -4,11 +4,33 @@ const app = express();
 const port = process.env.PORT;
 const db = require('./model/db');
 const path = require('path');
+const passport = require('passport');
+const session = require('express-session')
 
 //routers
 const authRouter = require('./routes/auth');
 
-app.use(express.static('../client/build'))
+app.use(express.static('../client/build'));
+
+//express session
+app.use(session({
+    secret: process.env.SESSIONSECRET,
+    cookie: {
+        maxAge: 172000000,
+        httpOnly: process.env.NODE_ENV === 'production' ? true : false,
+        sameSite: 'lax'
+    },
+    saveUninitialized: true,
+    resave: false,
+    sameSite: 'none',
+    secure: process.env.NODE_ENV === 'production' ? true : false
+}))
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+require('./controllers/auth');
+
 app.use('/auth', express.json(), authRouter);
 
 //general path for getting static pages
