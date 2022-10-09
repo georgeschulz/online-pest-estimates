@@ -4,12 +4,27 @@ import SingleLineText from "../components/Inputs/SingleLineText";
 import { useState } from "react";
 import LargeButton from "../components/buttons/button";
 import ColorPicker from "../components/Inputs/ColorPicker";
+import { useDispatch, useSelector } from "react-redux";
+import { addBusinessInfo, selectHasBusinessDetails } from "../redux/authSlice";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Biz() {
-    const [businessName, setBusinessName] = useState('');
+    const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
-    const [brandPrimary, setBrandPrimary] = useState('#6A77D9');
-    const [brandBackground, setBrandBackground] = useState('')
+    const [hexPrimary, setHexPrimary] = useState('#6A77D9');
+    const [hexSecondary, setHexSecondary] = useState('')
+    
+    const dispatch = useDispatch();
+    const hasBusinessDetails = useSelector(selectHasBusinessDetails)
+    const naviate = useNavigate();
+
+    useEffect(() => {
+        console.log(hasBusinessDetails)
+        if(hasBusinessDetails) {
+            naviate('/widgets')
+        }
+    }, [dispatch, hasBusinessDetails])
 
     return (
         <TwoColumnForm 
@@ -21,8 +36,8 @@ function Biz() {
                 name="bussiness-name"
                 label="Business Name"
                 type="text"
-                state={businessName}
-                setState={setBusinessName}
+                state={name}
+                setState={setName}
                 helper="ABC Pest"
             />
             <SingleLineText
@@ -36,16 +51,16 @@ function Biz() {
             <ColorPicker
                 name="brand-primary"
                 label="Your Brand's Primary Color"
-                state={brandPrimary}
-                setState={setBrandPrimary}
+                state={hexPrimary}
+                setState={setHexPrimary}
             />
             <ColorPicker
                 name="brand-background"
                 label="Your Brand's Background Color"
-                state={brandBackground}
-                setState={setBrandBackground}
+                state={hexSecondary}
+                setState={setHexSecondary}
             />
-            <LargeButton size={5} isPrimary={true}>Next</LargeButton>
+            <LargeButton size={5} isPrimary={true} handleClick={() => dispatch(addBusinessInfo({name, phone, hexPrimary: hexPrimary.hex.slice(1,7), hexSecondary: hexSecondary.hex.slice(1,7)}))}>Next</LargeButton>
         </TwoColumnForm>
     )
 }

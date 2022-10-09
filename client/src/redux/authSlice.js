@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { Navigate } from "react-router-dom";
 import { onLogin, onLogout, onSignup, onGoogleSignIn } from "../api/authApi";
-import { getUser } from "../api/userApi";
+import { createBusiness, getUser } from "../api/userApi";
 
 const userAuthFromLocalStorage = () => {
     const isAuth = localStorage.getItem('isAuth');
@@ -49,6 +50,14 @@ export const signInGoogle = createAsyncThunk(
     }
 )
 
+export const addBusinessInfo = createAsyncThunk(
+    'user/createBusiness',
+    async(businessData, thunkAPI) => {
+        const response = await createBusiness(businessData);
+        return response.data;
+    }
+)
+
 const authSlice = createSlice({
     name: 'auth',
     initialState: {
@@ -56,7 +65,8 @@ const authSlice = createSlice({
         loginError: null,
         loginIsPending: false,
         user: {},
-        isSetup: false
+        isSetup: false,
+        businessInfo: {}
     },
     extraReducers: (builder) => {
         //handle login api states
@@ -66,6 +76,10 @@ const authSlice = createSlice({
             state.isAuth = true
             localStorage.setItem('isAuth', true)
             state.user = action.payload.data;
+
+            if(action.payload.data.is_setup) {
+                state.isSetup = true;
+            }
         });
 
         builder.addCase(authorize.rejected, (state, action) => {
@@ -84,6 +98,10 @@ const authSlice = createSlice({
         //logout API
         builder.addCase(deauthorize.fulfilled, (state, action) => {
             state.isAuth = false;
+            state.loginError = null;
+            state.user = {}
+            state.isSetup = false;
+            state.businessInfo = {};
             localStorage.removeItem('isAuth');
         })
 
@@ -91,6 +109,15 @@ const authSlice = createSlice({
         builder.addCase(signUpLocal.fulfilled, (state, action) => {
             state.isAuth = true;
             state.user = action.payload.data;
+
+            if(action.payload.data.is_setup) {
+                state.isSetup = true;
+            }
+        })
+
+        builder.addCase(addBusinessInfo.fulfilled, (state, action) => {
+            state.businessInfo = action.payload.data;
+            state.isSetup = true;
         })
     }
 })
@@ -98,5 +125,7 @@ const authSlice = createSlice({
 export const selectIsAuth = state => state.auth.isAuth;
 export const selectLoginError = state => state.auth.loginError;
 export const selectLoginIsPending = state => state.auth.loginIsPending;
+export const selectIsAccountSetup = state => state.auth.isSetup;
+export const selectHasBusinessDetails = state => state.auth.isSetup;
 export const selectUser = state => state.auth.user;
 export default authSlice.reducer;

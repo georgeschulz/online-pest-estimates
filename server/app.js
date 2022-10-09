@@ -37,7 +37,7 @@ app.use(passport.session());
 require('./controllers/auth');
 
 app.use('/auth', express.json(), authRouter);
-app.use('/user', userRouter);
+app.use('/user', express.json(), userRouter);
 
 //general path for getting static pages
 app.get("/*", (req, res) => {
