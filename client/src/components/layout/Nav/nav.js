@@ -6,7 +6,7 @@ import gearOpen from '../../../assets/gear-open.png'
 
 function Nav() {
     return (
-        <nav className='flex justify-between'>
+        <nav className='flex justify-between mb-5 px-8 py-2'>
             <div className='flex items-center'>
                 <img src={logo} alt="PestEstimates Logo" className='w-8 h-8' />
                 <p className='font-poppins font-bold'>OnlinePestEstimates</p>
