@@ -5,10 +5,11 @@ import ColorPicker from "../components/Inputs/ColorPicker";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { getLoggedInUser, selectEmail, selectIsGetUserDetailsPending, selectPasswordField, updateBusinessDetails, updateUserAuth } from "../redux/authSlice";
+import { dismissAccountMessage, getLoggedInUser, selectAccountMessage, selectEmail, selectIsGetUserDetailsPending, selectPasswordField, updateBusinessDetails, updateUserAuth } from "../redux/authSlice";
 import { useSelector } from "react-redux";
 import { selectBusinessName, selectPhone, selectHexPrimary, selectHexSecondary, setName, setPhone, setHexPrimary, setHexSecondary, setEmail, setPasswordField } from "../redux/authSlice";
 import Loading from "../components/loading/loading";
+import UpdateMessage from "../components/notifications/UpdateMessage";
 
 function Settings() {
     const styles = { 'minWidth': '500px' }
@@ -20,6 +21,7 @@ function Settings() {
     const fetchCurrentUserInfoIsLoading = useSelector(selectIsGetUserDetailsPending)
     const email = useSelector(selectEmail)
     const passwordField = useSelector(selectPasswordField);
+    const accountMessage = useSelector(selectAccountMessage);
 
     const dispatch = useDispatch()
 
@@ -52,6 +54,12 @@ function Settings() {
     return (
         <ApplicationMainLayout header="Account Settings">
             <div className="flex flex-wrap pt-10">
+                <UpdateMessage
+                    message={accountMessage.message}
+                    isVisible={accountMessage.isVisible}
+                    isSuccess={accountMessage.isSuccess}
+                    dismissReducer={() => dispatch(dismissAccountMessage())}
+                />
                 <div className="w-1/2 pr-48 pb-24" style={styles}>
                     <h2 className="text-2xl font-semibold font-poppins mb-1">Update Company Information</h2>
                     <p className="mb-1">Update your business name, phone number or branding below.</p>

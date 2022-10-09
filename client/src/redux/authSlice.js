@@ -83,7 +83,8 @@ const authSlice = createSlice({
         passwordField: '',
         isSetup: false,
         businessInfo: {},
-        getUserDetailsIsPending: false
+        getUserDetailsIsPending: false,
+        accountMessage: { isVisible: false, message: '', isSuccess: false }
     },
     reducers: {
         setName: (state, action) => {
@@ -103,6 +104,9 @@ const authSlice = createSlice({
         }, 
         setPasswordField: (state, action) => {
             state.passwordField = action.payload;
+        },
+        dismissAccountMessage: (state, action) => {
+            state.accountMessage.isVisible = false;
         }
     },
     extraReducers: (builder) => {
@@ -165,6 +169,22 @@ const authSlice = createSlice({
         builder.addCase(getLoggedInUser.pending, (state, action) => {
             state.getUserDetailsIsPending = true;
         })
+
+        builder.addCase(updateBusinessDetails.fulfilled, (state, action) => {
+            state.accountMessage = {
+                isVisible: true,
+                message: "Your business details have been successfully updated.",
+                isSuccess: true
+            }
+        })
+
+        builder.addCase(updateUserAuth.fulfilled, (state, action) => {
+            state.accountMessage = {
+                isVisible: true,
+                message: "Your login credentials have been updated.",
+                isSuccess: true
+            }
+        })
     }
 })
 
@@ -181,5 +201,6 @@ export const selectIsGetUserDetailsPending = state => state.auth.getUserDetailsI
 export const selectUser = state => state.auth.user;
 export const selectPasswordField = state => state.auth.passwordField;
 export const selectEmail = state => state.auth.user.email;
-export const { setName, setHexPrimary, setHexSecondary, setPhone, setPasswordField, setEmail } = authSlice.actions;
+export const selectAccountMessage = state => state.auth.accountMessage;
+export const { setName, setHexPrimary, setHexSecondary, setPhone, setPasswordField, setEmail, dismissAccountMessage } = authSlice.actions;
 export default authSlice.reducer;
