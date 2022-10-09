@@ -8,6 +8,9 @@ function LargeButton({children, isPrimary = true, size = 1, className = "", hand
     //handle button size as a props value using tailwind
     let buttonSize;
     switch(size) {
+        case 0:
+            buttonSize = `px-12 py-2 font-semibold font-poppins text-sm text-center w-fit`;
+            break;
         case 1:
             buttonSize = `px-5 py-2 w-96 rounded text-lg font-poppins`
             break;

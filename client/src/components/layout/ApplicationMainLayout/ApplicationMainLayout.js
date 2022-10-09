@@ -1,10 +1,10 @@
 import Nav from "../Nav/nav";
 
-function ApplicationMainLayout({header, children}) {
+function ApplicationMainLayout({header, children, currentPage = ''}) {
     return (
         <div className="min-h-screen flex flex-wrap content-between">
             <div className="w-full">
-                <Nav />
+                <Nav currentPage={currentPage} />
                 <main className="px-16 py-8">
                     <h1 className="text-5xl mb-4 ">{header}</h1>
                     {children}

@@ -11,6 +11,8 @@ import Privacy from './pages/privacy';
 import RestrictedRoutes from './components/routeProtection/restrictedRoutes';
 import PrivateRoutes from './components/routeProtection/privateRoutes';
 import Widgets from './pages/widgets';
+import Training from './pages/training';
+import Settings from './pages/settings';
 
 function App() {
   return (
@@ -27,6 +29,8 @@ function App() {
           <Route element={<PrivateRoutes />}>
             <Route path="/signup/2" element={<Biz />} />
             <Route path="/widgets" element={<Widgets />} />
+            <Route path="/training" element={<Training />} />
+            <Route path="/settings" element={<Settings />} />
           </Route>
           <Route path="*" element={<p>404 Not Found</p>} />
         </Routes>

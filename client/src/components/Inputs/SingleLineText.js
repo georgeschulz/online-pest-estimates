@@ -1,4 +1,20 @@
-function SingleLineText({name, label, type = 'text', state = "", setState, helper, showLabel = true}) {
+function SingleLineText({name, label, type = 'text', state = "", setState, helper, showLabel = true, size = "large"}) {
+    let customStyles = "";
+
+    switch(size) {
+        case "large":
+            customStyles += 'py-4 px-9 text-2xl';
+            break;
+        case "medium":
+            customStyles += 'py-2 px-8 text-xl'
+            break;
+        default:
+            customStyles += 'py-4 px-9 text-2xl';
+            break;
+    
+    }
+
+
     return (
         <div className="input-group mb-6">
             {showLabel && (<label 
@@ -12,7 +28,7 @@ function SingleLineText({name, label, type = 'text', state = "", setState, helpe
                 value={state}
                 placeholder={helper} 
                 onChange={(e) => setState(e.target.value)}
-                className="border border-lightgray w-full rounded-full py-4 px-9 text-2xl text-lightmatte"
+                className={`border border-lightgray w-full rounded-full text-lightmatte ${customStyles}`}
             />
         </div>
     )

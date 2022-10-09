@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { Navigate } from "react-router-dom";
 import { onLogin, onLogout, onSignup, onGoogleSignIn } from "../api/authApi";
 import { createBusiness, getUser } from "../api/userApi";
 
@@ -65,8 +64,31 @@ const authSlice = createSlice({
         loginError: null,
         loginIsPending: false,
         user: {},
+        passwordField: '',
         isSetup: false,
-        businessInfo: {}
+        businessInfo: {},
+        getUserDetailsIsPending: false
+    },
+    reducers: {
+        setName: (state, action) => {
+            state.user.name = action.payload;
+        },
+        setPhone: (state, action) => {
+            state.user.phone  = action.payload;
+        },
+        setHexPrimary: (state, action) => {
+            state.user.hex_primary = action.payload.hex.slice(1, 7);
+        },
+        setHexSecondary: (state, action) => {
+            state.user.hex_secondary = action.payload.hex.slice(1, 7)
+        },
+        setEmail: (state, action) => {
+            state.user.email = action.payload;
+        }, 
+        setPasswordField: (state, action) => {
+            state.passwordField = action.payload;
+        }
+
     },
     extraReducers: (builder) => {
         //handle login api states
@@ -119,6 +141,15 @@ const authSlice = createSlice({
             state.businessInfo = action.payload.data;
             state.isSetup = true;
         })
+
+        builder.addCase(getLoggedInUser.fulfilled, (state, action) => {
+            state.getUserDetailsIsPending = false;
+            state.user = action.payload.data;
+        });
+
+        builder.addCase(getLoggedInUser.pending, (state, action) => {
+            state.getUserDetailsIsPending = true;
+        })
     }
 })
 
@@ -126,6 +157,14 @@ export const selectIsAuth = state => state.auth.isAuth;
 export const selectLoginError = state => state.auth.loginError;
 export const selectLoginIsPending = state => state.auth.loginIsPending;
 export const selectIsAccountSetup = state => state.auth.isSetup;
+export const selectBusinessName = state => state.auth.user.name;
+export const selectPhone = state => state.auth.user.phone;
+export const selectHexPrimary = state => state.auth.user.hex_primary;
+export const selectHexSecondary = state => state.auth.user.hex_secondary;
 export const selectHasBusinessDetails = state => state.auth.isSetup;
+export const selectIsGetUserDetailsPending = state => state.auth.getUserDetailsIsPending;
 export const selectUser = state => state.auth.user;
+export const selectPasswordField = state => state.auth.passwordField;
+export const selectEmail = state => state.auth.user.email;
+export const { setName, setHexPrimary, setHexSecondary, setPhone, setPasswordField, setEmail } = authSlice.actions;
 export default authSlice.reducer;

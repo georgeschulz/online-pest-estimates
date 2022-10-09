@@ -10,7 +10,7 @@ function Widgets() {
     const user = useSelector(selectUser);
 
     return (
-        <ApplicationMainLayout header="My Widgets">
+        <ApplicationMainLayout header="My Widgets" currentPage="widgets">
             <p>Email: {user.email}</p>
             <br />
             <p className="bg-primary w-36 flex justify-center text-white rounded-full py-2 text-lg cursor-pointer" onClick={() => dispatch(deauthorize())}>Logout</p>
