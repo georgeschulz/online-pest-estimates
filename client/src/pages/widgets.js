@@ -2,6 +2,7 @@ import { useDispatch } from "react-redux"
 import { deauthorize } from "../redux/authSlice";
 import { useSelector } from "react-redux";
 import { selectUser } from "../redux/authSlice";
+import Nav from "../components/layout/Nav/nav";
 
 function Widgets() {
     const dispatch = useDispatch();
@@ -9,6 +10,7 @@ function Widgets() {
 
     return (
         <div className="p-10">
+            <Nav />
             <b className="text-xl">WIDGETS SCREEN</b>
             <p>Email: {user.email}</p>
             <br />
