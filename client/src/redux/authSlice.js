@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { onLogin, onLogout, onSignup, onGoogleSignIn } from "../api/authApi";
-import { createBusiness, getUser, updateBusiness } from "../api/userApi";
+import { createBusiness, getUser, updateBusiness, updateUser } from "../api/userApi";
 
 const userAuthFromLocalStorage = () => {
     const isAuth = localStorage.getItem('isAuth');
@@ -65,6 +65,14 @@ export const updateBusinessDetails = createAsyncThunk(
     }
 )
 
+export const updateUserAuth = createAsyncThunk(
+    'user/updateLocalAuth',
+    async(userData, thunkAPI) => {
+        const response = await updateUser(userData);
+        return response.data;
+    }
+)
+
 const authSlice = createSlice({
     name: 'auth',
     initialState: {
@@ -96,7 +104,6 @@ const authSlice = createSlice({
         setPasswordField: (state, action) => {
             state.passwordField = action.payload;
         }
-
     },
     extraReducers: (builder) => {
         //handle login api states

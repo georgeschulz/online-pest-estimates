@@ -13,3 +13,7 @@ export const createBusiness = async (businessData) => {
 export const updateBusiness = async (businessData) => {
     return await axios.put(`${endpoint}/user/business`, businessData);
 }
+
+export const updateUser = async (userData) => {
+    return await axios.put(`${endpoint}/user`, userData);
+}

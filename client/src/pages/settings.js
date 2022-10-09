@@ -5,7 +5,7 @@ import ColorPicker from "../components/Inputs/ColorPicker";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { getLoggedInUser, selectEmail, selectIsGetUserDetailsPending, selectPasswordField, updateBusinessDetails } from "../redux/authSlice";
+import { getLoggedInUser, selectEmail, selectIsGetUserDetailsPending, selectPasswordField, updateBusinessDetails, updateUserAuth } from "../redux/authSlice";
 import { useSelector } from "react-redux";
 import { selectBusinessName, selectPhone, selectHexPrimary, selectHexSecondary, setName, setPhone, setHexPrimary, setHexSecondary, setEmail, setPasswordField } from "../redux/authSlice";
 import Loading from "../components/loading/loading";
@@ -39,6 +39,13 @@ function Settings() {
             phone: phone,
             hexPrimary: hexPrimary.hex.slice(1,7),
             hexSecondary: hexSecondary.hex.slice(1,7)
+        }))
+    }
+
+    const handleUserFormSubmission = () => {
+        dispatch(updateUserAuth({
+            email: email,
+            password: passwordField
         }))
     }
 
@@ -104,7 +111,7 @@ function Settings() {
                                         label="Account Email"
                                         type="text"
                                         state={email}
-                                        setState={setEmail}
+                                        setState={(e) => dispatch(setEmail(e))}
                                         helper="abcpest@gmail.com"
                                         size="medium"
                                     />
@@ -113,11 +120,11 @@ function Settings() {
                                         label="Password"
                                         type="password"
                                         state={passwordField}
-                                        setState={setPasswordField}
+                                        setState={(e) => dispatch(setPasswordField(e))}
                                         helper="New Password"
                                         size="medium"
                                     />
-                                    <LargeButton size={0}>Update</LargeButton>
+                                    <LargeButton size={0} handleClick={handleUserFormSubmission}>Update</LargeButton>
                                 </div>
                             ) 
                             : (

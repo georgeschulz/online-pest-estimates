@@ -1,6 +1,9 @@
 const createBusiness = require('../model/createBusiness');
 const getUserById = require('../model/getUserById');
 const updateBusiness = require('../model/updateBusiness');
+const updateLocalAuth = require('../model/updateLocalAuth');
+const bcrypt = require('bcrypt');
+
 
 const getUserInformation = async (req, res, next) => {
     try {
@@ -48,8 +51,29 @@ const updateBusinessRecord = async (req, res, next) => {
     }
 }
 
+const updateUserAuth = async (req, res, next) => {
+    try {
+        const { email, password } = req.body;
+        const userId = req.user.user_id;
+        const salt = await bcrypt.genSalt(8);
+        const hash = await bcrypt.hash(password, salt);
+        await updateLocalAuth(email, hash, userId)
+        res.status(204).send({
+            message: 'Successfully updated your login information',
+            data: {}
+        })
+    } catch (err) {
+        console.log(err);
+        res.status(400).send({
+            message: 'There was a problem updating your login info',
+            data: {}
+        })
+    }
+}
+
 module.exports = {
     getUserInformation,
     createBusinessRecord,
-    updateBusinessRecord
+    updateBusinessRecord,
+    updateUserAuth
 }
