@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { onLogin, onLogout, onSignup, onGoogleSignIn } from "../api/authApi";
-import { createBusiness, getUser } from "../api/userApi";
+import { createBusiness, getUser, updateBusiness } from "../api/userApi";
 
 const userAuthFromLocalStorage = () => {
     const isAuth = localStorage.getItem('isAuth');
@@ -53,6 +53,14 @@ export const addBusinessInfo = createAsyncThunk(
     'user/createBusiness',
     async(businessData, thunkAPI) => {
         const response = await createBusiness(businessData);
+        return response.data;
+    }
+)
+
+export const updateBusinessDetails = createAsyncThunk(
+    'user/updateBusiness',
+    async(businessData, thunkAPI) => {
+        const response = await updateBusiness(businessData)
         return response.data;
     }
 )

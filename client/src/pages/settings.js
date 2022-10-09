@@ -5,7 +5,7 @@ import ColorPicker from "../components/Inputs/ColorPicker";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { getLoggedInUser, selectEmail, selectIsGetUserDetailsPending, selectPasswordField } from "../redux/authSlice";
+import { getLoggedInUser, selectEmail, selectIsGetUserDetailsPending, selectPasswordField, updateBusinessDetails } from "../redux/authSlice";
 import { useSelector } from "react-redux";
 import { selectBusinessName, selectPhone, selectHexPrimary, selectHexSecondary, setName, setPhone, setHexPrimary, setHexSecondary, setEmail, setPasswordField } from "../redux/authSlice";
 import Loading from "../components/loading/loading";
@@ -32,6 +32,15 @@ function Settings() {
             }
         })();
     }, [dispatch])
+
+    const handleBusinessFormSubmission = () => {
+        dispatch(updateBusinessDetails({
+            name: businessName,
+            phone: phone,
+            hexPrimary: hexPrimary.hex.slice(1,7),
+            hexSecondary: hexSecondary.hex.slice(1,7)
+        }))
+    }
 
     return (
         <ApplicationMainLayout header="Account Settings">
@@ -73,7 +82,7 @@ function Settings() {
                                     state={hexSecondary}
                                     setState={(e) => dispatch(setHexSecondary(e))}
                                 />
-                                <LargeButton size={0}>Update</LargeButton>
+                                <LargeButton size={0} handleClick={handleBusinessFormSubmission}>Update</LargeButton>
                             </div>
                         )
                         : (

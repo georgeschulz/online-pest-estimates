@@ -1,5 +1,6 @@
 const createBusiness = require('../model/createBusiness');
 const getUserById = require('../model/getUserById');
+const updateBusiness = require('../model/updateBusiness');
 
 const getUserInformation = async (req, res, next) => {
     try {
@@ -29,7 +30,26 @@ const createBusinessRecord = async (req, res, next) => {
     }
 }
 
+const updateBusinessRecord = async (req, res, next) => {
+    try {
+        const { name, phone, hexPrimary, hexSecondary } = req.body;
+        const userId = req.user.user_id;
+        const business = await updateBusiness(name, phone, hexPrimary, hexSecondary, userId);
+        res.status(200).send({
+            message: 'Successfully updated the business',
+            data: business
+        })
+    } catch (err) {
+        console.log(err)
+        res.status(400).send({
+            message: 'There was a problem updating the business',
+            data: {}
+        })
+    }
+}
+
 module.exports = {
     getUserInformation,
-    createBusinessRecord
+    createBusinessRecord,
+    updateBusinessRecord
 }

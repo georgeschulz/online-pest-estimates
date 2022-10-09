@@ -9,3 +9,7 @@ export const getUser = async () => {
 export const createBusiness = async (businessData) => {
     return await axios.post(`${endpoint}/user/business`, businessData);
 }
+
+export const updateBusiness = async (businessData) => {
+    return await axios.put(`${endpoint}/user/business`, businessData);
+}
