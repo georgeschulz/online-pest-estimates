@@ -10,11 +10,17 @@ import LargeButton from '../components/buttons/button';
 
 function Widgets() {
     const dispatch = useDispatch();
-    const user = useSelector(selectUser);
     const widgets = useSelector(selectUserWidgets);
 
     useEffect(() => {
-        dispatch(getUserWidgetList())
+        (async () => {
+            try {
+                const response = await dispatch(getUserWidgetList())
+                dispatch(getLoggedInUser())
+            } catch (err) {
+                console.log(err)
+            }
+        })();
     }, [])
 
     return (

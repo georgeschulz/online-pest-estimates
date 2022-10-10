@@ -14,7 +14,8 @@ app.use(morgan('tiny'))
 
 //routers
 const authRouter = require('./routes/auth');
-const userRouter = require('./routes/user')
+const userRouter = require('./routes/user');
+const widgetRouter = require('./routes/widgets');
 
 app.use(cors({ credentials: true, origin: 'http://localhost:3000' }))
 app.use(express.static('../client/build'));
@@ -41,6 +42,7 @@ require('./controllers/auth');
 
 app.use('/auth', express.json(), authRouter);
 app.use('/user', express.json(), userRouter);
+app.use('/widget', express.json(), widgetRouter)
 
 //general path for getting static pages
 app.get("/*", (req, res) => {

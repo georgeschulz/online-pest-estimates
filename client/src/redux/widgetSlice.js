@@ -12,7 +12,8 @@ export const getUserWidgetList = createAsyncThunk(
 const widgetSlice = createSlice({
     name: 'widgets',
     initialState: {
-        widgets: []
+        widgets: [],
+        selectedWidget: null
     },
     reducers: {},
     extraReducers: (builder) => {
