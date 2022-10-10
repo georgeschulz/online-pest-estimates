@@ -13,6 +13,7 @@ import PrivateRoutes from './components/routeProtection/privateRoutes';
 import Widgets from './pages/widgets';
 import Training from './pages/training';
 import Settings from './pages/settings';
+import Strategies from './pages/strategies';
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
             <Route path="/widgets" element={<Widgets />} />
             <Route path="/training" element={<Training />} />
             <Route path="/settings" element={<Settings />} />
+            <Route path="/strategies/create" element={<Strategies />} />
           </Route>
           <Route path="*" element={<p>404 Not Found</p>} />
         </Routes>

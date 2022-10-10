@@ -7,10 +7,11 @@ import { getUserWidgetList, selectUserWidgets } from "../redux/widgetSlice";
 import LargeButton from '../components/buttons/button';
 import { createEmtpyWidget } from "../redux/widgetSlice";
 import WidgetTable from "../components/WidgetTable/WidgetTable";
-import { getUser } from "../api/userApi";
+import { useNavigate } from "react-router-dom";
 
 function Widgets() {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const widgets = useSelector(selectUserWidgets);
 
     useEffect(() => {
@@ -26,8 +27,12 @@ function Widgets() {
 
     const handleClick = () => {
         (async () => {
-            await dispatch(createEmtpyWidget())
-            await dispatch(getUserWidgetList())
+            try {
+                await dispatch(createEmtpyWidget())
+                navigate('/strategies/create')
+            } catch (err) {
+                console.log('There was an issue creating a new widget')
+            }
         })();
         
     }
