@@ -17,3 +17,7 @@ export const updateBusiness = async (businessData) => {
 export const updateUser = async (userData) => {
     return await axios.put(`${endpoint}/user`, userData);
 }
+
+export const getUserWidgets = async () => {
+    return await axios.get(`${endpoint}/user/widgets`);
+}

@@ -3,6 +3,7 @@ const getUserById = require('../model/getUserById');
 const updateBusiness = require('../model/updateBusiness');
 const updateLocalAuth = require('../model/updateLocalAuth');
 const bcrypt = require('bcrypt');
+const getUserWidgetsModel = require('../model/getUserWidgets')
 
 
 const getUserInformation = async (req, res, next) => {
@@ -71,9 +72,26 @@ const updateUserAuth = async (req, res, next) => {
     }
 }
 
+const getUserWidgets = async (req, res, next) => {
+    try {
+        const widgets = await getUserWidgetsModel(req.user.user_id);
+        res.status(200).send({
+            message: "Successfully retrieved user widgets",
+            data: widgets || []
+        })
+    } catch (err) {
+        console.log(err)
+        res.status(400).send({
+            message: "There was a problem finding the user's widgets",
+            data: {}
+        })
+    }
+}
+
 module.exports = {
     getUserInformation,
     createBusinessRecord,
     updateBusinessRecord,
-    updateUserAuth
+    updateUserAuth,
+    getUserWidgets
 }

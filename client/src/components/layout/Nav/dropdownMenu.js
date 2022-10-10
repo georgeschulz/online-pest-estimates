@@ -15,7 +15,7 @@ function DropdownMenu({closeIcon, openIcon, menuItems}) {
                 ? (<div className="absolute right-8 bg-matte text-white pt-2 px-7 border-b-2 border-y-white">
                     {menuItems.map(item => {
                         return (
-                            <Link to={item.location}><div className="text-lg hover:underline pb-3">{item.label}</div></Link>
+                            <div onClick={item.handler} className="text-lg hover:underline pb-3 cursor-pointer">{item.label}</div>
                         )
                     })}
                     </div>) 
