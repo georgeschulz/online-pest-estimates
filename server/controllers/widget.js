@@ -4,7 +4,6 @@ const createWidgetController = async (req, res, next) => {
     try {
         const userId = req.user.user_id;
         const newWidget = await createWidget(userId);
-        console.log('success');
         res.status(201).send({
             message: 'The widget has been created',
             data: newWidget
