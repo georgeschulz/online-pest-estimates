@@ -1,9 +1,13 @@
 import SingleLineText from "../components/Inputs/SingleLineText";
 import ApplicationMainLayout from "../components/layout/ApplicationMainLayout/ApplicationMainLayout";
 import { useDispatch, useSelector } from "react-redux";
-import { removeTarget, seelctBilling, selectBenefitOne, selectBenefitThree, selectBenefitTwo, selectFrequency, selectProgramDescription, selectProgramName, selectTargets, updateDraft } from "../redux/widgetSlice";
+import { removeTarget, seelctBilling, selectBenefitOne, selectBenefitThree, selectBenefitTwo, selectFrequency, selectProgramDescription, selectProgramName, selectTargets, toggleBilling, updateDraft } from "../redux/widgetSlice";
 import MultiLineText from "../components/Inputs/MultiLineText";
 import TagBuilder from "../components/Inputs/TagBuilder";
+import SingleSelect from "../components/Inputs/SingleSelect";
+import CheckBoxGroup from "../components/Inputs/CheckBoxGroup";
+import example from '../assets/widget-tile-ex.png'
+import LargeButton from "../components/buttons/button";
 
 function Details() {
     const name = useSelector(selectProgramName);
@@ -80,8 +84,26 @@ function Details() {
                             state={benefitThree}
                             setState={(e) => dispatch(updateDraft({benefitThree: e}))}
                         />
+                        <SingleSelect 
+                            name="frequency"
+                            label="Service Frequency"
+                            size="medium"
+                            state={frequency}
+                            setState={(e) => dispatch(updateDraft({frequency: e}))}
+                            options={['Bimonthly', 'Quarterly', 'Monthly', 'One Time']}
+                        />
+                        <CheckBoxGroup
+                            name="billing"
+                            label="Allowed Billing Options"
+                            state={billing}
+                            setState={(e) => dispatch(toggleBilling(e))}
+                        />
+                        <LargeButton size={0} className="justify-center">Save</LargeButton>
                     </div>
-                    <div className="w-1/2">DEMO</div>
+                    <div className="w-1/2 flex justify-center flex-wrap content-start">
+                        <p className="text-center text-2xl w-full mb-8 font-semibold font-poppins">DEMO</p>
+                        <img src={example} className="w-96 h-fit" />
+                    </div>
                 </div>
             </ApplicationMainLayout>
         </div>

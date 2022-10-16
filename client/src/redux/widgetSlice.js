@@ -42,7 +42,7 @@ const widgetSlice = createSlice({
             benefitTwo: 'Write a clear benefit for your service tile.',
             benefitThree: 'Write a clear benefit for your service tile.',
             frequency: 'One Time',
-            billing: 'Monthly',
+            billing: [{type: 'Monthly Billing Program', allowed: true}, {type: 'Annual Billing', allowed: false}, {type: 'Billed After Service', allowed: false}],
             image: null
         }
     },
@@ -58,6 +58,10 @@ const widgetSlice = createSlice({
         removeTarget: (state, action) => {
             const newTargets = state.draft.targets.filter(target => target != action.payload.tag)
             state.draft.targets = newTargets;
+        },
+        toggleBilling: (state, action) => {
+            const billing = state.draft.billing.find(option => option.type === action.payload)
+            billing.allowed = !billing.allowed;
         }
     },
     extraReducers: (builder) => {
@@ -84,5 +88,5 @@ export const selectBenefitTwo = state => state.widgets.draft.benefitTwo;
 export const selectBenefitThree = state => state.widgets.draft.benefitThree;
 export const selectFrequency = state => state.widgets.draft.frequency;
 export const seelctBilling = state => state.widgets.draft.billing;
-export const { updateDraft, removeTarget } = widgetSlice.actions;
+export const { updateDraft, removeTarget, toggleBilling } = widgetSlice.actions;
 export default widgetSlice.reducer;

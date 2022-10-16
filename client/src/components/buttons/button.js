@@ -9,7 +9,7 @@ function LargeButton({children, isPrimary = true, size = 1, className = "", hand
     let buttonSize;
     switch(size) {
         case 0:
-            buttonSize = `px-12 py-2 font-semibold font-poppins text-sm text-center w-fit`;
+            buttonSize = `px-16 py-2 font-semibold font-poppins text-md text-center w-fit`;
             break;
         case 1:
             buttonSize = `px-5 py-2 w-96 rounded text-lg font-poppins`
