@@ -14,6 +14,7 @@ import Widgets from './pages/widgets';
 import Training from './pages/training';
 import Settings from './pages/settings';
 import Strategies from './pages/strategies';
+import Details from './pages/details';
 
 function App() {
   return (
@@ -33,7 +34,7 @@ function App() {
             <Route path="/training" element={<Training />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/strategies/create" element={<Strategies />} />
-            <Route path="/widget-information/create" element={<p>Widget Informatoin</p>} />
+            <Route path="/widget-information/create" element={<Details />} />
           </Route>
           <Route path="*" element={<p>404 Not Found</p>} />
         </Routes>
