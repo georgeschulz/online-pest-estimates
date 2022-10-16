@@ -14,7 +14,7 @@ module.exports = async (userId) => {
         const { rows: proposal } = await db.query(`INSERT INTO proposal_templates (legal, widget_id) VALUES ('', $1)`, [widgetId]);
         
         const widget = new WidgetConfig(widgetId, widgetBasic[0], details[0], proposal[0], pricingStrategy[0])
-
+        
         return widget;
 
     } catch (err) {
