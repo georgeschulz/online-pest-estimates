@@ -1,8 +1,9 @@
 import SingleLineText from "../components/Inputs/SingleLineText";
 import ApplicationMainLayout from "../components/layout/ApplicationMainLayout/ApplicationMainLayout";
 import { useDispatch, useSelector } from "react-redux";
-import { seelctBilling, selectBenefitOne, selectBenefitThree, selectBenefitTwo, selectFrequency, selectProgramDescription, selectProgramName, selectTargets, updateDraft } from "../redux/widgetSlice";
+import { removeTarget, seelctBilling, selectBenefitOne, selectBenefitThree, selectBenefitTwo, selectFrequency, selectProgramDescription, selectProgramName, selectTargets, updateDraft } from "../redux/widgetSlice";
 import MultiLineText from "../components/Inputs/MultiLineText";
+import TagBuilder from "../components/Inputs/TagBuilder";
 
 function Details() {
     const name = useSelector(selectProgramName);
@@ -40,7 +41,15 @@ function Details() {
                             length={250}
                             setState={(e) => dispatch(updateDraft({programDescription: e}))}
                         />
-
+                        <TagBuilder
+                            name="targets"
+                            label="Possible Targets"
+                            type="text"
+                            helper="Add a New Target Here"
+                            state={targets}
+                            setState={(e) => dispatch(updateDraft({targets: [...targets, e]}))}
+                            removeTag={(e) => dispatch(removeTarget(e))}
+                        />
                         <MultiLineText
                             name="benefit-one"
                             label="Benefit 1"

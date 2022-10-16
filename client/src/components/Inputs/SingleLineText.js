@@ -11,9 +11,7 @@ function SingleLineText({name, label, type = 'text', state = "", setState, helpe
         default:
             customStyles += 'py-4 px-9 text-2xl';
             break;
-    
     }
-
 
     return (
         <div className="input-group mb-6">

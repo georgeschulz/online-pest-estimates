@@ -14,6 +14,9 @@ function LargeButton({children, isPrimary = true, size = 1, className = "", hand
         case 1:
             buttonSize = `px-5 py-2 w-96 rounded text-lg font-poppins`
             break;
+        case 2:
+            buttonSize = `px-8 py-2 font-semibold font-poppins text-sm text-center w-fit rounded-full flex`
+            break;
         case 5:
             buttonSize= `w-46 flex justify-center px-5 py-2 rounded-full text-2xl font-roboto font-bold`
             break;
@@ -23,7 +26,7 @@ function LargeButton({children, isPrimary = true, size = 1, className = "", hand
     }   
 
     return (
-        <p onClick={() => handleClick()} className={`
+        <span onClick={() => handleClick()} className={`
             text-center 
             cursor-pointer 
             shadow-sm 
@@ -37,7 +40,7 @@ function LargeButton({children, isPrimary = true, size = 1, className = "", hand
             ${className}
             `}>
                 {isPending ? children : 'Loading...'}
-            </p>
+            </span>
     )
 }
 

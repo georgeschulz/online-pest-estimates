@@ -48,13 +48,16 @@ const widgetSlice = createSlice({
     },
     reducers: {
         updateDraft: (state, action) => {
-            console.log(action.payload)
             const newData = action.payload;
 
             state.draft = { 
                 ...state.draft, 
                 ...newData
             }
+        },
+        removeTarget: (state, action) => {
+            const newTargets = state.draft.targets.filter(target => target != action.payload.tag)
+            state.draft.targets = newTargets;
         }
     },
     extraReducers: (builder) => {
@@ -81,5 +84,5 @@ export const selectBenefitTwo = state => state.widgets.draft.benefitTwo;
 export const selectBenefitThree = state => state.widgets.draft.benefitThree;
 export const selectFrequency = state => state.widgets.draft.frequency;
 export const seelctBilling = state => state.widgets.draft.billing;
-export const { updateDraft } = widgetSlice.actions;
+export const { updateDraft, removeTarget } = widgetSlice.actions;
 export default widgetSlice.reducer;
