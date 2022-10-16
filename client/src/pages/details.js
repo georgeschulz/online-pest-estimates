@@ -2,6 +2,7 @@ import SingleLineText from "../components/Inputs/SingleLineText";
 import ApplicationMainLayout from "../components/layout/ApplicationMainLayout/ApplicationMainLayout";
 import { useDispatch, useSelector } from "react-redux";
 import { seelctBilling, selectBenefitOne, selectBenefitThree, selectBenefitTwo, selectFrequency, selectProgramDescription, selectProgramName, selectTargets, updateDraft } from "../redux/widgetSlice";
+import MultiLineText from "../components/Inputs/MultiLineText";
 
 function Details() {
     const name = useSelector(selectProgramName);
@@ -29,6 +30,46 @@ function Details() {
                             size="medium"
                             state={name}
                             setState={(e) => dispatch(updateDraft({name: e}))}
+                        />
+                        <MultiLineText
+                            name="program-description"
+                            label="Program Description"
+                            type="text"
+                            helper="Sell the benefits of your program here. Max 250 characters."
+                            state={description}
+                            length={250}
+                            setState={(e) => dispatch(updateDraft({programDescription: e}))}
+                        />
+
+                        <MultiLineText
+                            name="benefit-one"
+                            label="Benefit 1"
+                            type="text"
+                            helper="Write a clear benefit for your service tile."
+                            size="short"
+                            length={125}
+                            state={benefitOne}
+                            setState={(e) => dispatch(updateDraft({benefitOne: e}))}
+                        />
+                        <MultiLineText
+                            name="benefit-twp"
+                            label="Benefit 2"
+                            type="text"
+                            helper="Write a clear benefit for your service tile."
+                            size="short"
+                            length={125}
+                            state={benefitTwo}
+                            setState={(e) => dispatch(updateDraft({benefitTwo: e}))}
+                        />
+                        <MultiLineText
+                            name="benefit-three"
+                            label="Benefit 3"
+                            type="text"
+                            helper="Write a clear benefit for your service tile."
+                            size="short"
+                            length={125}
+                            state={benefitThree}
+                            setState={(e) => dispatch(updateDraft({benefitThree: e}))}
                         />
                     </div>
                     <div className="w-1/2">DEMO</div>
