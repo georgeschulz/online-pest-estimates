@@ -1,7 +1,8 @@
 const createWidget = require('../model/createWidget');
-const { demoConfig } = require('../model/dataStructures/timeDifficultyStrategy');
+const { defaultTimeDifficultyConfig } = require('../model/dataStructures/timeDifficultyStrategy');
 const updatePriceStrategyConfig = require ('../model/updatePriceStrategyConfig');
 const getWidgetById = require('../model/getWidget');
+const { defaultTargetConfig } = require('../model/dataStructures/targetStrategy');
 
 const createWidgetController = async (req, res, next) => {
     try {
@@ -22,12 +23,25 @@ const createWidgetController = async (req, res, next) => {
 
 const updatePriceStrategy = async (req, res, next) => {
     try {
-        const userId = req.user.user_id;
         const { widgetId } = req.params;
+        const { strategyType, config } = req.body;
 
-        await updatePriceStrategyConfig('Test2', widgetId, demoConfig);
+        let configToUpdate;
+        //create the default config if the user is just starting to setup the configuration
+        if(config === null) {
+            if(strategyType === 'Time Difficulty Strategy') {
+                configToUpdate = defaultTimeDifficultyConfig;
+            } else if (strategyType === 'Target Strategy') {
+                configToUpdate = defaultTargetConfig;
+            } else {
+                throw new Error('The pricing strategy type name was not recognized');
+            }
+        } else {
+            configToUpdate = config;
+        }
+
+        await updatePriceStrategyConfig(strategyType, widgetId, configToUpdate);
         const newConfig = await getWidgetById(widgetId);
-        console.log(newConfig)
 
         res.status(200).send({
             message: 'Widget pricing configuration successfully updated',

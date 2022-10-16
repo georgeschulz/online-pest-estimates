@@ -6,7 +6,7 @@ const { hourlyRate, thoasandSquareFeet, twoThoasandSquareFeet, difficultSurcharg
 //add setup
 //create proposal class based on db
 
-const demoConfig = {
+const defaultTimeDifficultyConfig = {
     base: 75,
     billingOptions: ['monthly', 'service', 'annual'],
     setup: 150,
@@ -62,5 +62,5 @@ timeDifficultyStrategy.appendNextOperation('ADD', 'AGGMAX', 'Difficulty Surcharg
 
 
 module.exports = {
-    demoConfig
+    defaultTimeDifficultyConfig
 }

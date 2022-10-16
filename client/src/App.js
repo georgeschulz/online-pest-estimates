@@ -33,6 +33,7 @@ function App() {
             <Route path="/training" element={<Training />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/strategies/create" element={<Strategies />} />
+            <Route path="/widget-information/create" element={<p>Widget Informatoin</p>} />
           </Route>
           <Route path="*" element={<p>404 Not Found</p>} />
         </Routes>

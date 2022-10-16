@@ -2,11 +2,7 @@ const PriceStrategy = require('./PricingStrategy');
 const FormulaGroup = require('./FormulaGroup');
 const { difficultSurcharge } = require('./paramters');
 
-//add billing
-//add setup
-//create proposal class based on db
-
-const demoConfig = {
+const defaultTargetConfig = {
     base: 85,
     billingOptions: ['monthly', 'service', 'annual'],
     setup: 150,
@@ -39,4 +35,6 @@ targetStrategy.addParameters([
 targetStrategy.appendNextOperation('ADD', 'config', 'base');
 targetStrategy.appendNextOperation('ADD', 'SUM', 'Target');
 
-console.log(targetStrategy.calculate(demoConfig, results).pricing);
+module.exports = {
+    defaultTargetConfig
+}
