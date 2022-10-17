@@ -21,20 +21,20 @@ export const createEmtpyWidget = createAsyncThunk(
 export const setWidgetStrategy = createAsyncThunk(
     'widgets/updateWidgetStrategy',
     async (data, thunkAPI) => {
-        const { strategyType } = data;
-        const state = thunkAPI.getState();
-        const response = await updateStrategy(state.widgets.selectedWidget.widgetId, null, strategyType);
+        const { strategyType, widgetId } = data;
+        const response = await updateStrategy(widgetId, null, strategyType);
         return response.data;
     }
 )
 
 export const updateWidgetDetails = createAsyncThunk(
     'widgets/updateWidgetDetails',
-    async (data, thunkAPI) => { 
+    async (data, thunkAPI) => {
+        const { widgetId } = data; 
         const state = thunkAPI.getState();
         const d = state.widgets.draft;
         console.log('good')
-        const response = await updateDetails(state.widgets.selectedWidget.widgetId, {
+        const response = await updateDetails(widgetId, {
             name: d.name,
             description: d.programDescription,
             frequency: d.frequency,
@@ -56,15 +56,18 @@ const widgetSlice = createSlice({
         selectedWidget: null,
         widgetError: { isVisible: false, message: '', isSuccess: false },
         draft: {
-            name: 'Gold Program',
-            programDescription: 'Sell the benefits of your program here. Max 250 characters.',
+            name: null,
+            programDescription: null,
             targets: [],
-            benefitOne: 'Write a clear benefit for your service tile.',
-            benefitTwo: 'Write a clear benefit for your service tile.',
-            benefitThree: 'Write a clear benefit for your service tile.',
-            frequency: 'One Time',
-            billing: [{type: 'Monthly Billing Program', allowed: true}, {type: 'Annual Billing', allowed: false}, {type: 'Billed After Service', allowed: false}],
-            image: null
+            benefitOne: null,
+            benefitTwo: null,
+            benefitThree: null,
+            frequency: null,
+            billing: [{type: 'Monthly Billing Program', allowed: false}, {type: 'Annual Billing', allowed: false}, {type: 'Billed After Service', allowed: false}],
+            image: null,
+            covered: [],
+            notCovered: [],
+            targetFull: []
         }
     },
     reducers: {
@@ -79,6 +82,18 @@ const widgetSlice = createSlice({
         removeTarget: (state, action) => {
             const newTargets = state.draft.targets.filter(target => target != action.payload.tag)
             state.draft.targets = newTargets;
+        },
+        removeCovered: (state, action) => {
+            const newCovereds = state.draft.covered.filter(cover => cover != action.payload.tag);
+            state.draft.covered = newCovereds;
+        },
+        removeNotCovered: (state, action) => {
+            const newNotCovereds = state.draft.notCovered.filter(cover => cover != action.payload.tag);
+            state.draft.notCovered = newNotCovereds;
+        },
+        removeTargetFull: (state, action) => {
+            const newTargets = state.draft.targetFull.filter(target => target != action.payload.tag)
+            state.draft.targetFull = newTargets;
         },
         toggleBilling: (state, action) => {
             const billing = state.draft.billing.find(option => option.type === action.payload)
@@ -113,5 +128,8 @@ export const selectBenefitTwo = state => state.widgets.draft.benefitTwo;
 export const selectBenefitThree = state => state.widgets.draft.benefitThree;
 export const selectFrequency = state => state.widgets.draft.frequency;
 export const seelctBilling = state => state.widgets.draft.billing;
-export const { updateDraft, removeTarget, toggleBilling } = widgetSlice.actions;
+export const selectCovered = state => state.widgets.draft.covered;
+export const selectNotCovered = state => state.widgets.draft.notCovered;
+export const selectTargetFull = state => state.widgets.draft.targetFull;
+export const { updateDraft, removeTarget, toggleBilling, removeCovered, removeNotCovered, removeTargetFull } = widgetSlice.actions;
 export default widgetSlice.reducer;

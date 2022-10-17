@@ -1,9 +1,10 @@
 import { useState } from "react";
 import LargeButton from "../buttons/button";
 import deleteImg from '../../assets/delete.png'
-import plus from '../../assets/plus.png'
+import check from '../../assets/check.png'
+import x from '../../assets/x.png';
 
-function TagBuilder({name, label, type = 'text', state = "", setState, removeTag = () => {}, helper, showLabel = true, size = "medium", length = 100000}) {
+function TagBuilder({name, label, type = 'text', state = "", setState, removeTag = () => {}, helper, showLabel = true, size = "medium", length = 100000, tagStyle = "tag", icon = check}) {
     let customStyles = "";
     const [newValue, setNewValue] = useState('');
 
@@ -17,7 +18,6 @@ function TagBuilder({name, label, type = 'text', state = "", setState, removeTag
         default:
             customStyles += 'py-4 px-9 text-2xl';
             break;
-    
     }
 
     const onSubmit = () => {
@@ -33,7 +33,7 @@ function TagBuilder({name, label, type = 'text', state = "", setState, removeTag
     }
 
     return (
-        <div className="input-group mb-6">
+        <div className="input-group mb-6" style={{'minHeight': '270px'}}>
             {showLabel && (<label 
                 htmlFor={name}
                 className="text-xl font-roboto font-semibold ml-6">
@@ -47,7 +47,7 @@ function TagBuilder({name, label, type = 'text', state = "", setState, removeTag
                     placeholder={helper} 
                     onChange={(e) => setNewValue(e.target.value)}
                     maxLength={length}
-                    className={`border border-lightgray w-full rounded-lg text-lightmatte ${customStyles}`}
+                    className={`border border-lightgray w-full rounded-full text-lightmatte ${customStyles}`}
                     onKeyDown={handleKeyDown}
                 />
                 <LargeButton
@@ -58,7 +58,9 @@ function TagBuilder({name, label, type = 'text', state = "", setState, removeTag
                 </LargeButton>
             </div>
             
-            <div className="w-full flex flex-wrap">
+
+            { tagStyle === 'tag'
+                ? (<div className="w-full flex flex-wrap">
                 {state.map(tag => {
                     return (
                         <div className="bg-primary text-white px-6 py-2 mx-2 my-1 rounded-full text-center flex justify-between items-center" style={{"minWidth": "150px"}}>
@@ -67,9 +69,24 @@ function TagBuilder({name, label, type = 'text', state = "", setState, removeTag
                         </div>
                     )
                 })}
-            </div>
+            </div>)
+            : (<div className="w-full flex flex-wrap px-16 align-bottom mt-8">
+                {state.map(tag => {
+                    return (
+                        <div className="w-full flex text-lg font-semibold font-poppins mb-5 items-center">
+                            <img src={icon} className="w-5 mr-2" />
+                            <span>{tag}</span>
+                            <span className="text-sm hover:underline cursor-pointer ml-2 font-normal" onClick={() => removeTag({tag})}>Remove</span>
+                        </div>
+                    )
+                })}
+            </div>)
+            }
+            
         </div>
     )
 }
 
 export default TagBuilder;
+
+//<img src={x} className="ml-2 w-2 h-2 scale" onClick={() => removeTag({tag})} />

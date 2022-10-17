@@ -5,6 +5,9 @@ function MultiLineText({name, label, type = 'text', state = "", setState, helper
         case "short":
             customStyles += 'py-2 px-8 text-xl h-24'
             break;
+        case "tall":
+            customStyles += 'py-2 px-8 text-xl h-96';
+            break;
         default:
             customStyles += 'py-2 px-8 text-xl h-36';
             break;

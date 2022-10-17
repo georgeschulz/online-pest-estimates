@@ -28,8 +28,8 @@ function Widgets() {
     const handleClick = () => {
         (async () => {
             try {
-                await dispatch(createEmtpyWidget())
-                navigate('/strategies/create')
+                const response = await dispatch(createEmtpyWidget())
+                navigate(`/strategies/${response.payload.data.widgetId}/edit`)
             } catch (err) {
                 console.log('There was an issue creating a new widget')
             }

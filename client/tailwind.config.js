@@ -7,7 +7,8 @@ module.exports = {
     extend: {
       fontFamily: {
         'poppins': ['"Poppins"', ...defaultTheme.fontFamily.sans],
-        'roboto': ['"Roboto"', ...defaultTheme.fontFamily.sans]
+        'roboto': ['"Roboto"', ...defaultTheme.fontFamily.sans],
+        'code': ['"Fira Code"', ...defaultTheme.fontFamily.sans]
       },
       colors: {
         'primary': '#6A77D9',

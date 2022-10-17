@@ -1,16 +1,18 @@
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setWidgetStrategy } from "../../redux/widgetSlice";
+import { useParams } from "react-router-dom";
 
 function StrategyButton({tag = '', name, children, strategy}) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const { widgetId } = useParams();
     
     const handleClick = () => {
         (async () => {
             try {
-                await dispatch(setWidgetStrategy({strategyType: strategy}))
-                navigate('/widget-information/create');
+                await dispatch(setWidgetStrategy({strategyType: strategy, widgetId}))
+                navigate(`/widget-information/${widgetId}/edit`);
             } catch (err) {
                 console.log(err)
             }

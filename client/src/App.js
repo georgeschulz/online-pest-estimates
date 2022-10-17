@@ -16,6 +16,8 @@ import Settings from './pages/settings';
 import Strategies from './pages/strategies';
 import Details from './pages/details';
 import Pricing from './pages/pricing';
+import ProposalConfig from './pages/proposalConfig';
+import Code from './pages/code';
 
 function App() {
   return (
@@ -34,9 +36,11 @@ function App() {
             <Route path="/widgets" element={<Widgets />} />
             <Route path="/training" element={<Training />} />
             <Route path="/settings" element={<Settings />} />
-            <Route path="/strategies/create" element={<Strategies />} />
-            <Route path="/widget-information/create" element={<Details />} />
-            <Route path="/widget-pricing/create" element={<Pricing />} />
+            <Route path="/strategies/:widgetId/edit" element={<Strategies />} />
+            <Route path="/widget-information/:widgetId/edit" element={<Details />} />
+            <Route path="/widget-pricing/:widgetId/edit" element={<Pricing />} />
+            <Route path="/widget-proposal/:widgetId/edit" element={<ProposalConfig />} />
+            <Route path="/widget-confirmation/:widgetId/edit" element={<Code />} />
           </Route>
           <Route path="*" element={<p>404 Not Found</p>} />
         </Routes>

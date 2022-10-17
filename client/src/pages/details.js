@@ -8,7 +8,7 @@ import SingleSelect from "../components/Inputs/SingleSelect";
 import CheckBoxGroup from "../components/Inputs/CheckBoxGroup";
 import example from '../assets/widget-tile-ex.png'
 import LargeButton from "../components/buttons/button";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 function Details() {
     const name = useSelector(selectProgramName);
@@ -21,12 +21,13 @@ function Details() {
     const billing = useSelector(seelctBilling);
 
     const dispatch = useDispatch();
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const { widgetId } = useParams()
 
     const handleSubmit = async () => {
         try {
-            const response = await dispatch(updateWidgetDetails())
-            navigate('/widget-pricing/create');
+            const response = await dispatch(updateWidgetDetails({widgetId}))
+            navigate(`/widget-pricing/${widgetId}/edit`);
         } catch (err) {
             console.log(err);
         }
