@@ -16,8 +16,17 @@ module.exports = async (widgetId) => {
         const { rows: strategy } = await db.query(`SELECT strategy_id FROM widgets WHERE widget_id = $1`, [widgetId]);
         const { strategy_id } = strategy[0];
         const { rows: pricingStrategy } = await db.query(`SELECT * FROM pricing_strategies WHERE strategy_id = $1`, [strategy_id])
-        
-        const widget = new WidgetConfig(widgetId, widgetBasic[0], details[0], proposal[0], pricingStrategy[0])
+        const { rows: targetQuery }  = await db.query(`SELECT * FROM targets WHERE widget_id = $1`, [widgetId]);
+        const { rows: benefitQuery } = await db.query(`SELECT * FROM benefits WHERE widget_id = $1`, [widgetId]);
+
+        const widget = new WidgetConfig(
+            widgetId, 
+            widgetBasic[0], 
+            details[0], 
+            proposal[0], 
+            pricingStrategy[0], 
+            benefitQuery.map(benefit => benefit.text), 
+            targetQuery.map(target => target.name))
         return widget;
         
     } catch (err) {

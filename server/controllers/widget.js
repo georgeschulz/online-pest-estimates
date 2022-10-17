@@ -3,6 +3,7 @@ const { defaultTimeDifficultyConfig } = require('../model/dataStructures/timeDif
 const updatePriceStrategyConfig = require ('../model/updatePriceStrategyConfig');
 const getWidgetById = require('../model/getWidget');
 const { defaultTargetConfig } = require('../model/dataStructures/targetStrategy');
+const { updateWidgetDetails } = require('../model/updateWidgetDetails');
 
 const createWidgetController = async (req, res, next) => {
     try {
@@ -57,7 +58,27 @@ const updatePriceStrategy = async (req, res, next) => {
     }
 }
 
+const updateWidgetDetailsController = async (req, res, next) => {
+    try {
+        const { widgetId } = req.params;
+        const { name, description, frequency, billingFrequency, benefitOne, benefitTwo, benefitThree, targets } = req.body;
+
+        const updatedWidget = await updateWidgetDetails(widgetId, name, description, frequency, billingFrequency, benefitOne, benefitTwo, benefitThree, targets)
+        res.status(200).send({
+            message: 'Successfully updated widget details',
+            data: updatedWidget
+        })
+    } catch (err) {
+        console.log(err);
+        res.status(404).send({
+            message: 'Failed to update widget details',
+            data: {}
+        })
+    }
+}
+
 module.exports = {
     createWidgetController,
-    updatePriceStrategy
+    updatePriceStrategy,
+    updateWidgetDetailsController
 }

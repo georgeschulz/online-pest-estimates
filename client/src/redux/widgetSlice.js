@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { getUserWidgets } from "../api/userApi";
-import { createWidget, updateStrategy } from "../api/widgetApi";
+import { createWidget, updateDetails, updateStrategy } from "../api/widgetApi";
 
 export const getUserWidgetList = createAsyncThunk(
     'widgets/getWidgets',
@@ -24,6 +24,27 @@ export const setWidgetStrategy = createAsyncThunk(
         const { strategyType } = data;
         const state = thunkAPI.getState();
         const response = await updateStrategy(state.widgets.selectedWidget.widgetId, null, strategyType);
+        return response.data;
+    }
+)
+
+export const updateWidgetDetails = createAsyncThunk(
+    'widgets/updateWidgetDetails',
+    async (data, thunkAPI) => { 
+        const state = thunkAPI.getState();
+        const d = state.widgets.draft;
+        console.log('good')
+        const response = await updateDetails(state.widgets.selectedWidget.widgetId, {
+            name: d.name,
+            description: d.programDescription,
+            frequency: d.frequency,
+            billingFrequency: d.billing,
+            benefitOne: d.benefitOne,
+            benefitTwo: d.benefitTwo,
+            benefitThree: d.benefitThree,
+            targets: d.targets
+        })
+
         return response.data;
     }
 )
@@ -74,6 +95,10 @@ const widgetSlice = createSlice({
         })
 
         builder.addCase(setWidgetStrategy.fulfilled, (state, action) => {
+            state.selectedWidget = action.payload.data;
+        })
+
+        builder.addCase(updateWidgetDetails.fulfilled, (state, action) => {
             state.selectedWidget = action.payload.data;
         })
     }

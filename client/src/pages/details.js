@@ -1,13 +1,14 @@
 import SingleLineText from "../components/Inputs/SingleLineText";
 import ApplicationMainLayout from "../components/layout/ApplicationMainLayout/ApplicationMainLayout";
 import { useDispatch, useSelector } from "react-redux";
-import { removeTarget, seelctBilling, selectBenefitOne, selectBenefitThree, selectBenefitTwo, selectFrequency, selectProgramDescription, selectProgramName, selectTargets, toggleBilling, updateDraft } from "../redux/widgetSlice";
+import { removeTarget, seelctBilling, selectBenefitOne, selectBenefitThree, selectBenefitTwo, selectFrequency, selectProgramDescription, selectProgramName, selectTargets, toggleBilling, updateDraft, updateWidgetDetails } from "../redux/widgetSlice";
 import MultiLineText from "../components/Inputs/MultiLineText";
 import TagBuilder from "../components/Inputs/TagBuilder";
 import SingleSelect from "../components/Inputs/SingleSelect";
 import CheckBoxGroup from "../components/Inputs/CheckBoxGroup";
 import example from '../assets/widget-tile-ex.png'
 import LargeButton from "../components/buttons/button";
+import { useNavigate } from "react-router-dom";
 
 function Details() {
     const name = useSelector(selectProgramName);
@@ -20,6 +21,16 @@ function Details() {
     const billing = useSelector(seelctBilling);
 
     const dispatch = useDispatch();
+    const navigate = useNavigate()
+
+    const handleSubmit = async () => {
+        try {
+            const response = await dispatch(updateWidgetDetails())
+            navigate('/widget-pricing/create');
+        } catch (err) {
+            console.log(err);
+        }
+    }
 
     return (
         <div>
@@ -98,7 +109,7 @@ function Details() {
                             state={billing}
                             setState={(e) => dispatch(toggleBilling(e))}
                         />
-                        <LargeButton size={0} className="justify-center">Save</LargeButton>
+                        <LargeButton handleClick={() => handleSubmit()} size={0} className="justify-center">Save</LargeButton>
                     </div>
                     <div className="w-1/2 flex justify-center flex-wrap content-start">
                         <p className="text-center text-2xl w-full mb-8 font-semibold font-poppins">DEMO</p>
