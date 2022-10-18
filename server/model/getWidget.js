@@ -8,10 +8,13 @@ module.exports = async (widgetId) => {
         const { rows: proposal } = await db.query(`SELECT 
             proposal_templates.proposal_template_id,
             proposal_templates.legal,
-            proposal_features.text,
-            proposal_features.is_included
-        FROM proposal_templates LEFT JOIN proposal_features ON proposal_features.proposal_template_id = proposal_templates.proposal_template_id WHERE widget_id = $1`, 
+            proposal_templates.covered_pests,
+            highlighted_features.text,
+            highlighted_features.is_included
+        FROM proposal_templates LEFT JOIN highlighted_features ON highlighted_features.proposal_template_id = proposal_templates.proposal_template_id WHERE widget_id = $1`, 
         [widgetId]);
+
+        const { legal, covered_pests, proposal_template_id } = proposal[0];
         
         const { rows: strategy } = await db.query(`SELECT strategy_id FROM widgets WHERE widget_id = $1`, [widgetId]);
         const { strategy_id } = strategy[0];
@@ -23,10 +26,11 @@ module.exports = async (widgetId) => {
             widgetId, 
             widgetBasic[0], 
             details[0], 
-            proposal[0], 
+            { legal, covered_pests: covered_pests.split(','), proposal_template_id }, 
             pricingStrategy[0], 
             benefitQuery.map(benefit => benefit.text), 
-            targetQuery.map(target => target.name))
+            targetQuery.map(target => target.name),
+            proposal.map(feature => [feature.text, feature.is_included]))
         return widget;
         
     } catch (err) {
