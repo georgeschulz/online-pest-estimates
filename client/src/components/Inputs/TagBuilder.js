@@ -58,7 +58,6 @@ function TagBuilder({name, label, type = 'text', state = "", setState, removeTag
                 </LargeButton>
             </div>
             
-
             { tagStyle === 'tag'
                 ? (<div className="w-full flex flex-wrap">
                 {state.map(tag => {

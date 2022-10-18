@@ -4,6 +4,7 @@ const updatePriceStrategyConfig = require ('../model/updatePriceStrategyConfig')
 const getWidgetById = require('../model/getWidget');
 const { defaultTargetConfig } = require('../model/dataStructures/targetStrategy');
 const { updateWidgetDetails } = require('../model/updateWidgetDetails');
+const { updateWidgetProposal } = require('../model/updateWidgetProposal');
 
 const createWidgetController = async (req, res, next) => {
     try {
@@ -77,8 +78,27 @@ const updateWidgetDetailsController = async (req, res, next) => {
     }
 }
 
+const updateWidgetProposalController = async (req, res, next) => {
+    try {
+        const { widgetId } = req.params;
+        const { legal, covered, notCovered, targetFull } = req.body;
+        const updatedWidget = await updateWidgetProposal(widgetId, legal, covered, notCovered, targetFull)
+        res.status(200).send({
+            message: 'Widget proposal was successfully updated',
+            data: updatedWidget
+        })
+    } catch (e) {
+        console.log(e);
+        res.status(400).send({
+            message: 'Widget proposal could not be updated',
+            data: {}
+        })
+    }
+}
+
 module.exports = {
     createWidgetController,
     updatePriceStrategy,
-    updateWidgetDetailsController
+    updateWidgetDetailsController,
+    updateWidgetProposalController
 }
