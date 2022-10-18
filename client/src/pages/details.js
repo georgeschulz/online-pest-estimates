@@ -1,7 +1,7 @@
 import SingleLineText from "../components/Inputs/SingleLineText";
 import ApplicationMainLayout from "../components/layout/ApplicationMainLayout/ApplicationMainLayout";
 import { useDispatch, useSelector } from "react-redux";
-import { removeTarget, seelctBilling, selectBenefitOne, selectBenefitThree, selectBenefitTwo, selectFrequency, selectProgramDescription, selectProgramName, selectTargets, toggleBilling, updateDraft, updateWidgetDetails } from "../redux/widgetSlice";
+import { getWidgetByIdReload, removeTarget, seelctBilling, selectBenefitOne, selectBenefitThree, selectBenefitTwo, selectFrequency, selectIsWidgetLoaded, selectProgramDescription, selectProgramName, selectTargets, toggleBilling, updateDraft, updateWidgetDetails } from "../redux/widgetSlice";
 import MultiLineText from "../components/Inputs/MultiLineText";
 import TagBuilder from "../components/Inputs/TagBuilder";
 import SingleSelect from "../components/Inputs/SingleSelect";
@@ -9,6 +9,7 @@ import CheckBoxGroup from "../components/Inputs/CheckBoxGroup";
 import example from '../assets/widget-tile-ex.png'
 import LargeButton from "../components/buttons/button";
 import { useNavigate, useParams } from "react-router-dom";
+import { useEffect } from "react";
 
 function Details() {
     const name = useSelector(selectProgramName);
@@ -19,10 +20,23 @@ function Details() {
     const benefitThree = useSelector(selectBenefitThree);
     const frequency = useSelector(selectFrequency);
     const billing = useSelector(seelctBilling);
+    const isWidgetLoaded = useSelector(selectIsWidgetLoaded)
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { widgetId } = useParams()
+
+    useEffect(() => {
+        (async () => {
+            try {
+                if(!isWidgetLoaded) {
+                    dispatch(getWidgetByIdReload(widgetId))
+                }
+            } catch (err) {
+                console.log(err)
+            }
+        })();
+    }, [])
 
     const handleSubmit = async () => {
         try {

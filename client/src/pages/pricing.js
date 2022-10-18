@@ -4,10 +4,30 @@ import SingleLineText from "../components/Inputs/SingleLineText";
 import ApplicationMainLayout from "../components/layout/ApplicationMainLayout/ApplicationMainLayout";
 import LargeButton from "../components/buttons/button";
 import { useNavigate, useParams } from "react-router-dom";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { selectIsWidgetLoaded } from "../redux/widgetSlice";
+import { useDispatch } from "react-redux";
+import { getWidgetByIdReload } from "../redux/widgetSlice";
 
 function Pricing() {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const { widgetId } = useParams();
+
+    const isWidgetLoaded = useSelector(selectIsWidgetLoaded);
+
+    useEffect(() => {
+        (async () => {
+            try {
+                if(!isWidgetLoaded) {
+                    dispatch(getWidgetByIdReload(widgetId))
+                }
+            } catch (err) {
+                console.log(err)
+            }
+        })();
+    }, [])
 
     return (
         <div>

@@ -17,3 +17,7 @@ export const updateDetails = async (widgetId, data) => {
 export const updateProposal = async (widgetId, data) => {
     return await axios.put(`${endpoint}/widget/${widgetId}/proposal`, data);
 }
+
+export const getWidgetById = async (widgetId) => {
+    return await axios.get(`${endpoint}/widget/${widgetId}`);
+}

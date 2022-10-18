@@ -5,6 +5,7 @@ const getWidgetById = require('../model/getWidget');
 const { defaultTargetConfig } = require('../model/dataStructures/targetStrategy');
 const { updateWidgetDetails } = require('../model/updateWidgetDetails');
 const { updateWidgetProposal } = require('../model/updateWidgetProposal');
+const getWidget = require('../model/getWidget');
 
 const createWidgetController = async (req, res, next) => {
     try {
@@ -97,9 +98,26 @@ const updateWidgetProposalController = async (req, res, next) => {
     }
 }
 
+const getWidgetByIdController = async (req, res, next) => {
+    try {
+        const { widgetId } = req.params;
+        const widget = await getWidget(widgetId);
+        res.status(200).send({
+            message: 'Widget successfully retrieved',
+            data: widget
+        })
+    } catch (err) {
+        res.status(404).send({
+            message: 'Could not find widget',
+            data: {}
+        })
+    }
+}
+
 module.exports = {
     createWidgetController,
     updatePriceStrategy,
     updateWidgetDetailsController,
-    updateWidgetProposalController
+    updateWidgetProposalController,
+    getWidgetByIdController
 }

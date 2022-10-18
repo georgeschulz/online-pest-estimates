@@ -1,11 +1,13 @@
 import TagBuilder from "../components/Inputs/TagBuilder";
 import ApplicationMainLayout from "../components/layout/ApplicationMainLayout/ApplicationMainLayout";
 import { useDispatch, useSelector } from "react-redux";
-import { removeCovered, removeNotCovered, removeTarget, removeTargetFull, selectCovered, selectLegal, selectNotCovered, selectTargetFull, updateDraft, updateWidgetProposalConfig } from "../redux/widgetSlice";
+import { removeCovered, removeNotCovered, removeTarget, removeTargetFull, selectCovered, selectIsWidgetLoaded, selectLegal, selectNotCovered, selectTargetFull, updateDraft, updateWidgetProposalConfig } from "../redux/widgetSlice";
 import { useNavigate, useParams } from "react-router-dom";
 import x from '../assets/x.png';
 import MultiLineText from "../components/Inputs/MultiLineText";
 import LargeButton from "../components/buttons/button";
+import { useEffect } from "react";
+import { getWidgetByIdReload } from "../redux/widgetSlice";
 
 function ProposalConfig() {
     const { widgetId } = useParams(); 
@@ -14,6 +16,7 @@ function ProposalConfig() {
     const notCovered = useSelector(selectNotCovered);
     const targetFull = useSelector(selectTargetFull);
     const legal = useSelector(selectLegal);
+    const isWidgetLoaded = useSelector(selectIsWidgetLoaded)
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -26,6 +29,18 @@ function ProposalConfig() {
             console.log(err);
         }
     }
+
+    useEffect(() => {
+        (async () => {
+            try {
+                if(!isWidgetLoaded) {
+                    dispatch(getWidgetByIdReload(widgetId))
+                }
+            } catch (err) {
+                console.log(err)
+            }
+        })();
+    }, [])
 
     return (
         <div>

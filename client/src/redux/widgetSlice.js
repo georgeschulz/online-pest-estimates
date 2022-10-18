@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { getUserWidgets } from "../api/userApi";
-import { createWidget, updateDetails, updateProposal, updateStrategy } from "../api/widgetApi";
+import { createWidget, getWidgetById, updateDetails, updateProposal, updateStrategy } from "../api/widgetApi";
 
 export const getUserWidgetList = createAsyncThunk(
     'widgets/getWidgets',
@@ -56,6 +56,14 @@ export const updateWidgetProposalConfig = createAsyncThunk(
         const { legal, covered, notCovered, targetFull } = state.widgets.draft;
         const response = await updateProposal(widgetId, { legal, covered, notCovered, targetFull });
         return response.data;
+    }
+)
+
+export const getWidgetByIdReload = createAsyncThunk(
+    'widgets/getWidgetById',
+    async (widgetId, thunkAPI) => {
+        const response = await getWidgetById(widgetId);
+        return response.data
     }
 )
 
@@ -131,6 +139,10 @@ const widgetSlice = createSlice({
         builder.addCase(updateWidgetProposalConfig.fulfilled, (state, action) => {
             state.selectedWidget = action.payload.data;
         })
+
+        builder.addCase(getWidgetByIdReload.fulfilled, (state, action) => {
+            state.selectedWidget = action.payload.data;
+        })
     }
 })
 
@@ -147,5 +159,7 @@ export const selectCovered = state => state.widgets.draft.covered;
 export const selectNotCovered = state => state.widgets.draft.notCovered;
 export const selectTargetFull = state => state.widgets.draft.targetFull;
 export const selectLegal = state => state.widgets.draft.legal;
+export const selectParameters = state => state.widgets.selectedWidget
+export const selectIsWidgetLoaded = state => state.widgets.selectedWidget != null
 export const { updateDraft, removeTarget, toggleBilling, removeCovered, removeNotCovered, removeTargetFull } = widgetSlice.actions;
 export default widgetSlice.reducer;
