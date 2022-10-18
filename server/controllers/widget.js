@@ -63,6 +63,7 @@ const updateWidgetDetailsController = async (req, res, next) => {
     try {
         const { widgetId } = req.params;
         const { name, description, frequency, billingFrequency, benefitOne, benefitTwo, benefitThree, targets } = req.body;
+        console.log(frequency)
 
         const updatedWidget = await updateWidgetDetails(widgetId, name, description, frequency, billingFrequency, benefitOne, benefitTwo, benefitThree, targets)
         res.status(200).send({

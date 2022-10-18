@@ -11,6 +11,9 @@ export const updateStrategy = async (widgetId, config, strategyType) => {
 }
 
 export const updateDetails = async (widgetId, data) => {
-    console.log('hit')
     return await axios.put(`${endpoint}/widget/${widgetId}/details`, data);
+}
+
+export const updateProposal = async (widgetId, data) => {
+    return await axios.put(`${endpoint}/widget/${widgetId}/proposal`, data);
 }

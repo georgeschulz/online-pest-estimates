@@ -16,9 +16,7 @@ module.exports = async (widgetId) => {
 
         const { legal, covered_pests, proposal_template_id } = proposal[0];
         
-        const { rows: strategy } = await db.query(`SELECT strategy_id FROM widgets WHERE widget_id = $1`, [widgetId]);
-        const { strategy_id } = strategy[0];
-        const { rows: pricingStrategy } = await db.query(`SELECT * FROM pricing_strategies WHERE strategy_id = $1`, [strategy_id])
+        const { rows: pricingStrategy } = await db.query(`SELECT * FROM pricing_strategies WHERE widget_id = $1`, [widgetId])
         const { rows: targetQuery }  = await db.query(`SELECT * FROM targets WHERE widget_id = $1`, [widgetId]);
         const { rows: benefitQuery } = await db.query(`SELECT * FROM benefits WHERE widget_id = $1`, [widgetId]);
 

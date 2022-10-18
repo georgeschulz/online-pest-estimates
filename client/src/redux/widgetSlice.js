@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { getUserWidgets } from "../api/userApi";
-import { createWidget, updateDetails, updateStrategy } from "../api/widgetApi";
+import { createWidget, updateDetails, updateProposal, updateStrategy } from "../api/widgetApi";
 
 export const getUserWidgetList = createAsyncThunk(
     'widgets/getWidgets',
@@ -33,7 +33,6 @@ export const updateWidgetDetails = createAsyncThunk(
         const { widgetId } = data; 
         const state = thunkAPI.getState();
         const d = state.widgets.draft;
-        console.log('good')
         const response = await updateDetails(widgetId, {
             name: d.name,
             description: d.programDescription,
@@ -45,6 +44,17 @@ export const updateWidgetDetails = createAsyncThunk(
             targets: d.targets
         })
 
+        return response.data;
+    }
+)
+
+export const updateWidgetProposalConfig = createAsyncThunk(
+    'widgets/updateWidgetProposalConfig',
+    async (data, thunkAPI) => {
+        const { widgetId } = data;
+        const state = thunkAPI.getState();
+        const { legal, covered, notCovered, targetFull } = state.widgets.draft;
+        const response = await updateProposal(widgetId, { legal, covered, notCovered, targetFull });
         return response.data;
     }
 )
@@ -62,12 +72,13 @@ const widgetSlice = createSlice({
             benefitOne: null,
             benefitTwo: null,
             benefitThree: null,
-            frequency: null,
+            frequency: 'Quarterly',
             billing: [{type: 'Monthly Billing Program', allowed: false}, {type: 'Annual Billing', allowed: false}, {type: 'Billed After Service', allowed: false}],
             image: null,
             covered: [],
             notCovered: [],
-            targetFull: []
+            targetFull: [],
+            legal: null
         }
     },
     reducers: {
@@ -116,6 +127,10 @@ const widgetSlice = createSlice({
         builder.addCase(updateWidgetDetails.fulfilled, (state, action) => {
             state.selectedWidget = action.payload.data;
         })
+
+        builder.addCase(updateWidgetProposalConfig.fulfilled, (state, action) => {
+            state.selectedWidget = action.payload.data;
+        })
     }
 })
 
@@ -131,5 +146,6 @@ export const seelctBilling = state => state.widgets.draft.billing;
 export const selectCovered = state => state.widgets.draft.covered;
 export const selectNotCovered = state => state.widgets.draft.notCovered;
 export const selectTargetFull = state => state.widgets.draft.targetFull;
+export const selectLegal = state => state.widgets.draft.legal;
 export const { updateDraft, removeTarget, toggleBilling, removeCovered, removeNotCovered, removeTargetFull } = widgetSlice.actions;
 export default widgetSlice.reducer;

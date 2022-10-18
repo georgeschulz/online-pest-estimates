@@ -1,7 +1,7 @@
 class WidgetConfig {
     constructor(id, basic, detail, proposal, pricingStrategy, benefits = [], targets = [], highlightedFeatures = []) {
         this.widgetId = id;
-        this.strategyId = pricingStrategy.strategy_id;
+        //this.strategyId = pricingStrategy.strategy_id;
         this.pricingStrategyType = pricingStrategy.type || null,
         this.pricingStrategy = {
             startsAt: pricingStrategy.starts_at,

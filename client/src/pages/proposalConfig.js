@@ -1,7 +1,7 @@
 import TagBuilder from "../components/Inputs/TagBuilder";
 import ApplicationMainLayout from "../components/layout/ApplicationMainLayout/ApplicationMainLayout";
 import { useDispatch, useSelector } from "react-redux";
-import { removeCovered, removeNotCovered, removeTarget, removeTargetFull, selectCovered, selectNotCovered, selectTargetFull, updateDraft } from "../redux/widgetSlice";
+import { removeCovered, removeNotCovered, removeTarget, removeTargetFull, selectCovered, selectLegal, selectNotCovered, selectTargetFull, updateDraft, updateWidgetProposalConfig } from "../redux/widgetSlice";
 import { useNavigate, useParams } from "react-router-dom";
 import x from '../assets/x.png';
 import MultiLineText from "../components/Inputs/MultiLineText";
@@ -13,12 +13,14 @@ function ProposalConfig() {
     const covered = useSelector(selectCovered);
     const notCovered = useSelector(selectNotCovered);
     const targetFull = useSelector(selectTargetFull);
+    const legal = useSelector(selectLegal);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const handleSubmit = async () => {
         try {
+            dispatch(updateWidgetProposalConfig({widgetId}))
             navigate(`/widget-confirmation/${widgetId}/edit`)
         } catch (err) {
             console.log(err);
@@ -67,6 +69,8 @@ function ProposalConfig() {
                     type="text"
                     helper="Please provide documentation of your legal terms"
                     size="tall"
+                    state={legal}
+                    setState={(e) => dispatch(updateDraft({legal: e}))}
                 />
                 <LargeButton size={0} className="justify-center" handleClick={() => handleSubmit()}>
                     Save
