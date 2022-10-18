@@ -10,51 +10,9 @@ const { runOperation } = require('./operations/runOperation');
 const { Quote } = require('./quote');
 
 class PricingStrategy {
-    constructor() {
-        this._parameters = {};
+    constructor(config) {
         this._formula = [];
-        this._config = undefined;
-    }
-
-    addParameter(parameterObject) {
-        const { name, inputType, description, helperText, options } = parameterObject;
-        let state;
-
-        //create a structure to store and change state based on type of input
-        switch (inputType) {
-            case 'singleSelect':
-                state = { value: undefined };
-                break;
-            case 'number':
-                state = { value: undefined };
-                break;
-            case 'multipleSelect':
-                state = {
-                    _value: [],
-                    addValue(value) { this._value.push(value) },
-                    removeValue(value) { this._value = this._value.filter(element => element != value) }
-                }
-                break;
-            default:
-                throw new Error('Input type did not match any of the availabile options.');
-        }
-
-        this._parameters = {
-            ...this._parameters,
-            [name]: {
-                inputType: inputType,
-                description: description,
-                helperText: helperText,
-                options: options,
-                state: state
-            }
-        }
-    }
-
-    addParameters(parameterArray) {
-        parameterArray.forEach(parameter => {
-            this.addParameter(parameter);
-        })
+        this._config = config;
     }
 
     addGroup(type, group) {
@@ -66,29 +24,33 @@ class PricingStrategy {
         return group;
     }
 
-    calculate(config, results) {
+    calculate(results) {
         let price = 0;
         this._formula.forEach(operation => {
             //get the value
-            let value = extractValue(operation, config, results)
+            let value = extractValue(operation, this._config, results)
             price = runOperation(operation, price, value);
         })
         
-        const quote = new Quote(config.setup, Math.round(price * 100)/100, 0.9, 'Bimonthly')
+        const quote = new Quote(this._config.setup, Math.round(price * 100)/100, 0.9, 'Bimonthly')
 
-        if(config.billingOptions.includes('monthly')) {
+        if(this._config.billingOptions.includes('monthly')) {
             quote.addMonthlyPricing()
         } 
         
-        if(config.billingOptions.includes('annual')) {
+        if(this._config.billingOptions.includes('annual')) {
             quote.addAnnualPricing()
         } 
         
-        if(config.billingOptions.includes('service')) {
+        if(this._config.billingOptions.includes('service')) {
             quote.addPerServicePricing();
         }
         
         return quote;
+    }
+
+    extractConfig() {
+        return this._config;
     }
 }
 

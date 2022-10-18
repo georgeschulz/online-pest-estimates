@@ -12,15 +12,11 @@ const defaultTimeDifficultyConfig = {
     setup: 150,
     frequency: 'Bimonthly',
     parameterConfig: {
-        'Medium House Minutes': { type: 'config', value: 38 },
-        'Small House Minutes': { type: 'config', value: 33 },
-        'Hourly Rate': { type: 'config', value: 130 },
-        'Square Feet': { type: 'value' },
-        'Difficulty Surcharge': [
-            { option: 'ants', value: 0 },
-            { option: 'rodents', value: 6 },
-            { option: 'roaches', value: 10 }
-        ]
+        'Medium House Minutes': twoThoasandSquareFeet,
+        'Small House Minutes': thoasandSquareFeet,
+        'Hourly Rate': hourlyRate,
+        'Square Feet': squareFeet,
+        'Difficulty Surcharge': difficultSurcharge
     }
 }
 
@@ -29,11 +25,7 @@ const results = {
     'Difficulty Surcharge': ['ants', 'rodents']
 }
 
-const timeDifficultyStrategy = new PriceStrategy();
-
-timeDifficultyStrategy.addParameters([
-    hourlyRate, thoasandSquareFeet, twoThoasandSquareFeet, difficultSurcharge, squareFeet
-])
+const timeDifficultyStrategy = new PriceStrategy(defaultTimeDifficultyConfig);
 
 //calculate the slope (ie. the minutes per square feet)
 const slope = new FormulaGroup();
@@ -59,7 +51,6 @@ timeDifficultyStrategy.appendNextOperation('MULTIPLY', 'config', 'Hourly Rate');
     
 //add in any surcharges for pests
 timeDifficultyStrategy.appendNextOperation('ADD', 'AGGMAX', 'Difficulty Surcharge');
-
 
 module.exports = {
     defaultTimeDifficultyConfig

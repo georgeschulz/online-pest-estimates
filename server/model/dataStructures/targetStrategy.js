@@ -25,11 +25,8 @@ const results = {
     'Target': ['ants', 'rodents', 'termites']
 }
 
-const targetStrategy = new PriceStrategy();
+const targetStrategy = new PriceStrategy(defaultTargetConfig);
 
-targetStrategy.addParameters([
-    difficultSurcharge
-])
     
 //add in any surcharges for pests
 targetStrategy.appendNextOperation('ADD', 'config', 'base');
