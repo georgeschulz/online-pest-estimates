@@ -1,7 +1,7 @@
 import TagBuilder from "../components/Inputs/TagBuilder";
 import ApplicationMainLayout from "../components/layout/ApplicationMainLayout/ApplicationMainLayout";
 import { useDispatch, useSelector } from "react-redux";
-import { removeCovered, removeNotCovered, removeTarget, removeTargetFull, selectCovered, selectIsWidgetLoaded, selectLegal, selectNotCovered, selectTargetFull, updateDraft, updateWidgetProposalConfig } from "../redux/widgetSlice";
+import { removeCovered, removeNotCovered, removeTarget, removeTargetFull, seelctIsProposalLoading, selectCovered, selectIsWidgetLoaded, selectIsWidgetLoading, selectLegal, selectNotCovered, selectTargetFull, updateDraft, updateWidgetProposalConfig } from "../redux/widgetSlice";
 import { useNavigate, useParams } from "react-router-dom";
 import x from '../assets/x.png';
 import MultiLineText from "../components/Inputs/MultiLineText";
@@ -32,9 +32,25 @@ function ProposalConfig() {
 
     useEffect(() => {
         (async () => {
+            //load current widget settings for editing
             try {
                 if(!isWidgetLoaded) {
-                    dispatch(getWidgetByIdReload(widgetId))
+                    const currentWidget = await dispatch(getWidgetByIdReload(widgetId));
+                    const { proposal } = currentWidget.payload.data;
+                    
+                    const covered = proposal
+                        .highlightedFeatures.filter(feature => feature[1])
+                        .map(item => item[0]);
+                    const notCovered = proposal
+                        .highlightedFeatures.filter(feature => !feature[1])
+                        .map(item => item[0]);
+                    
+                    dispatch(updateDraft({
+                        covered: covered,
+                        notCovered: notCovered,
+                        targetFull: proposal.covered_pests,
+                        legal: proposal.legal
+                    }))
                 }
             } catch (err) {
                 console.log(err)
@@ -44,7 +60,7 @@ function ProposalConfig() {
 
     return (
         <div>
-            <ApplicationMainLayout header="Proposal Setup">
+            <ApplicationMainLayout header="Proposal Setup" isDataLoading={!isWidgetLoaded}>
                 <br />
                 <TagBuilder
                     name="covered"

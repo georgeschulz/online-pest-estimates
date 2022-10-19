@@ -87,7 +87,8 @@ const widgetSlice = createSlice({
             notCovered: [],
             targetFull: [],
             legal: null
-        }
+        },
+        isWidgetReloading: false
     },
     reducers: {
         updateDraft: (state, action) => {

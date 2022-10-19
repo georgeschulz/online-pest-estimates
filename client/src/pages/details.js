@@ -79,7 +79,7 @@ function Details() {
 
     return (
         <div>
-            <ApplicationMainLayout header="Widget Information">
+            <ApplicationMainLayout header="Widget Information" isDataLoading={!isWidgetLoaded}>
                 <br />
                 <div className="flex flex-wrap">
                     <div className="w-1/2 px-8">
