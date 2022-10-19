@@ -26,11 +26,41 @@ function Details() {
     const navigate = useNavigate();
     const { widgetId } = useParams()
 
+    const consolidateArrayandOptions = (options, arr, propToSearch, propToChange) => {
+        const output = [];
+        options.forEach(option => {
+            if(arr.includes(option[propToSearch])) {
+                output.push({
+                    ...option,
+                    [propToChange]: true
+                })
+            } else {
+                output.push(option)
+            }
+        })
+        return output;
+    }
+
     useEffect(() => {
+        //load the current widget's data into the widget
         (async () => {
             try {
                 if(!isWidgetLoaded) {
-                    dispatch(getWidgetByIdReload(widgetId))
+                    const currentWidget = await dispatch(getWidgetByIdReload(widgetId))
+                    const details = currentWidget.payload.data.details;
+                    const { targets, benefits } = currentWidget.payload.data;
+                    const billingFrequency = consolidateArrayandOptions(billing, details.billing_frequency, 'type', 'allowed');
+
+                    dispatch(updateDraft({
+                        name: details.program,
+                        programDescription: details.short_description,
+                        targets: targets,
+                        benefitOne: benefits[0],
+                        benefitTwo: benefits[1],
+                        benefitThree: benefits[2],
+                        frequency: details.frequency,
+                        billing: billingFrequency
+                    }))
                 }
             } catch (err) {
                 console.log(err)

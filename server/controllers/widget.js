@@ -64,9 +64,8 @@ const updateWidgetDetailsController = async (req, res, next) => {
     try {
         const { widgetId } = req.params;
         const { name, description, frequency, billingFrequency, benefitOne, benefitTwo, benefitThree, targets } = req.body;
-        console.log(frequency)
-
-        const updatedWidget = await updateWidgetDetails(widgetId, name, description, frequency, billingFrequency, benefitOne, benefitTwo, benefitThree, targets)
+        console.log(billingFrequency.map(option => option.type))
+        const updatedWidget = await updateWidgetDetails(widgetId, name, description, frequency, billingFrequency.map(option => option.type), benefitOne, benefitTwo, benefitThree, targets)
         res.status(200).send({
             message: 'Successfully updated widget details',
             data: updatedWidget

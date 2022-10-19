@@ -19,7 +19,7 @@ function WidgetTable() {
                 return (
                     <div className="w-full flex py-3 text-xl font-roboto" key={widget.widget_id}>
                         <div className="w-6/12 hover:underline"><Link to={`/strategies/${widget.widget_id}/edit`}>{widget.program}</Link></div>
-                        <div className="w-2/12 flex justify-end">{widget.starts_at ? widget.starts_at : "$0"}</div>
+                        <div className="w-2/12 flex justify-end">{widget.starts_at ? "$" + widget.starts_at : "$0"}</div>
                         <div className="w-2/12 flex items-center justify-end">
                             {widget.active 
                                 ? (<div className="flex"><div className="w-7 h-7 mr-2 bg-green-500 rounded-full"></div><p>Active</p></div>)

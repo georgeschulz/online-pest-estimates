@@ -21,7 +21,7 @@ function Pricing() {
         (async () => {
             try {
                 if(!isWidgetLoaded) {
-                    dispatch(getWidgetByIdReload(widgetId))
+                    await dispatch(getWidgetByIdReload(widgetId))
                 }
             } catch (err) {
                 console.log(err)

@@ -8,7 +8,10 @@ class WidgetConfig {
             config: pricingStrategy.strategy_config
         };
         this.active = basic.active;
-        this.details = detail;
+        this.details = {
+            ...detail,
+            billing_frequency: detail.billing_frequency.split(', ')
+        };
         this.benefits = benefits
         this.targets = targets;
         this.proposal = {
