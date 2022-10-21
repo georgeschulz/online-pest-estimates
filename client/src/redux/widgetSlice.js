@@ -99,6 +99,9 @@ const widgetSlice = createSlice({
                 ...newData
             }
         },
+        updateConfig: (state, action) => {
+            state.selectedWidget.pricingStrategy.config =  action.payload;
+        },
         removeTarget: (state, action) => {
             const newTargets = state.draft.targets.filter(target => target != action.payload.tag)
             state.draft.targets = newTargets;
@@ -162,5 +165,7 @@ export const selectTargetFull = state => state.widgets.draft.targetFull;
 export const selectLegal = state => state.widgets.draft.legal;
 export const selectParameters = state => state.widgets.selectedWidget
 export const selectIsWidgetLoaded = state => state.widgets.selectedWidget != null
-export const { updateDraft, removeTarget, toggleBilling, removeCovered, removeNotCovered, removeTargetFull } = widgetSlice.actions;
+export const selectConfig = state => state.widgets.selectedWidget ? state.widgets.selectedWidget.pricingStrategy.config : null;
+export const selectConfigParameters = state => state.widgets.selectedWidget != null ? state.widgets.selectedWidget.pricingStrategy.config.parameterConfig : null;
+export const { updateDraft, removeTarget, toggleBilling, removeCovered, removeNotCovered, removeTargetFull, updateConfig } = widgetSlice.actions;
 export default widgetSlice.reducer;

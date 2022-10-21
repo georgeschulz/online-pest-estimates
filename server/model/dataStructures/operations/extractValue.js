@@ -9,7 +9,8 @@ module.exports.extractValue = function (operation, config, results) {
         let groupTotal = operation.parameter.getValue(config, results);
         return groupTotal
     } else if(operation.aggregate === 'config') {
-        return config['parameterConfig'][operation.parameter]['value']
+        return config['parameterConfig'].find(parameter => parameter.name == operation.parameter)['value'];
+        //[operation.parameter]['value']
     } else if(operation.aggregate === 'constant') {
         return operation.parameter;
     } else {

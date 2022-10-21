@@ -11,13 +11,13 @@ const defaultTimeDifficultyConfig = {
     billingOptions: ['monthly', 'service', 'annual'],
     setup: 150,
     frequency: 'Bimonthly',
-    parameterConfig: {
-        'Medium House Minutes': twoThoasandSquareFeet,
-        'Small House Minutes': thoasandSquareFeet,
-        'Hourly Rate': hourlyRate,
-        'Square Feet': squareFeet,
-        'Difficulty Surcharge': difficultSurcharge
-    }
+    parameterConfig: [
+        twoThoasandSquareFeet,
+        thoasandSquareFeet,
+        hourlyRate,
+        squareFeet,
+        difficultSurcharge
+    ]
 }
 
 const results = {
@@ -51,6 +51,8 @@ timeDifficultyStrategy.appendNextOperation('MULTIPLY', 'config', 'Hourly Rate');
     
 //add in any surcharges for pests
 timeDifficultyStrategy.appendNextOperation('ADD', 'AGGMAX', 'Difficulty Surcharge');
+
+console.log(timeDifficultyStrategy.calculate(results));
 
 module.exports = {
     defaultTimeDifficultyConfig
