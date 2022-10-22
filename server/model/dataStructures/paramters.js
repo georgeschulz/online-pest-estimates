@@ -1,5 +1,5 @@
 module.exports.hourlyRate = {
-    name: 'Hourly Rate',
+    name: 'Desired hourly rate for technician',
     inputType: 'number',
     description: 'How many dollars in revenue should your technician bring in for every hour in front of a customer?',
     helperText: '130',
@@ -8,7 +8,7 @@ module.exports.hourlyRate = {
 }
 
 module.exports.thoasandSquareFeet = {
-    name: "Small House Minutes",
+    name: "How many minutes does it take to finish a 1000 square foot home?",
     inputType: 'number',
     description: 'For the average 1000 square foot home house completing this services takes how many minutes to complete a stop',
     helperText: '33',
@@ -17,7 +17,7 @@ module.exports.thoasandSquareFeet = {
 }
 
 module.exports.twoThoasandSquareFeet = {
-    name: "Medium House Minutes",
+    name: "How many minutes does it take to finish a 2000 square foot home?",
     inputType: 'number',
     description: 'For the average 1000 square foot house completing this services takes how many minutes to complete a stop',
     helperText: '38',
@@ -26,7 +26,7 @@ module.exports.twoThoasandSquareFeet = {
 }
 
 module.exports.difficultSurcharge = {
-    name: "Difficulty Surcharge",
+    name: "How much more would you like to charge for each possible target they say they are seeing?",
     inputType: 'multipleSelect',
     description: 'This is an additional charge we will add to difficult targets like rodents and spiders. Leave as 0 for pests that do not require extra work.',
     helperText: 10,

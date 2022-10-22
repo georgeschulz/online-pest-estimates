@@ -54,7 +54,7 @@ function MultiSelectConfig({ parameter, parameterIndex, parameters, config, upda
 
     return (
         <div className="border-stone-400 border pt-10 pb-8 px-5 mb-8">
-            <p className="text-3xl ml-4 mb-5 font-semibold font-poppins">{parameter.name} Configuration</p>
+            <p className="text-xl ml-4 mb-5 font-semibold font-poppins">{parameter.name}</p>
             <p className="text-lg ml-4 mb-5">Below, please set up the values that will be assigned to each option. You can add or remove options, and adjust their labels or associated values.</p>
             <div className="flex space-x-4 mb-2">
                 <b className="w-2/5 pl-16 text-xl">{parameter.labels[0]}</b>

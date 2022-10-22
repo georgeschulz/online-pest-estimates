@@ -49,18 +49,17 @@ function Pricing() {
             <ApplicationMainLayout header="Pricing Parameters">
                 <br />
                 <div className="flex flex-wrap space-x-4">
-                    <div className="w-1/3">
-                        <SingleLineText
-                            name="base"
-                            label="Base Price"
-                            type="number"
-                            helper="$75"
-                            state={base}
-                            setState={(e) => dispatch(updateBase(e))}
-                        />
-                    </div>
                     {config == null ? <Loading /> :
-                        <ConfigForm config={config} parameters={parameters} updateConfig={(results) => dispatch(updateConfig(results))} />
+                        <ConfigForm config={config} parameters={parameters} updateConfig={(results) => dispatch(updateConfig(results))}>
+                            <SingleLineText
+                                name="base"
+                                label="Base Price"
+                                type="number"
+                                helper="$75"
+                                state={base}
+                                setState={(e) => dispatch(updateBase(e))}
+                            />
+                        </ConfigForm>
                     }
 
                     <div className="w-full">
