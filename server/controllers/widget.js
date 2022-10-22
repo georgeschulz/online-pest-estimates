@@ -60,6 +60,27 @@ const updatePriceStrategy = async (req, res, next) => {
     }
 }
 
+const updatePriceStrategyConfigController = async (req, res, next) => {
+    try {
+        const { widgetId } = req.params;
+        const { config, strategyType } = req.body;
+
+        await updatePriceStrategyConfig(strategyType, widgetId, config)
+        const newConfig = await getWidgetById(widgetId);
+
+        res.status(200).send({
+            message: 'Widget pricing configuration successfully updated',
+            data: newConfig
+        });
+    } catch (err) {
+        console.log(err);
+        res.status(400).send({
+            message: 'Could not update the widget pricing configuration',
+            data: {} 
+        })
+    }
+}
+
 const updateWidgetDetailsController = async (req, res, next) => {
     try {
         const { widgetId } = req.params;
@@ -118,5 +139,6 @@ module.exports = {
     updatePriceStrategy,
     updateWidgetDetailsController,
     updateWidgetProposalController,
-    getWidgetByIdController
+    getWidgetByIdController,
+    updatePriceStrategyConfigController
 }

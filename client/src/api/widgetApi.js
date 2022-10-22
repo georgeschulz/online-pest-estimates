@@ -10,6 +10,10 @@ export const updateStrategy = async (widgetId, config, strategyType) => {
     return await axios.put(`${endpoint}/widget/${widgetId}/price-strategy`, {config, strategyType});
 }
 
+export const updateStrategyConfig = async (widgetId, config, strategyType) => {
+    return await axios.put(`${endpoint}/widget/${widgetId}/price-strategy-config`, {config, strategyType})
+}
+
 export const updateDetails = async (widgetId, data) => {
     return await axios.put(`${endpoint}/widget/${widgetId}/details`, data);
 }

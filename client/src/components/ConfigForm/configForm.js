@@ -1,6 +1,4 @@
-import { useState } from "react";
 import SingleLineText from "../Inputs/SingleLineText";
-import Loading from "../loading/loading";
 
 function ConfigForm({ parameters, config, updateConfig = () => { } }) {
 

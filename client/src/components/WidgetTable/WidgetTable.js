@@ -4,7 +4,7 @@ import menu from '../../assets/menu.png'
 import { Link } from "react-router-dom";
 import DropdownMenu from "../layout/Nav/dropdownMenu";
 
-function WidgetTable() {
+function WidgetTable({isLoading = true}) {
     const widgets = useSelector(selectUserWidgets);
 
     return (
@@ -18,7 +18,7 @@ function WidgetTable() {
             {widgets.map(widget => {
                 return (
                     <div className="w-full flex py-3 text-xl font-roboto" key={widget.widget_id}>
-                        <div className="w-6/12 hover:underline"><Link to={`/strategies/${widget.widget_id}/edit`}>{widget.program}</Link></div>
+                        <div className="w-6/12 hover:underline"><Link to={`/widget-information/${widget.widget_id}/edit`}>{widget.program}</Link></div>
                         <div className="w-2/12 flex justify-end">{widget.starts_at ? "$" + widget.starts_at : "$0"}</div>
                         <div className="w-2/12 flex items-center justify-end">
                             {widget.active 

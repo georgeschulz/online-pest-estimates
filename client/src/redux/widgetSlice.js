@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { getUserWidgets } from "../api/userApi";
-import { createWidget, getWidgetById, updateDetails, updateProposal, updateStrategy } from "../api/widgetApi";
+import { createWidget, getWidgetById, updateDetails, updateProposal, updateStrategy, updateStrategyConfig } from "../api/widgetApi";
 
 export const getUserWidgetList = createAsyncThunk(
     'widgets/getWidgets',
@@ -19,10 +19,22 @@ export const createEmtpyWidget = createAsyncThunk(
 )
 
 export const setWidgetStrategy = createAsyncThunk(
-    'widgets/updateWidgetStrategy',
+    'widgets/setWidgetStrategy',
     async (data, thunkAPI) => {
         const { strategyType, widgetId } = data;
         const response = await updateStrategy(widgetId, null, strategyType);
+        return response.data;
+    }
+)
+
+export const updateWidgetStrategy = createAsyncThunk(
+    'widgets/updateWidgetStrategy',
+    async (data, thunkAPI) => {
+        const { widgetId } = data;
+        const state = thunkAPI.getState();
+        const { config } = state.widgets.selectedWidget.pricingStrategy;
+        const  { pricingStrategyType } = state.widgets.selectedWidget;
+        const response = await updateStrategyConfig(widgetId, config, pricingStrategyType);
         return response.data;
     }
 )
@@ -145,6 +157,10 @@ const widgetSlice = createSlice({
         })
 
         builder.addCase(getWidgetByIdReload.fulfilled, (state, action) => {
+            state.selectedWidget = action.payload.data;
+        })
+
+        builder.addCase(updateWidgetStrategy.fulfilled, (state, action) => {
             state.selectedWidget = action.payload.data;
         })
     }

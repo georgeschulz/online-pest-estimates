@@ -4,7 +4,7 @@ import LargeButton from "../components/buttons/button";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { selectConfig, selectIsWidgetLoaded } from "../redux/widgetSlice";
+import { selectConfig, selectIsWidgetLoaded, updateWidgetStrategy } from "../redux/widgetSlice";
 import { useDispatch } from "react-redux";
 import { getWidgetByIdReload } from "../redux/widgetSlice";
 import PricingStrategy from "../components/PriceStrategy/PriceStrategy";
@@ -34,6 +34,15 @@ function Pricing() {
         })();
     }, [config])
 
+    const handleSubmit = async () => {
+        try {
+            await dispatch(updateWidgetStrategy({widgetId}))
+            navigate(`/widget-proposal/${widgetId}/edit`);
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
     return (
         <div>
             <ApplicationMainLayout header="Pricing Parameters">
@@ -52,7 +61,7 @@ function Pricing() {
                     }
 
                     <div className="w-full">
-                        <LargeButton handleClick={() => navigate(`/widget-proposal/${widgetId}/edit`)}>Save</LargeButton>
+                        <LargeButton handleClick={() => handleSubmit()}>Save</LargeButton>
                     </div>
                 </div>
 
