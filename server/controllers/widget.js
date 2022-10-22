@@ -65,6 +65,7 @@ const updatePriceStrategyConfigController = async (req, res, next) => {
         const { widgetId } = req.params;
         const { config, strategyType } = req.body;
 
+        console.log(config)
         await updatePriceStrategyConfig(strategyType, widgetId, config)
         const newConfig = await getWidgetById(widgetId);
 

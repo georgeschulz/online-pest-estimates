@@ -4,7 +4,7 @@ import LargeButton from "../components/buttons/button";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { selectConfig, selectIsWidgetLoaded, updateWidgetStrategy } from "../redux/widgetSlice";
+import { selectBase, selectConfig, selectIsWidgetLoaded, updateBase, updateWidgetStrategy } from "../redux/widgetSlice";
 import { useDispatch } from "react-redux";
 import { getWidgetByIdReload } from "../redux/widgetSlice";
 import PricingStrategy from "../components/PriceStrategy/PriceStrategy";
@@ -21,6 +21,7 @@ function Pricing() {
     const isWidgetLoaded = useSelector(selectIsWidgetLoaded);
     const config = useSelector(selectConfig)
     const parameters = useSelector(selectConfigParameters)
+    const base = useSelector(selectBase)
 
     useEffect(() => {
         (async () => {
@@ -54,6 +55,8 @@ function Pricing() {
                             label="Base Price"
                             type="number"
                             helper="$75"
+                            state={base}
+                            setState={(e) => dispatch(updateBase(e))}
                         />
                     </div>
                     {config == null ? <Loading /> :

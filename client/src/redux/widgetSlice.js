@@ -133,6 +133,10 @@ const widgetSlice = createSlice({
         toggleBilling: (state, action) => {
             const billing = state.draft.billing.find(option => option.type === action.payload)
             billing.allowed = !billing.allowed;
+        },
+        updateBase: (state, action) => {
+            state.selectedWidget.pricingStrategy.config.base = action.payload;
+            state.selectedWidget.pricingStrategy.startsAt = action.payload;
         }
     },
     extraReducers: (builder) => {
@@ -183,5 +187,6 @@ export const selectParameters = state => state.widgets.selectedWidget
 export const selectIsWidgetLoaded = state => state.widgets.selectedWidget != null
 export const selectConfig = state => state.widgets.selectedWidget ? state.widgets.selectedWidget.pricingStrategy.config : null;
 export const selectConfigParameters = state => state.widgets.selectedWidget != null ? state.widgets.selectedWidget.pricingStrategy.config.parameterConfig : null;
-export const { updateDraft, removeTarget, toggleBilling, removeCovered, removeNotCovered, removeTargetFull, updateConfig } = widgetSlice.actions;
+export const selectBase = state => state.widgets.selectedWidget != null ? state.widgets.selectedWidget.pricingStrategy.config.base : null;
+export const { updateDraft, removeTarget, toggleBilling, removeCovered, removeNotCovered, removeTargetFull, updateConfig, updateBase } = widgetSlice.actions;
 export default widgetSlice.reducer;

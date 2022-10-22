@@ -31,6 +31,7 @@ module.exports.difficultSurcharge = {
     description: 'This is an additional charge we will add to difficult targets like rodents and spiders. Leave as 0 for pests that do not require extra work.',
     helperText: 10,
     type: 'value',
+    labels: ['Target', 'Additional Charge for Pest'],
     options: [
         { option: 'ants', value: 0 },
         { option: 'rodents', value: 6 },

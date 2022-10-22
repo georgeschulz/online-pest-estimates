@@ -1,6 +1,5 @@
 import SingleLineText from "./SingleLineText";
 import x from '../../assets/x.png'
-import plus from '../../assets/plus.png'
 
 function MultiSelectConfig({ parameter, parameterIndex, parameters, config, updateConfig = () => {} }) {
     //this one is used in all the different handlers to take the update options and add them to the config object
@@ -54,11 +53,12 @@ function MultiSelectConfig({ parameter, parameterIndex, parameters, config, upda
     }
 
     return (
-        <div className="border-stone-600 border p-5 mb-8">
-            <p className="text-2xl ml-4 mb-5">{parameter.name} Configuration</p>
-            <div className="flex space-x-4">
-                <b className="w-2/5 pl-16 text-xl">Option</b>
-                <b className="w-2/5 pl-16 text-xl">Value</b>
+        <div className="border-stone-400 border pt-10 pb-8 px-5 mb-8">
+            <p className="text-3xl ml-4 mb-5 font-semibold font-poppins">{parameter.name} Configuration</p>
+            <p className="text-lg ml-4 mb-5">Below, please set up the values that will be assigned to each option. You can add or remove options, and adjust their labels or associated values.</p>
+            <div className="flex space-x-4 mb-2">
+                <b className="w-2/5 pl-16 text-xl">{parameter.labels[0]}</b>
+                <b className="w-2/5 pl-16 text-xl">{parameter.labels[1]}</b>
             </div>
             {parameter.options.map((option, i) => {
                 return (
@@ -77,7 +77,7 @@ function MultiSelectConfig({ parameter, parameterIndex, parameters, config, upda
                             <SingleLineText
                                 name={'value-' + option.option}
                                 label=''
-                                type="text"
+                                type="number"
                                 helper='Value'
                                 state={option.value}
                                 setState={(e) => updateValue(e, i, 'value')}
