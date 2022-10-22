@@ -61,7 +61,7 @@ function Pricing() {
                     }
 
                     <div className="w-full">
-                        <LargeButton handleClick={() => handleSubmit()}>Save</LargeButton>
+                        <LargeButton handleClick={() => handleSubmit()} size={0} className="justify-center">Save</LargeButton>
                     </div>
                 </div>
 

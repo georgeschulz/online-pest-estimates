@@ -86,19 +86,19 @@ const widgetSlice = createSlice({
         selectedWidget: null,
         widgetError: { isVisible: false, message: '', isSuccess: false },
         draft: {
-            name: null,
-            programDescription: null,
+            name: '',
+            programDescription: '',
             targets: [],
-            benefitOne: null,
-            benefitTwo: null,
-            benefitThree: null,
+            benefitOne: '',
+            benefitTwo: '',
+            benefitThree: '',
             frequency: 'Quarterly',
             billing: [{type: 'Monthly Billing Program', allowed: false}, {type: 'Annual Billing', allowed: false}, {type: 'Billed After Service', allowed: false}],
             image: null,
             covered: [],
             notCovered: [],
             targetFull: [],
-            legal: null
+            legal: ''
         },
         isWidgetReloading: false
     },

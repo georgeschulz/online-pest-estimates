@@ -62,7 +62,7 @@ function TagBuilder({name, label, type = 'text', state = "", setState, removeTag
                 ? (<div className="w-full flex flex-wrap">
                 {state.map(tag => {
                     return (
-                        <div className="bg-primary text-white px-6 py-2 mx-2 my-1 rounded-full text-center flex justify-between items-center" style={{"minWidth": "150px"}}>
+                        <div key={'tag-' + tag} className="bg-primary text-white px-6 py-2 mx-2 my-1 rounded-full text-center flex justify-between items-center" style={{"minWidth": "150px"}}>
                             {tag}
                             <img src={deleteImg} className="ml-2 w-5 h-5 scale" onClick={() => removeTag({tag})} />
                         </div>
@@ -72,7 +72,7 @@ function TagBuilder({name, label, type = 'text', state = "", setState, removeTag
             : (<div className="w-full flex flex-wrap px-16 align-bottom mt-8">
                 {state.map(tag => {
                     return (
-                        <div className="w-full flex text-lg font-semibold font-poppins mb-5 items-center">
+                        <div key={'tag-' + tag} className="w-full flex text-lg font-semibold font-poppins mb-5 items-center">
                             <img src={icon} className="w-5 mr-2" />
                             <span>{tag}</span>
                             <span className="text-sm hover:underline cursor-pointer ml-2 font-normal" onClick={() => removeTag({tag})}>Remove</span>

@@ -8,7 +8,7 @@ function TrainingLayout({ header, loomEmedLink, children }) {
             <div className="grid grid-cols-3 mt-16 px-16">
                 <article className="col-span-2">
                     <div className="w-full mb-8">
-                        <iframe className="w-full aspect-video" src={loomEmedLink} frameborder="0" webkitallowfullscreen="true" mozallowfullscreen="true" allowfullscreen="true"></iframe>
+                        <iframe className="w-full aspect-video" src={loomEmedLink} frameBorder="0" webkitallowfullscreen="true" mozallowfullscreen="true" allowFullScreen={true}></iframe>
                     </div>
                     <div className="text-xl font-roboto leading-relaxed space-y-8">
                        {children}

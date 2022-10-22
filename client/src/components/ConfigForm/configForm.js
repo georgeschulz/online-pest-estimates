@@ -1,3 +1,4 @@
+import MultiSelectConfig from "../Inputs/MultiSelectConfig";
 import SingleLineText from "../Inputs/SingleLineText";
 
 function ConfigForm({ parameters, config, updateConfig = () => { } }) {
@@ -20,7 +21,7 @@ function ConfigForm({ parameters, config, updateConfig = () => { } }) {
                 parameters.map((parameter, i) => {
                     if (parameter.inputType === 'number' && parameter.type === 'config') {
                         return (
-                            <div className="w-2/5">
+                            <div className="w-2/5" key={"single-line-text-" + parameter.name}>
                                 <SingleLineText
                                     name={parameter.name}
                                     label={parameter.name}
@@ -31,8 +32,12 @@ function ConfigForm({ parameters, config, updateConfig = () => { } }) {
                                 />
                             </div>
                         )
-                    } else if (parameter.inputTyoe === 'multipeSelect') {
-
+                    } else if (parameter.inputType === 'multipleSelect') {
+                        return (
+                            <div className="w-full" key={"multiSelect-Config-" + parameter.name}>
+                                <MultiSelectConfig parameterIndex={i} parameters={parameters} parameter={parameter} config={config} updateConfig={updateConfig} />
+                            </div>
+                        )
                     }
                 })}
         </div>

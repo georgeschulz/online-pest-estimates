@@ -27,7 +27,7 @@ function SingleSelect({name, label, state = "", setState, showLabel = true, size
                 className={`border border-lightgray w-full rounded-full text-lightmatte ${customStyles}`}
             >
                 {options.map(option => {
-                    return (<option value={option}>{option}</option>)
+                    return (<option key={option} value={option}>{option}</option>)
                 })}
             </select>
         </div>
