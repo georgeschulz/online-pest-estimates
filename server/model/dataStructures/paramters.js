@@ -39,6 +39,25 @@ module.exports.difficultSurcharge = {
     ]
 }
 
+module.exports.squareFeetCoefficient = {
+    name: "Extra fee per 100 square feet",
+    inputType: 'number',
+    description: "How much more should the customer be charged for each 100 square feet their house is",
+    helperText: 1.5,
+    type: 'config',
+    value: 1.75
+}
+
+module.exports.acres = {
+    name: "Property acres",
+    inputType: 'number',
+    description: 'How many acres is the property we will be servicing?',
+    helperText: 1.5,
+    type: 'value',
+    value: 0.75
+}
+
+
 module.exports.squareFeet = {
     name: "Square Feet",
     inputType: 'number',

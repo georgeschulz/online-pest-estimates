@@ -10,6 +10,12 @@ function Strategies() {
                     <StrategyButton strategy="Time Difficulty Strategy" name="Time x Difficulty Recipe" tag={<p className="text-green-600 mb-1">Recommended!</p>}>
                         <p>Our most accurate calculator that attempts to estimate time to complete the treatment, while taking into account the difficulty of the pest.</p>
                     </StrategyButton>
+                    <StrategyButton strategy="Target Strategy" name="Target Recipe">
+                        <p>A quick strategy that adds a fee based on each reported target based on the difficulty of the target.</p>
+                    </StrategyButton>
+                    <StrategyButton strategy='Square Feet Strategy' name="Based on Square Feet">
+                        <p>Directly specific how many dollars each square foot should be worth.</p>
+                    </StrategyButton>
                 </div>
             </ApplicationMainLayout>
         </div>

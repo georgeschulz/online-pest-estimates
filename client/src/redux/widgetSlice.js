@@ -156,8 +156,10 @@ const widgetSlice = createSlice({
             state.selectedWidget.pricingStrategy.startsAt = action.payload;
         },
         updateConfigTargets: (state, action) => {
-            const targetConfig = state.selectedWidget.pricingStrategy.config.parameterConfig.find(parameter => parameter.name === 'How much more would you like to charge for each possible target they say they are seeing?');
-            if (targetConfig) {
+            const containsTargetParameter = state.selectedWidget.pricingStrategy.config.parameterConfig.some(parameter => parameter.name === 'How much more would you like to charge for each possible target they say they are seeing?')
+            
+            if (containsTargetParameter) {
+                const targetConfig = state.selectedWidget.pricingStrategy.config.parameterConfig.find(parameter => parameter.name === 'How much more would you like to charge for each possible target they say they are seeing?');
                 const index = state.selectedWidget.pricingStrategy.config.parameterConfig.indexOf(targetConfig);
                 const newOptions = action.payload.map(target => {
                     return { option: target, value: 0 }
@@ -234,7 +236,7 @@ export const selectIsWidgetLoaded = state => state.widgets.selectedWidget != nul
 export const selectConfig = state => state.widgets.selectedWidget ? state.widgets.selectedWidget.pricingStrategy.config : null;
 export const selectConfigParameters = state => state.widgets.selectedWidget != null ? state.widgets.selectedWidget.pricingStrategy.config.parameterConfig : null;
 export const selectBase = state => state.widgets.selectedWidget != null ? state.widgets.selectedWidget.pricingStrategy.config.base : null;
-export const selectTargetOptionList = state => state.widgets.selectedWidget != null ? state.widgets.selectedWidget.pricingStrategy.config.parameterConfig.find(parameter => parameter.name === 'How much more would you like to charge for each possible target they say they are seeing?').options : null;
+export const selectTargetOptionList = state => state.widgets.selectedWidget != null &&  state.widgets.selectedWidget.pricingStrategy.config.parameterConfig.some(parameter => parameter.name === 'How much more would you like to charge for each possible target they say they are seeing?') ? state.widgets.selectedWidget.pricingStrategy.config.parameterConfig.find(parameter => parameter.name === 'How much more would you like to charge for each possible target they say they are seeing?').options : null;
 export const { updateDraft, removeTarget, toggleBilling, removeCovered, removeNotCovered, removeTargetFull, updateConfig, updateBase, updateConfigTargets } = widgetSlice.actions;
 export default widgetSlice.reducer;
 

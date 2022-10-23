@@ -164,6 +164,7 @@ class PricingStrategy {
         let price = 0;
         this._config._formula.forEach(operation => {
             //get the value
+            console.log(operation)
             let value = this.extractValue(operation, this._config, results)
             price = this.runOperation(operation, price, value);
         })
