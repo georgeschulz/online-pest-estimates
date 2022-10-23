@@ -123,11 +123,11 @@ class Quote {
             [type]: price
         }
     }
-
+    
     addAnnualPricing() {
         this.addPricing('Annual Billing', {
             perService: this.perService,
-            billingAmount: this.initial + (this.perService * 12 * this.prepayDiscount),
+            billingAmount: (Math.round(this.initial + (this.perService * 12 * this.prepayDiscount) * 100)/100).toFixed(2),
             initial: null
         })
     }
@@ -139,11 +139,11 @@ class Quote {
             initial: this.initial
         })
     }
-
+    
     addMonthlyPricing() {
         this.addPricing('Monthly Billing Program', {
             perService: this.perService,
-            billingAmount: this.perService / (12 / this.servicesPerYear),
+            billingAmount: (Math.round(this.perService / (12 / this.servicesPerYear))).toFixed(2),
             initial: this.initial
         })
     }
@@ -171,7 +171,12 @@ class PricingStrategy {
             price = this.runOperation(operation, price, value);
         })
         
-        const quote = new Quote(this._config.setup, Math.round(price * 100)/100, 0.9, 'Bimonthly')
+        //reset to base price if it is below the floor
+        if(price < this._config.base) {
+            price = this._config.base;
+        }
+
+        const quote = new Quote(this._config.setup, (Math.round(price * 100)/100).toFixed(2), 0.9, 'Bimonthly')
 
         if(this._config.billingOptions.includes('monthly')) {
             quote.addMonthlyPricing()
