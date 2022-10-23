@@ -10,7 +10,9 @@ const store = require('./helpers/session');
 const cors = require('cors');
 const morgan = require('morgan');
 
-app.use(morgan('tiny'))
+if(process.env.NODE_ENV != 'production') {
+    app.use(morgan('tiny'))
+}
 
 //routers
 const authRouter = require('./routes/auth');
