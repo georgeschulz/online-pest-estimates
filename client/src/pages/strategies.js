@@ -13,6 +13,9 @@ function Strategies() {
                     <StrategyButton strategy="Target Strategy" name="Target Recipe">
                         <p>A quick strategy that adds a fee based on each reported target based on the difficulty of the target.</p>
                     </StrategyButton>
+                    <StrategyButton strategy="Exterior Time Strategy" name="Based on Time to Complete Acres">
+                        <p>Calculate the time to complete the acreage and use your desired hourly rate to provide an estimate.</p>
+                    </StrategyButton>
                     <StrategyButton strategy='Square Feet Strategy' name="Based on Square Feet">
                         <p>Directly specific how many dollars each square foot should be worth.</p>
                     </StrategyButton>

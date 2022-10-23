@@ -57,6 +57,23 @@ module.exports.acres = {
     value: 0.75
 }
 
+module.exports.smallYard = {
+    name: 'Minutes to complete a 1/4 acre exterior?',
+    inputType: 'number',
+    description: 'How many minutes would it take to complete an exterior service for a 1/4 acre property.',
+    helperText: 'Minutes to complete 1/4 acre',
+    type: 'config',
+    value: 20
+}
+
+module.exports.largeYard = {
+    name: 'Minutes to complate a 2 acre exterior?',
+    inputType: 'number',
+    description: 'How many minutes would it take to complete an exterior service for a 2 acre property.',
+    helperText: 'Minutes to complete a 2 acre account',
+    type: 'config',
+    value: 35
+}
 
 module.exports.squareFeet = {
     name: "Square Feet",
