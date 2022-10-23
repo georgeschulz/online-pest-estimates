@@ -68,14 +68,44 @@ function Details() {
         })();
     }, [])
 
-    const handleSubmit = async () => {
-        try {
-            const response = await dispatch(updateWidgetDetails({widgetId}))
-            dispatch(updateConfigTargets(targets))
-            navigate(`/widget-pricing/${widgetId}/edit`);
-        } catch (err) {
-            console.log(err);
+    const checkIsValid = () => {
+        let error = 'No Errors';
+        if(name.length <= 5 || name.length > 80) {
+            error = 'Program name must be between 5 and 80 characters long'
+        } else if (description.length < 10 || description.length > 200) {
+            error = 'Program description must be between 10 and 200 characeters long'
+        } else if (targets.length <= 0) {
+            error = 'Please add one or more targets. Make sure you click the add button to add them to your widget!'
+        } else if (benefitOne.length < 5 || benefitTwo.length > 150) {
+            error = 'Please make sure benefit 1 is between 5 and 150 characters long';
+        } else if (benefitTwo.length < 5 || benefitTwo.length > 150) {
+            error = 'Please make sure benefit 2 is between 5 and 150 characters long';
+        } else if (benefitThree.length < 5 || benefitThree.length > 150) {
+            error = 'Please make sure benefit 3 is between 5 and 150 characters long';
+        } else if (!['Bimonthly', 'Quarterly', 'Monthly', 'One Time'].includes(frequency)) {
+            error = 'Please select a service frequency'
+        } else if (!billing.some(option => option.allowed)) {
+            error = 'Please check at least one of the billing options'
         }
+
+        return { isValid: error === 'No Errors' ? true : false, error }
+    }
+
+    const handleSubmit = async () => {
+        //ensure that all of the information is valid
+        const { isValid, error } = checkIsValid()
+        if(isValid) {
+            try {
+                const response = await dispatch(updateWidgetDetails({widgetId}))
+                dispatch(updateConfigTargets(targets))
+                navigate(`/widget-pricing/${widgetId}/edit`);
+            } catch (err) {
+                console.log(err);
+            }
+        } else {
+            alert(error)
+        }
+       
     }
 
     return (

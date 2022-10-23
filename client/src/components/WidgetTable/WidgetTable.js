@@ -36,6 +36,7 @@ function WidgetTable({isLoading = true}) {
                                 {label: 'Edit', handler: () => navigate(`/widget-information/${widget.widget_id}/edit`)},
                                 {label: 'Reset Price Formula', handler: () => navigate(`/strategies/${widget.widget_id}/edit`)},
                                 {label: 'Delete', handler: () => dispatch(deleteWidget(widget.widget_id))},
+                                {label: 'Share', handler: () => navigate(`/widget-confirmation/${widget.widget_id}/edit`)},
                                 {label: widget.active ? 'Make Inactive' : 'Publish', handler: () => dispatch(publishWidget(widget.widget_id))}
                             ]} />
                         </div>
