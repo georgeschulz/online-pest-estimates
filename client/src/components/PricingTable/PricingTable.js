@@ -9,14 +9,31 @@ function PricingTable({ xResults, yResults }) {
     let strategy = new PricingStrategy(config);
     const targetList = useSelector(selectTargetOptionList);
     let xResultMutated = xResults;
-    let yResultMutated = yResults;
+    //let yResultMutated = yResults;
     const billingOptions = useSelector(seelctBilling)
-    console.log(billingOptions)
     const [billType, setBillType] = useState('perService')
+    const [yResultMutated, setYResultMutated] = useState(yResults)
 
-    if (yResults.label === 'How much more would you like to charge for each possible target they say they are seeing?') {
-        yResultMutated = { label: 'How much more would you like to charge for each possible target they say they are seeing?', values: targetList.map(target => [target.option]) }
-    }
+    useEffect(() => {
+        if (yResults.label === 'How much more would you like to charge for each possible target they say they are seeing?') {
+            //optional feature to add: get a few random combos
+            /*
+            const lengthsToGet = [2, 2, 2, 3];
+            const extraOptions = [];
+            lengthsToGet.forEach(combo => {
+                let targetTest = targetList.map(target => target.option)
+                let output = []
+                for(let i = 0; i < combo; i++) {
+                    const randomIndex = Math.floor(Math.random() * targetTest.length);
+                    const target = targetTest.splice(randomIndex, 1);
+                    output.push(target)
+                }
+                extraOptions.push(output)
+            }) */
+            
+            setYResultMutated({ label: 'How much more would you like to charge for each possible target they say they are seeing?', values: targetList.map(target => [target.option]) })
+        }
+    }, [])
 
     useEffect(() => {
         strategy = new PricingStrategy(config);

@@ -1,7 +1,7 @@
 import Nav from "../Nav/nav";
 import Loading from "../../loading/loading";
 
-function ApplicationMainLayout({header, children, isDataLoading = false, currentPage = '', controls = ''}) {
+function ApplicationMainLayout({header, children, isDataLoading, currentPage = '', controls = ''}) {
     return (
         <div className="min-h-screen flex flex-wrap content-between">
             <div className="w-full">
@@ -13,9 +13,9 @@ function ApplicationMainLayout({header, children, isDataLoading = false, current
                             {controls}
                         </div>
                     </div>
-                    { !isDataLoading 
-                        ? children
-                        : (<div className="flex w-full items-center" style={{'height': '250px'}}><Loading /></div>)
+                    { isDataLoading 
+                        ? (<div className="flex w-full items-center" style={{'height': '250px'}}><Loading /></div>)
+                        : children
                     }
                 </main>
             </div>

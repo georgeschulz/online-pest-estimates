@@ -1,6 +1,3 @@
-import ConfigForm from "../ConfigForm/configForm";
-import SingleLineText from "../Inputs/SingleLineText";
-
 class FormulaGroup {
     constructor(formula = []) {
         this._formula = formula;

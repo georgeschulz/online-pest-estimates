@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { getUserWidgets } from "../api/userApi";
-import { createWidget, getWidgetById, updateDetails, updateProposal, updateStrategy, updateStrategyConfig } from "../api/widgetApi";
+import { createWidget, getWidgetById, updateDetails, updateProposal, updateStrategy, updateStrategyConfig, deleteWidgetById } from "../api/widgetApi";
 
 export const getUserWidgetList = createAsyncThunk(
     'widgets/getWidgets',
@@ -79,11 +79,20 @@ export const getWidgetByIdReload = createAsyncThunk(
     }
 )
 
+export const deleteWidget = createAsyncThunk(
+    'widgets/deleteWidget',
+    async (widgetId) => {
+        const response = await deleteWidgetById(widgetId);
+        return response.data;
+    }
+)
+
 const widgetSlice = createSlice({
     name: 'widgets',
     initialState: {
         widgets: [],
         selectedWidget: null,
+        isWidgetListLoading: false,
         widgetError: { isVisible: false, message: '', isSuccess: false },
         draft: {
             name: '',
@@ -155,7 +164,12 @@ const widgetSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(getUserWidgetList.fulfilled, (state, action) => {
             state.widgets = [...action.payload.data];
+            state.isWidgetListLoading = false;
         });
+
+        builder.addCase(getUserWidgetList.pending, (state, action) => {
+            state.isWidgetListLoading = true;
+        })
 
         builder.addCase(createEmtpyWidget.fulfilled, (state, action) => {
             state.selectedWidget = action.payload.data;
@@ -180,10 +194,15 @@ const widgetSlice = createSlice({
         builder.addCase(updateWidgetStrategy.fulfilled, (state, action) => {
             state.selectedWidget = action.payload.data;
         })
+
+        builder.addCase(deleteWidget.fulfilled, (state, action) => {
+            state.widgets = state.widgets.filter(widget => widget.widget_id != action.payload.data.widgetId)
+        })
     }
 })
 
 export const selectUserWidgets = state => state.widgets.widgets;
+export const selectIsWidgetListLoading = state => state.widgets.isWidgetListLoading;
 export const selectProgramName = state => state.widgets.draft.name;
 export const selectProgramDescription = state => state.widgets.draft.programDescription;
 export const selectTargets = state => state.widgets.draft.targets;

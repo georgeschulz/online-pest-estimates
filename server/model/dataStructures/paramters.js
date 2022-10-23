@@ -19,10 +19,10 @@ module.exports.thoasandSquareFeet = {
 module.exports.twoThoasandSquareFeet = {
     name: "Minutes to complete 2000 SQ FT home",
     inputType: 'number',
-    description: 'For the average 1000 square foot house completing this services takes how many minutes to complete a stop',
+    description: 'For the average 2000 square foot house completing this services takes how many minutes to complete a stop',
     helperText: '38',
     type: 'config',
-    value: 33
+    value: 38
 }
 
 module.exports.difficultSurcharge = {

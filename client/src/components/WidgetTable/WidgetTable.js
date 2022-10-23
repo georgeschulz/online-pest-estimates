@@ -1,11 +1,12 @@
-import { useSelector } from "react-redux";
-import { selectUserWidgets } from "../../redux/widgetSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteWidget, selectUserWidgets } from "../../redux/widgetSlice";
 import menu from '../../assets/menu.png'
 import { Link } from "react-router-dom";
 import DropdownMenu from "../layout/Nav/dropdownMenu";
 
 function WidgetTable({isLoading = true}) {
     const widgets = useSelector(selectUserWidgets);
+    const dispatch = useDispatch();
 
     return (
         <div className="flex flex-wrap px-5 py-8">
@@ -28,7 +29,7 @@ function WidgetTable({isLoading = true}) {
                         </div>
                         <div className="w-2/12 justify-end flex">
                             <DropdownMenu closeIcon={menu} openIcon={menu} menuItems={[
-                                {label: 'Delete', handler: () => alert('delete!')}
+                                {label: 'Delete', handler: () => dispatch(deleteWidget(widget.widget_id))}
                             ]} />
                         </div>
                     </div>

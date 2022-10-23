@@ -3,7 +3,7 @@ import { getLoggedInUser } from "../redux/authSlice";
 import { useSelector } from "react-redux";
 import ApplicationMainLayout from "../components/layout/ApplicationMainLayout/ApplicationMainLayout";
 import { useEffect } from "react";
-import { getUserWidgetList, selectUserWidgets } from "../redux/widgetSlice";
+import { getUserWidgetList, selectIsWidgetListLoading, selectUserWidgets } from "../redux/widgetSlice";
 import LargeButton from '../components/buttons/button';
 import { createEmtpyWidget } from "../redux/widgetSlice";
 import WidgetTable from "../components/WidgetTable/WidgetTable";
@@ -13,6 +13,7 @@ function Widgets() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const widgets = useSelector(selectUserWidgets);
+    const isLoading = useSelector(selectIsWidgetListLoading)
 
     useEffect(() => {
         (async () => {
@@ -38,7 +39,7 @@ function Widgets() {
     }
 
     return (
-        <ApplicationMainLayout header="My Widgets" currentPage="widgets" controls={<LargeButton handleClick={handleClick} size={0}>+ New Widget</LargeButton>}>
+        <ApplicationMainLayout header="My Widgets" currentPage="widgets" controls={<LargeButton handleClick={handleClick} size={0}>+ New Widget</LargeButton>}  isDataLoading={isLoading}>
             {widgets.length > 0 
                 ? <WidgetTable />
                 : (

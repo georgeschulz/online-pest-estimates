@@ -25,3 +25,7 @@ export const updateProposal = async (widgetId, data) => {
 export const getWidgetById = async (widgetId) => {
     return await axios.get(`${endpoint}/widget/${widgetId}`);
 }
+
+export const deleteWidgetById = async (widgetId) => {
+    return await axios.delete(`${endpoint}/widget/${widgetId}`);
+}

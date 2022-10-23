@@ -5,7 +5,9 @@ const getWidgetById = require('../model/getWidget');
 const { defaultTargetConfig } = require('../model/dataStructures/targetStrategy');
 const { updateWidgetDetails } = require('../model/updateWidgetDetails');
 const { updateWidgetProposal } = require('../model/updateWidgetProposal');
+const { deleteWidget } = require('../model/deleteWidget');
 const getWidget = require('../model/getWidget');
+const getUserWidgetsModel = require('../model/getUserWidgets')
 
 const createWidgetController = async (req, res, next) => {
     try {
@@ -135,11 +137,30 @@ const getWidgetByIdController = async (req, res, next) => {
     }
 }
 
+const deleteWidgetController = async (req, res, next) => {
+    try {
+        const { widgetId } = req.params;
+        await deleteWidget(widgetId);
+
+        res.status(200).send({
+            message: 'Widget successfully deleted',
+            data: { widgetId }
+        })
+    } catch (err) {
+        console.log(err)
+        res.status(400).send({
+            message: 'There was a problem deleting the widget',
+            data: {}
+        })
+    }
+}
+
 module.exports = {
     createWidgetController,
     updatePriceStrategy,
     updateWidgetDetailsController,
     updateWidgetProposalController,
     getWidgetByIdController,
-    updatePriceStrategyConfigController
+    updatePriceStrategyConfigController,
+    deleteWidgetController
 }
