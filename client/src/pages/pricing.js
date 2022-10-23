@@ -49,27 +49,32 @@ function Pricing() {
         <div>
             <ApplicationMainLayout header="Pricing Parameters">
                 <br />
-                <div className="flex flex-wrap space-x-4">
-                    {config == null ? <Loading /> :
-                        <div>
-                            <ConfigForm config={config} parameters={parameters} updateConfig={(results) => dispatch(updateConfig(results))}>
-                                <SingleLineText
-                                    name="base"
-                                    label="Base Price"
-                                    type="number"
-                                    helper="$75"
-                                    state={base}
-                                    setState={(e) => dispatch(updateBase(e))}
-                                />
-                            </ConfigForm>
-                            <PricingTable 
+                <div className="flex flex-wrap">
+                    <div className="flex flex-wrap justify-between w-full">
+                        {config == null ? <Loading /> :
+                            <div style={{'maxWidth': '1000px'}} className='w-2/3'>
+                                <ConfigForm config={config} parameters={parameters} updateConfig={(results) => dispatch(updateConfig(results))}>
+                                    <SingleLineText
+                                        name="base"
+                                        label="Base Price"
+                                        type="number"
+                                        helper="ex. $75"
+                                        state={base}
+                                        setState={(e) => dispatch(updateBase(e))}
+                                        size='medium-large'
+                                    />
+                                </ConfigForm>
+                            </div>
+                        }
+                        {config == null ? <Loading /> :
+                            <PricingTable
                                 xResults={config.xResults}
                                 yResults={config.yResults}
                             />
+                        }
+                        <div className="w-full">
+                            <LargeButton handleClick={() => handleSubmit()} size={0} className="justify-center">Save</LargeButton>
                         </div>
-                    }
-                    <div className="w-full">
-                        <LargeButton handleClick={() => handleSubmit()} size={0} className="justify-center">Save</LargeButton>
                     </div>
                 </div>
 

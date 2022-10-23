@@ -17,7 +17,9 @@ module.exports = {
         'dark': '#464646',
         'matte': '#393939',
         'lightmatte': '#7C7A7A',
-        'lightgray': '#B9B9B9'
+        'lightgray': '#B9B9B9',
+        'tableheader': '#5B5B5B',
+        'tableBody': '#363636'
       }
     },
   },

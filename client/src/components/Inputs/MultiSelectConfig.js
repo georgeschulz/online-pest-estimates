@@ -53,17 +53,21 @@ function MultiSelectConfig({ parameter, parameterIndex, parameters, config, upda
     }
 
     return (
-        <div className="border-stone-400 border pt-10 pb-8 px-5 mb-8">
-            <p className="text-xl ml-4 mb-5 font-semibold font-poppins">{parameter.name}</p>
-            <p className="text-lg ml-4 mb-5">Below, please set up the values that will be assigned to each option. You can add or remove options, and adjust their labels or associated values.</p>
-            <div className="flex space-x-4 mb-2">
-                <b className="w-2/5 pl-16 text-xl">{parameter.labels[0]}</b>
-                <b className="w-2/5 pl-16 text-xl">{parameter.labels[1]}</b>
-            </div>
-            {parameter.options.map((option, i) => {
+        <div className="pb-8 mb-8">
+            <p className="text-xl ml-4 mb-8 font-semibold font-poppins">{parameter.name}</p>
+            <table style={{'width': '800px'}}>
+                <thead className="text-left text-lg font-poppins">
+                    <tr>
+                        <th><b className="pl-12  font-normal">{parameter.labels[0]}</b></th>
+                        <th><b className="pl-12  font-normal">{parameter.labels[1]}</b></th>
+                        <th className="w-48 text-center font-normal">Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {parameter.options.map((option, i) => {
                 return (
-                    <div className="flex space-x-4" key={'multiselect-config-' + i}>
-                        <div className="w-2/5">
+                    <tr key={'multiselect-config-' + i}>
+                        <td className="px-4">
                             <SingleLineText
                                 name={'option-' + option.option}
                                 label=''
@@ -71,9 +75,10 @@ function MultiSelectConfig({ parameter, parameterIndex, parameters, config, upda
                                 helper='Option'
                                 state={option.option}
                                 setState={(e) => updateValue(e, i, 'option')}
+                                size="medium"
                             />
-                        </div>
-                        <div className="w-2/5">
+                        </td>
+                        <td className="px-4">
                             <SingleLineText
                                 name={'value-' + option.option}
                                 label=''
@@ -81,20 +86,23 @@ function MultiSelectConfig({ parameter, parameterIndex, parameters, config, upda
                                 helper='Value'
                                 state={option.value}
                                 setState={(e) => updateValue(e, i, 'value')}
+                                size="medium"
                             />
-                        </div>
-                        <div className="w-48 flex justify-center mt-4">
+                        </td>
+                        <td className="flex justify-center pt-4">
                             <span className="flex scale" onClick={() => removeOption(i)}>
                                 <img className="w-5 h-5 mr-2" src={x} />
-                                <span>Remove Option</span>
                             </span>   
-                        </div>
-                    </div>
+                        </td>
+                    </tr>
                 )
             })}
+                </tbody>
+            </table>
+            
             <div className="w-full">
-                <span className="flex text-2xl items-center text-green-800" onClick={() => addOption()}>
-                    <b className="text-4xl pointer scale mr-2">+</b> 
+                <span className="ml-10 flex text-lg items-center text-green-800" onClick={() => addOption()}>
+                    <b className="text-3xl pointer scale mr-2">+</b> 
                     <span className="pointer scale">Add Option</span>
                 </span> 
             </div>

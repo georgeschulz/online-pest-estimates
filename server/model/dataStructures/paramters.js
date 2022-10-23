@@ -8,7 +8,7 @@ module.exports.hourlyRate = {
 }
 
 module.exports.thoasandSquareFeet = {
-    name: "How many minutes does it take to finish a 1000 square foot home?",
+    name:  "Minutes to complete 1000 SQ FT home",
     inputType: 'number',
     description: 'For the average 1000 square foot home house completing this services takes how many minutes to complete a stop',
     helperText: '33',
@@ -17,7 +17,7 @@ module.exports.thoasandSquareFeet = {
 }
 
 module.exports.twoThoasandSquareFeet = {
-    name: "How many minutes does it take to finish a 2000 square foot home?",
+    name: "Minutes to complete 2000 SQ FT home",
     inputType: 'number',
     description: 'For the average 1000 square foot house completing this services takes how many minutes to complete a stop',
     helperText: '38',
@@ -31,7 +31,7 @@ module.exports.difficultSurcharge = {
     description: 'This is an additional charge we will add to difficult targets like rodents and spiders. Leave as 0 for pests that do not require extra work.',
     helperText: 10,
     type: 'value',
-    labels: ['Target', 'Additional Charge for Pest'],
+    labels: ['Target', 'Extra Charge for Pest'],
     options: [
         { option: 'ants', value: 0 },
         { option: 'rodents', value: 6 },
