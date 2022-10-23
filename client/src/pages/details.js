@@ -10,6 +10,8 @@ import example from '../assets/widget-tile-ex.png'
 import LargeButton from "../components/buttons/button";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
+import { useState } from "react";
+import UpdateMessage from "../components/notifications/UpdateMessage";
 
 function Details() {
     const name = useSelector(selectProgramName);
@@ -21,6 +23,8 @@ function Details() {
     const frequency = useSelector(selectFrequency);
     const billing = useSelector(seelctBilling);
     const isWidgetLoaded = useSelector(selectIsWidgetLoaded)
+    const [errorMessage, setErrorMessage] = useState('');
+    const [showError, setShowError] = useState(false)
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -103,7 +107,9 @@ function Details() {
                 console.log(err);
             }
         } else {
-            alert(error)
+            setErrorMessage(error)
+            setShowError(true)
+            window.scrollTo(0, 0)
         }
        
     }
@@ -114,6 +120,7 @@ function Details() {
                 <br />
                 <div className="flex flex-wrap">
                     <div className="w-1/2 px-8">
+                        <UpdateMessage message={`${errorMessage}`} isVisible={showError} dismissReducer={() => setShowError(false)} />
                         <SingleLineText
                             name="program-name"
                             label="Program Name"

@@ -9,6 +9,8 @@ import LargeButton from "../components/buttons/button";
 import { useEffect } from "react";
 import { getWidgetByIdReload } from "../redux/widgetSlice";
 import { publishWidget } from "../redux/widgetSlice";
+import { useState } from "react";
+import UpdateMessage from "../components/notifications/UpdateMessage";
 
 function ProposalConfig() {
     const { widgetId } = useParams(); 
@@ -18,6 +20,8 @@ function ProposalConfig() {
     const targetFull = useSelector(selectTargetFull);
     const legal = useSelector(selectLegal);
     const isWidgetLoaded = useSelector(selectIsWidgetLoaded)
+    const [errorMessage, setErrorMessage] = useState('');
+    const [showError, setShowError] = useState('');
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -48,7 +52,9 @@ function ProposalConfig() {
                 console.log(err);
             }
         } else {
-            alert(error)
+            setShowError(true)
+            setErrorMessage(error);
+            window.scrollTo(0, 0)
         }
     }
 
@@ -84,6 +90,7 @@ function ProposalConfig() {
         <div>
             <ApplicationMainLayout header="Proposal Setup" isDataLoading={!isWidgetLoaded}>
                 <br />
+                <UpdateMessage message={`${errorMessage}`} isVisible={showError} dismissReducer={() => setShowError(false)} />
                 <TagBuilder
                     name="covered"
                     label="What things do you want to highlight ARE covered?"
