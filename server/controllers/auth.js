@@ -1,6 +1,6 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
-const GoogleStrategy = require('passport-google-oidc');
+//const GoogleStrategy = require('passport-google-oidc');
 const bcrypt = require('bcrypt');
 const createUser = require('../model/createUser');
 const getUserById = require('../model/getUserById');
@@ -29,6 +29,7 @@ passport.use(new LocalStrategy(
     }
 }));
 
+/*
 passport.use(new GoogleStrategy({
     clientID: process.env['GOOGLECLIENTID'],
     clientSecret: process.env['GOOGLECLIENTSECRET'],
@@ -66,7 +67,7 @@ function (issuer, profile, cb) {
             return cb(null, {customerID: cred.rows[0].userId})
         } 
     })
-}));
+})); */
 
 passport.serializeUser(function(user, done) { 
     done(null, user.userId);
