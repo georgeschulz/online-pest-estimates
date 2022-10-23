@@ -11,6 +11,7 @@ const getUserWidgetsModel = require('../model/getUserWidgets');
 const { publishWidget } = require('../model/publishWidget');
 const { defaultSquareFeetConfig } = require('../model/dataStructures/squareFeetStrategy');
 const { defaultExteriorTimeConfig } = require('../model/dataStructures/exteriorTimeStrategy');
+const { defaultInteriorTimeConfig } = require('../model/dataStructures/interiorTimeStrategy');
 
 const createWidgetController = async (req, res, next) => {
     try {
@@ -45,6 +46,8 @@ const updatePriceStrategy = async (req, res, next) => {
                 configToUpdate = defaultSquareFeetConfig
             } else if (strategyType === 'Exterior Time Strategy') {
                 configToUpdate = defaultExteriorTimeConfig;
+            } else if (strategyType === 'Interior Time Strategy') {
+                configToUpdate = defaultInteriorTimeConfig;
             } else {
                 throw new Error('The pricing strategy type name was not recognized');
             }

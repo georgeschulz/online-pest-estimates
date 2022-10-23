@@ -4,7 +4,8 @@ function PriceCell({strategy, x, y, xLabel, yLabel, constantResult, billType}) {
         [xLabel]: x,
         [yLabel]: y
     }
-    
+    console.log(results)
+
     const quote = strategy.calculate(results)
     let value = 0;
     

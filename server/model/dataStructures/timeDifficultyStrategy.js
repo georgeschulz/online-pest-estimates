@@ -55,8 +55,6 @@ timeDifficultyStrategy.appendNextOperation('MULTIPLY', 'config', 'Desired hourly
 //add in any surcharges for pests
 timeDifficultyStrategy.appendNextOperation('ADD', 'AGGMAX', 'How much more would you like to charge for each possible target they say they are seeing?');
 
-console.log(timeDifficultyStrategy.calculate(results))
-
 module.exports = {
     defaultTimeDifficultyConfig
 }
