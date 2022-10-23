@@ -1,7 +1,7 @@
 import SingleLineText from "../components/Inputs/SingleLineText";
 import ApplicationMainLayout from "../components/layout/ApplicationMainLayout/ApplicationMainLayout";
 import { useDispatch, useSelector } from "react-redux";
-import { getWidgetByIdReload, removeTarget, seelctBilling, selectBenefitOne, selectBenefitThree, selectBenefitTwo, selectFrequency, selectIsWidgetLoaded, selectProgramDescription, selectProgramName, selectTargets, toggleBilling, updateDraft, updateWidgetDetails } from "../redux/widgetSlice";
+import { getWidgetByIdReload, removeTarget, seelctBilling, selectBenefitOne, selectBenefitThree, selectBenefitTwo, selectFrequency, selectIsWidgetLoaded, selectProgramDescription, selectProgramName, selectTargets, toggleBilling, updateConfigTargets, updateDraft, updateWidgetDetails } from "../redux/widgetSlice";
 import MultiLineText from "../components/Inputs/MultiLineText";
 import TagBuilder from "../components/Inputs/TagBuilder";
 import SingleSelect from "../components/Inputs/SingleSelect";
@@ -71,6 +71,7 @@ function Details() {
     const handleSubmit = async () => {
         try {
             const response = await dispatch(updateWidgetDetails({widgetId}))
+            dispatch(updateConfigTargets(targets))
             navigate(`/widget-pricing/${widgetId}/edit`);
         } catch (err) {
             console.log(err);

@@ -18,7 +18,8 @@ const defaultTargetConfig = {
             { option: 'roaches', value: 10 },
             { option: 'roaches', value: 10 }
         ]
-    }
+    },
+    _formula: []
 }
 
 const results = {

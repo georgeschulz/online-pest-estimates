@@ -25,7 +25,7 @@ function SingleLineText({name, label, type = 'text', state = "", setState, helpe
                 type={type} 
                 value={state}
                 placeholder={helper} 
-                onChange={(e) => setState(e.target.value)}
+                onChange={type == 'number' ? (e) => setState(Number(e.target.value)) : (e) => setState(e.target.value)}
                 className={`border border-lightgray w-full rounded-full text-lightmatte ${customStyles}`}
             />
         </div>

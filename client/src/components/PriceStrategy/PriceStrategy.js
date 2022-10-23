@@ -1,103 +1,100 @@
 import ConfigForm from "../ConfigForm/configForm";
 import SingleLineText from "../Inputs/SingleLineText";
 
-const runOperation = function (operation, price, value) {
-    //handle the operation in the value
-    if (operation.type === 'ADD') {
-        return add(price, value)
-    } else if (operation.type === 'SUBTRACT') {
-        return subtract(price, value);
-    } else if (operation.type === 'MULTIPLY') {
-        return multiply(price, value);
-    } else if (operation.type === 'DIVIDE') {
-        return divide(price, value);
-    } else if (operation.type === 'EXPONENT') {
-        return exponent(price, value);
-    } else {
-        throw new Error('The operation in the formula was not recognized');
+class FormulaGroup {
+    constructor(formula = []) {
+        this._formula = formula;
     }
-}
 
-const extractValue = function (operation, config, results) {
-    if (operation.aggregate === 'value') {
-        return results[operation.parameter];
-    } else if (operation.parameter === 'base') {
-        return config.base;
-    } else if (operation.aggregate === 'group') {
-        let groupTotal = operation.parameter.getValue(config, results);
-        return groupTotal
-    } else if (operation.aggregate === 'config') {
-        return config['parameterConfig'][operation.parameter]['value']
-    } else if (operation.aggregate === 'constant') {
-        return operation.parameter;
-    } else {
-        //handle aggregate operations like average and max
-        const resultsValues = covertParameterToValues(results, config, operation)
-        if (operation.aggregate === 'AGGMAX') {
-            return Math.max(...resultsValues)
-        } else if (operation.aggregate === 'AGGMIN') {
-            return Math.min(...resultsValues)
-        } else if (operation.aggregate === 'AVERAGE') {
-            return (resultsValues.reduce((prev, current) => prev + current, 0) / resultsValues.length)
-        } else if (operation.aggregate === 'COUNT') {
-            return resultsValues.length
-        } else if (operation.aggregate === 'SUM') {
-            return (resultsValues.reduce((prev, current) => prev + current, 0))
-        }
+    getValue(config, results) {
+        let groupTotal = 0;
+
+        this._formula.forEach(operation => {
+            let operationValue = this.extractValue(operation, config, results);
+            groupTotal = this.runOperation(operation, groupTotal, operationValue);
+        })
+        return groupTotal;
     }
-}
 
-function appendNextOperation(type, aggregate, parameter) {
-    this._formula.push({ type, aggregate, parameter })
-}
-
-function add(value1, value2) {
-    return doIfNumber([value1, value2], () => value1 + value2);
-}
-
-function subtract(value1, value2) {
-    return doIfNumber([value1, value2], () => value1 - value2);
-}
-
-function multiply(value1, value2) {
-    return doIfNumber([value1, value2], () => value1 * value2);
-}
-
-function divide(value1, value2) {
-    return doIfNumber([value1, value2], () => value1 / value2);
-}
-
-function exponent(value1, value2) {
-    return doIfNumber([value1, value2], () => Math.pow(value1, value2));
-}
-
-const doIfNumber = (arrayOfInputs, doCallback) => {
-    if (inputsAreNumbers(arrayOfInputs)) {
-        return doCallback();
-    } else {
-        throw new Error('Error with add operation. Accepts numbers only')
+    covertParameterToValues(results, config, operation) {
+        return results[operation.parameter].map(result => {
+            return config['parameterConfig'].find(parameter => parameter.name == operation.parameter)['options'].find(element => element.option == result)['value']
+        })
     }
-}
 
-const inputsAreNumbers = (arrayOfInputs) => {
-    let i = 0;
-    let includesNumbers = false;
-
-    while (i < arrayOfInputs.length && !includesNumbers) {
-        if (typeof arrayOfInputs[i] != 'number') {
-            includesNumbers = true;
+    doIfNumber(arrayOfInputs, doCallback) {
+        const inputsAreNumbers = (arrayOfInputs) => {
+            let i = 0;
+            let includesNumbers = false;
+        
+            while(i < arrayOfInputs.length && !includesNumbers) {
+                if(typeof arrayOfInputs[i] != 'number') {
+                    includesNumbers = true;
+                } 
+                
+                i++;
+            }
+        
+            return !includesNumbers;
         }
 
-        i++;
+        if(inputsAreNumbers(arrayOfInputs)) {
+            return doCallback();
+        } else {
+            throw new Error('Error with add operation. Accepts numbers only')
+        }
     }
 
-    return !includesNumbers;
-}
+    runOperation(operation, price, value) {
+        //handle the operation in the value
+        if(operation.type === 'ADD') {
+            return this.doIfNumber([price, value], () => price + value)
+        } else if(operation.type === 'SUBTRACT') {
+            return this.doIfNumber([price, value], () => price - value);
+        } else if(operation.type === 'MULTIPLY') {
+            return this.doIfNumber([price, value], () => price * value);
+        } else if(operation.type === 'DIVIDE') {
+            return this.doIfNumber([price, value], () => price / value);
+        } else if(operation.type === 'EXPONENT') {
+            return this.doIfNumber([price, value], () => Math.pow(price, value));
+        } else {
+            throw new Error('The operation in the formula was not recognized');
+        }
+    }
 
-const covertParameterToValues = (results, config, operation) => {
-    return results[operation.parameter].map(result => {
-        return config['parameterConfig'][operation.parameter]['options'].find(element => element.option == result)['value']
-    })
+    extractValue(operation, config, results) {
+        if(operation.aggregate === 'value') {
+            return results[operation.parameter];
+        } else if(operation.parameter === 'base') {
+            return config.base;
+        } else if (operation.aggregate === 'group') {
+            let groupTotal = operation.parameter.getValue(config, results);
+            return groupTotal
+        } else if(operation.aggregate === 'config') {
+            return config['parameterConfig'].find(parameter => parameter.name == operation.parameter)['value'];
+        } else if(operation.aggregate === 'constant') {
+            return operation.parameter;
+        } else {
+            //handle aggregate operations like average and max
+            const resultsValues = this.covertParameterToValues(results, config, operation)
+            if(operation.aggregate === 'AGGMAX') {
+                return Math.max(...resultsValues)
+            } else if(operation.aggregate === 'AGGMIN') {
+                return Math.min(...resultsValues)
+            } else if(operation.aggregate === 'AVERAGE') {
+                return (resultsValues.reduce((prev, current) => prev + current, 0)/resultsValues.length)
+            } else if(operation.aggregate === 'COUNT') {
+                return resultsValues.length
+            } else if(operation.aggregate === 'SUM') {
+                return (resultsValues.reduce((prev, current) => prev + current, 0))
+            }
+        }
+    }
+
+
+    appendNextOperation(type, aggregate, parameter) {
+        this._formula.push({ type, aggregate, parameter })
+    }
 }
 
 class Quote {
@@ -154,12 +151,11 @@ class Quote {
 
 class PricingStrategy {
     constructor(config) {
-        this._formula = [];
         this._config = config;
     }
 
     addGroup(type, group) {
-        this._formula.push({
+        this._config._formula.push({
             type: type,
             aggregate: 'group',
             parameter: group
@@ -169,43 +165,112 @@ class PricingStrategy {
 
     calculate(results) {
         let price = 0;
-        this._formula.forEach(operation => {
+        this._config._formula.forEach(operation => {
             //get the value
-            let value = extractValue(operation, this._config, results)
-            price = runOperation(operation, price, value);
+            let value = this.extractValue(operation, this._config, results)
+            price = this.runOperation(operation, price, value);
         })
+        
+        const quote = new Quote(this._config.setup, Math.round(price * 100)/100, 0.9, 'Bimonthly')
 
-        const quote = new Quote(this._config.setup, Math.round(price * 100) / 100, 0.9, 'Bimonthly')
-
-        if (this._config.billingOptions.includes('monthly')) {
+        if(this._config.billingOptions.includes('monthly')) {
             quote.addMonthlyPricing()
-        }
-
-        if (this._config.billingOptions.includes('annual')) {
+        } 
+        
+        if(this._config.billingOptions.includes('annual')) {
             quote.addAnnualPricing()
-        }
-
-        if (this._config.billingOptions.includes('service')) {
+        } 
+        
+        if(this._config.billingOptions.includes('service')) {
             quote.addPerServicePricing();
         }
-
+        
         return quote;
+    }
+
+    covertParameterToValues(results, config, operation) {
+        return results[operation.parameter].map(result => {
+            return config['parameterConfig'].find(parameter => parameter.name == operation.parameter)['options'].find(element => element.option == result)['value']
+        })
+    }
+
+    doIfNumber(arrayOfInputs, doCallback) {
+        const inputsAreNumbers = (arrayOfInputs) => {
+            let i = 0;
+            let includesNumbers = false;
+        
+            while(i < arrayOfInputs.length && !includesNumbers) {
+                if(typeof arrayOfInputs[i] != 'number') {
+                    includesNumbers = true;
+                } 
+                
+                i++;
+            }
+        
+            return !includesNumbers;
+        }
+
+        if(inputsAreNumbers(arrayOfInputs)) {
+            return doCallback();
+        } else {
+            throw new Error('Error with add operation. Accepts numbers only')
+        }
+    }
+
+    runOperation(operation, price, value) {
+        //handle the operation in the value
+        if(operation.type === 'ADD') {
+            return this.doIfNumber([price, value], () => price + value)
+        } else if(operation.type === 'SUBTRACT') {
+            return this.doIfNumber([price, value], () => price - value);
+        } else if(operation.type === 'MULTIPLY') {
+            return this.doIfNumber([price, value], () => price * value);
+        } else if(operation.type === 'DIVIDE') {
+            return this.doIfNumber([price, value], () => price / value);
+        } else if(operation.type === 'EXPONENT') {
+            return this.doIfNumber([price, value], () => Math.pow(price, value));
+        } else {
+            throw new Error('The operation in the formula was not recognized');
+        }
+    }
+
+    extractValue(operation, config, results) {
+        if(operation.aggregate === 'value') {
+            return results[operation.parameter];
+        } else if(operation.parameter === 'base') {
+            return config.base;
+        } else if (operation.aggregate === 'group') {
+            const group = new FormulaGroup(operation.parameter._formula)
+            let groupTotal = group.getValue(config, results);
+            return groupTotal
+        } else if(operation.aggregate === 'config') {
+            return config['parameterConfig'].find(parameter => parameter.name == operation.parameter)['value'];
+        } else if(operation.aggregate === 'constant') {
+            return operation.parameter;
+        } else {
+            //handle aggregate operations like average and max
+            const resultsValues = this.covertParameterToValues(results, config, operation)
+            if(operation.aggregate === 'AGGMAX') {
+                return Math.max(...resultsValues)
+            } else if(operation.aggregate === 'AGGMIN') {
+                return Math.min(...resultsValues)
+            } else if(operation.aggregate === 'AVERAGE') {
+                return (resultsValues.reduce((prev, current) => prev + current, 0)/resultsValues.length)
+            } else if(operation.aggregate === 'COUNT') {
+                return resultsValues.length
+            } else if(operation.aggregate === 'SUM') {
+                return (resultsValues.reduce((prev, current) => prev + current, 0))
+            }
+        }
+    }
+
+    appendNextOperation(type, aggregate, parameter) {
+        this._config._formula.push({ type, aggregate, parameter })
     }
 
     extractConfig() {
         return this._config;
     }
-
-    buildConfigForm(handler) {
-        const parameters = this._config.parameterConfig
-        return (
-            <ConfigForm parameters={parameters} updateConfig={handler} />
-        )
-    }
 }
-
-
-PricingStrategy.prototype.appendNextOperation = appendNextOperation;
-
 
 export default PricingStrategy;

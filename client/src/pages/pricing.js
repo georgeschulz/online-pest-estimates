@@ -12,6 +12,7 @@ import ConfigForm from "../components/ConfigForm/configForm";
 import { updateConfig } from "../redux/widgetSlice";
 import Loading from "../components/loading/loading";
 import { selectConfigParameters } from "../redux/widgetSlice";
+import PricingTable from "../components/PricingTable/PricingTable";
 
 function Pricing() {
     const navigate = useNavigate();
@@ -37,7 +38,7 @@ function Pricing() {
 
     const handleSubmit = async () => {
         try {
-            await dispatch(updateWidgetStrategy({widgetId}))
+            await dispatch(updateWidgetStrategy({ widgetId }))
             navigate(`/widget-proposal/${widgetId}/edit`);
         } catch (err) {
             console.log(err)
@@ -50,18 +51,23 @@ function Pricing() {
                 <br />
                 <div className="flex flex-wrap space-x-4">
                     {config == null ? <Loading /> :
-                        <ConfigForm config={config} parameters={parameters} updateConfig={(results) => dispatch(updateConfig(results))}>
-                            <SingleLineText
-                                name="base"
-                                label="Base Price"
-                                type="number"
-                                helper="$75"
-                                state={base}
-                                setState={(e) => dispatch(updateBase(e))}
+                        <div>
+                            <ConfigForm config={config} parameters={parameters} updateConfig={(results) => dispatch(updateConfig(results))}>
+                                <SingleLineText
+                                    name="base"
+                                    label="Base Price"
+                                    type="number"
+                                    helper="$75"
+                                    state={base}
+                                    setState={(e) => dispatch(updateBase(e))}
+                                />
+                            </ConfigForm>
+                            <PricingTable 
+                                xResults={config.xResults}
+                                yResults={config.yResults}
                             />
-                        </ConfigForm>
+                        </div>
                     }
-
                     <div className="w-full">
                         <LargeButton handleClick={() => handleSubmit()} size={0} className="justify-center">Save</LargeButton>
                     </div>

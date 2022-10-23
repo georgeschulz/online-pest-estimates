@@ -4,7 +4,7 @@ import { createWidget, getWidgetById, updateDetails, updateProposal, updateStrat
 
 export const getUserWidgetList = createAsyncThunk(
     'widgets/getWidgets',
-    async(thunkAPI) => {
+    async (thunkAPI) => {
         const response = await getUserWidgets();
         return response.data;
     }
@@ -33,7 +33,7 @@ export const updateWidgetStrategy = createAsyncThunk(
         const { widgetId } = data;
         const state = thunkAPI.getState();
         const { config } = state.widgets.selectedWidget.pricingStrategy;
-        const  { pricingStrategyType } = state.widgets.selectedWidget;
+        const { pricingStrategyType } = state.widgets.selectedWidget;
         const response = await updateStrategyConfig(widgetId, config, pricingStrategyType);
         return response.data;
     }
@@ -42,7 +42,7 @@ export const updateWidgetStrategy = createAsyncThunk(
 export const updateWidgetDetails = createAsyncThunk(
     'widgets/updateWidgetDetails',
     async (data, thunkAPI) => {
-        const { widgetId } = data; 
+        const { widgetId } = data;
         const state = thunkAPI.getState();
         const d = state.widgets.draft;
         const response = await updateDetails(widgetId, {
@@ -93,7 +93,7 @@ const widgetSlice = createSlice({
             benefitTwo: '',
             benefitThree: '',
             frequency: 'Quarterly',
-            billing: [{type: 'Monthly Billing Program', allowed: false}, {type: 'Annual Billing', allowed: false}, {type: 'Billed After Service', allowed: false}],
+            billing: [{ type: 'Monthly Billing Program', allowed: false }, { type: 'Annual Billing', allowed: false }, { type: 'Billed After Service', allowed: false }],
             image: null,
             covered: [],
             notCovered: [],
@@ -106,13 +106,13 @@ const widgetSlice = createSlice({
         updateDraft: (state, action) => {
             const newData = action.payload;
 
-            state.draft = { 
-                ...state.draft, 
+            state.draft = {
+                ...state.draft,
                 ...newData
             }
         },
         updateConfig: (state, action) => {
-            state.selectedWidget.pricingStrategy.config =  action.payload;
+            state.selectedWidget.pricingStrategy.config = action.payload;
         },
         removeTarget: (state, action) => {
             const newTargets = state.draft.targets.filter(target => target != action.payload.tag)
@@ -137,6 +137,19 @@ const widgetSlice = createSlice({
         updateBase: (state, action) => {
             state.selectedWidget.pricingStrategy.config.base = action.payload;
             state.selectedWidget.pricingStrategy.startsAt = action.payload;
+        },
+        updateConfigTargets: (state, action) => {
+            const targetConfig = state.selectedWidget.pricingStrategy.config.parameterConfig.find(parameter => parameter.name === 'How much more would you like to charge for each possible target they say they are seeing?');
+            if (targetConfig) {
+                const index = state.selectedWidget.pricingStrategy.config.parameterConfig.indexOf(targetConfig);
+                const newOptions = action.payload.map(target => {
+                    return { option: target, value: 0 }
+                });
+                console.log(newOptions)
+
+                state.selectedWidget.pricingStrategy.config.parameterConfig[index].options = newOptions
+            }
+
         }
     },
     extraReducers: (builder) => {
@@ -188,5 +201,9 @@ export const selectIsWidgetLoaded = state => state.widgets.selectedWidget != nul
 export const selectConfig = state => state.widgets.selectedWidget ? state.widgets.selectedWidget.pricingStrategy.config : null;
 export const selectConfigParameters = state => state.widgets.selectedWidget != null ? state.widgets.selectedWidget.pricingStrategy.config.parameterConfig : null;
 export const selectBase = state => state.widgets.selectedWidget != null ? state.widgets.selectedWidget.pricingStrategy.config.base : null;
-export const { updateDraft, removeTarget, toggleBilling, removeCovered, removeNotCovered, removeTargetFull, updateConfig, updateBase } = widgetSlice.actions;
+export const selectTargetOptionList = state => state.widgets.selectedWidget != null ? state.widgets.selectedWidget.pricingStrategy.config.parameterConfig.find(parameter => parameter.name === 'How much more would you like to charge for each possible target they say they are seeing?').options : null;
+export const { updateDraft, removeTarget, toggleBilling, removeCovered, removeNotCovered, removeTargetFull, updateConfig, updateBase, updateConfigTargets } = widgetSlice.actions;
 export default widgetSlice.reducer;
+
+
+//.pricingStrategy.config.parameterConfig.find(parameter => parameter.name === 'How much more would you like to charge for each possible target they say they are seeing?')
