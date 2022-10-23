@@ -7,7 +7,8 @@ const { updateWidgetDetails } = require('../model/updateWidgetDetails');
 const { updateWidgetProposal } = require('../model/updateWidgetProposal');
 const { deleteWidget } = require('../model/deleteWidget');
 const getWidget = require('../model/getWidget');
-const getUserWidgetsModel = require('../model/getUserWidgets')
+const getUserWidgetsModel = require('../model/getUserWidgets');
+const { publishWidget } = require('../model/publishWidget');
 
 const createWidgetController = async (req, res, next) => {
     try {
@@ -155,6 +156,24 @@ const deleteWidgetController = async (req, res, next) => {
     }
 }
 
+const toggleActiveWidget = async (req, res, next) => {
+    try {
+        const { widgetId } = req.params;
+        await publishWidget(widgetId);
+
+        res.status(200).send({
+            message: 'Widget status successfully updated',
+            data: { widgetId }
+        })
+    } catch (e) {
+        console.log(e)
+        res.status(400).send({
+            message: 'There was a problem publishing the widget',
+            data: {}
+        })
+    }
+}
+
 module.exports = {
     createWidgetController,
     updatePriceStrategy,
@@ -162,5 +181,6 @@ module.exports = {
     updateWidgetProposalController,
     getWidgetByIdController,
     updatePriceStrategyConfigController,
-    deleteWidgetController
+    deleteWidgetController,
+    toggleActiveWidget
 }

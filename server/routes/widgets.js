@@ -8,5 +8,6 @@ router.put('/:widgetId/details', controllers.updateWidgetDetailsController);
 router.put('/:widgetId/proposal', controllers.updateWidgetProposalController);
 router.put('/:widgetId/price-strategy-config', controllers.updatePriceStrategyConfigController)
 router.delete('/:widgetId', controllers.deleteWidgetController)
+router.put('/:widgetId/publish', controllers.toggleActiveWidget)
 
 module.exports = router;
