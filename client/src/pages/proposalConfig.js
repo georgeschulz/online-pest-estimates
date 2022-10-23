@@ -22,13 +22,33 @@ function ProposalConfig() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+    const checkIsValid = () => {
+        let error = 'No Errors';
+        if(covered.length <= 0) {
+            error = 'Please include at least 1 feature to highlight'
+        } else if (notCovered.length <= 0) {
+            error = 'Please include at least 1 feature to highlight is not covered'
+        } else if (legal.length <= 10) {
+            error = 'Please make sure to include your legal information'
+        } else if (targetFull.length <= 0) {
+            error = 'Please include at least one covered target to include on your proposal'
+        }
+
+        return { isValid: error === 'No Errors' ? true : false, error }
+    }
+
     const handleSubmit = async () => {
-        try {
-            dispatch(updateWidgetProposalConfig({widgetId}))
-            dispatch(publishWidget(widgetId))
-            navigate(`/widget-confirmation/${widgetId}/edit`)
-        } catch (err) {
-            console.log(err);
+        const { isValid, error } = checkIsValid()
+        if(isValid) {
+            try {
+                dispatch(updateWidgetProposalConfig({widgetId}))
+                dispatch(publishWidget(widgetId))
+                navigate(`/widget-confirmation/${widgetId}/edit`)
+            } catch (err) {
+                console.log(err);
+            }
+        } else {
+            alert(error)
         }
     }
 
