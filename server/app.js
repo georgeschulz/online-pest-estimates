@@ -8,9 +8,9 @@ const passport = require('passport');
 const session = require('express-session');
 const store = require('./helpers/session');
 const cors = require('cors');
-const morgan = require('morgan');
 
 if(process.env.NODE_ENV != 'production') {
+    const morgan = require('morgan');
     app.use(morgan('tiny'))
 }
 
