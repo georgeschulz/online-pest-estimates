@@ -8,6 +8,7 @@ import MultiLineText from "../components/Inputs/MultiLineText";
 import LargeButton from "../components/buttons/button";
 import { useEffect } from "react";
 import { getWidgetByIdReload } from "../redux/widgetSlice";
+import { publishWidget } from "../redux/widgetSlice";
 
 function ProposalConfig() {
     const { widgetId } = useParams(); 
@@ -24,6 +25,7 @@ function ProposalConfig() {
     const handleSubmit = async () => {
         try {
             dispatch(updateWidgetProposalConfig({widgetId}))
+            dispatch(publishWidget(widgetId))
             navigate(`/widget-confirmation/${widgetId}/edit`)
         } catch (err) {
             console.log(err);

@@ -34,7 +34,7 @@ function Nav({ currentPage }) {
             <div className='flex items-center'>
                 <Link to="/widgets"><span className={`text-lg font-bold mr-4 pb-2 ${currentPage === 'widgets' ? selected : ''}`}>My Widgets</span></Link>
                 <Link to="/training"><span className={`text-lg font-bold mr-4 pb-2 ${currentPage === 'training' ? selected : ''}`}>Training</span></Link>
-                <DropdownMenu closeIcon={gear} openIcon={gearOpen} menuItems={[
+                <DropdownMenu h="8" w="8" closeIcon={gear} openIcon={gearOpen} menuItems={[
                     { label: 'Billing', handler: goToBilling },
                     { label: 'Account', handler: openAccount },
                     { label: 'Logout', handler: logout }

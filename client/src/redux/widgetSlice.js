@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { getUserWidgets } from "../api/userApi";
-import { createWidget, getWidgetById, updateDetails, updateProposal, updateStrategy, updateStrategyConfig, deleteWidgetById } from "../api/widgetApi";
+import { createWidget, getWidgetById, updateDetails, updateProposal, updateStrategy, updateStrategyConfig, deleteWidgetById, toggleActiveWidget } from "../api/widgetApi";
 
 export const getUserWidgetList = createAsyncThunk(
     'widgets/getWidgets',
@@ -83,6 +83,14 @@ export const deleteWidget = createAsyncThunk(
     'widgets/deleteWidget',
     async (widgetId) => {
         const response = await deleteWidgetById(widgetId);
+        return response.data;
+    }
+)
+
+export const publishWidget = createAsyncThunk(
+    'widget/publishWidet',
+    async (widgetId) => {
+        const response = await toggleActiveWidget(widgetId);
         return response.data;
     }
 )
@@ -197,6 +205,12 @@ const widgetSlice = createSlice({
 
         builder.addCase(deleteWidget.fulfilled, (state, action) => {
             state.widgets = state.widgets.filter(widget => widget.widget_id != action.payload.data.widgetId)
+        })
+
+        builder.addCase(publishWidget.fulfilled, (state, action) => {
+            const widgetToUpdate = state.widgets.find(widget => widget.widget_id == action.payload.data.widgetId);
+            const index = state.widgets.indexOf(widgetToUpdate);
+            state.widgets[index].active = !state.widgets[index].active;
         })
     }
 })

@@ -29,3 +29,7 @@ export const getWidgetById = async (widgetId) => {
 export const deleteWidgetById = async (widgetId) => {
     return await axios.delete(`${endpoint}/widget/${widgetId}`);
 }
+
+export const toggleActiveWidget = async (widgetId) => {
+    return await axios.put(`${endpoint}/widget/${widgetId}/publish`);
+}
