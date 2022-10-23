@@ -24,30 +24,33 @@ function ColorPicker({name, label, state, setState}) {
     return (
         <div className="mb-6 flex flex-wrap">
             <p className="w-full text-xl font-roboto font-semibold ml-6 mb-2">{label}</p>
-            <div 
-                className="rounded-full w-16 h-16 border-4 border-black mr-4" 
-                style={{'backgroundColor': state.hex}}
-                onClick={handleClick}
-            ></div>
-            {displayColorPicker 
-                ? <div style={ popover }>
-                    <div style={ cover } onClick={ handleClick }/>
-                    <ChromePicker
-                        color={state}
-                        onChangeComplete={setState}
-                    />
-                  </div> 
-                : null }
+            <div className="flex">
+                <div 
+                    className="rounded-full w-16 h-16 border-4 border-black mr-4 shrink-0" 
+                    style={{'backgroundColor': state.hex}}
+                    onClick={handleClick}
+                ></div>
+                {displayColorPicker 
+                    ? <div style={ popover }>
+                        <div style={ cover } onClick={ handleClick }/>
+                        <ChromePicker
+                            color={state}
+                            onChangeComplete={setState}
+                        />
+                    </div> 
+                    : null }
 
-            <SingleLineText
-                name={name}
-                label={label}
-                type="text"
-                state={state.hex}
-                setState={setState}
-                helper="#Ae3031"
-                showLabel={false}
-            />
+                <SingleLineText
+                    name={name}
+                    label={label}
+                    type="text"
+                    state={state.hex}
+                    setState={setState}
+                    helper="#Ae3031"
+                    showLabel={false}
+                    size="color"
+                />
+            </div>
         </div>
     )
 }

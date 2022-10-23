@@ -15,6 +15,10 @@ function SingleLineText({name, label, type = 'text', state = "", setState, helpe
             customStyles += 'py-2 px-8 text-xl'
             labelStyles += "text-xl font-roboto font-semibold ml-6"
             break;
+        case "color":
+            customStyles += 'py-4 px-4 text-xl';
+            labelStyles += 'text-lg font-semibold font-roboto'
+            break;
         default:
             customStyles += 'py-4 px-9 text-2xl';
             labelStyles += "text-xl font-roboto font-semibold ml-6"

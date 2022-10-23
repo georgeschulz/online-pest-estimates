@@ -81,7 +81,7 @@ const authSlice = createSlice({
         loginIsPending: false,
         user: {},
         passwordField: '',
-        isSetup: false,
+        isSetup: true,
         businessInfo: {},
         getUserDetailsIsPending: false,
         accountMessage: { isVisible: false, message: '', isSuccess: false }
@@ -150,7 +150,7 @@ const authSlice = createSlice({
         builder.addCase(signUpLocal.fulfilled, (state, action) => {
             state.isAuth = true;
             state.user = action.payload.data;
-
+            console.log(action.payload.data)
             if(action.payload.data.is_setup) {
                 state.isSetup = true;
             }

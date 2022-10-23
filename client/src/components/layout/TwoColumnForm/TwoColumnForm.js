@@ -9,7 +9,7 @@ function TwoColumnForm({ emoji, header, instructions, children }) {
                     <img src={emoji} className="mb-8 w-24" />
                     <p className="font-poppins text-6xl font-bold mb-6">{header}</p>
                     <p className="text-2xl font-roboto text-lightmatte">{instructions}</p>
-                    <div id="signup-local-form" className="w-3/5 py-10">
+                    <div id="signup-local-form" className=" xl:w-4/5 2xl:w-3/5 md:w-full lg:w-full py-10 sm:w-full">
                         {children}
                     </div>
                 </div>
