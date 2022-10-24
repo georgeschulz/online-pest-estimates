@@ -1,6 +1,6 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
-//const GoogleStrategy = require('passport-google-oidc');
+const GoogleStrategy = require('passport-google-oidc');
 const bcrypt = require('bcrypt');
 const createUser = require('../model/createUser');
 const getUserById = require('../model/getUserById');
@@ -29,11 +29,11 @@ passport.use(new LocalStrategy(
     }
 }));
 
-/*
+
 passport.use(new GoogleStrategy({
     clientID: process.env['GOOGLECLIENTID'],
     clientSecret: process.env['GOOGLECLIENTSECRET'],
-    callbackURL: process.env.NODE_ENV === 'production' ? 'https://onlinepestestimates.herokuapp.com/' : 'http://localhost:3000/signup/2'
+    callbackURL: process.env.NODE_ENV === 'production' ? 'https://onlinepestestimates.herokuapp.com/signup/2' : 'http://localhost:3000/signup/2'
 },
 function (issuer, profile, cb) {
     //check to see if a user with these google credentials exists
@@ -47,7 +47,7 @@ function (issuer, profile, cb) {
             //create a user with the info from google and a timestamp. When this happens, we need to collect more complete user information before going through the signup flow
             db.query('INSERT INTO customers (email, first_name, last_name) VALUES ($1, $2, $3) RETURNING user_id', [profile.emails[0].value, profile.name.givenName, profile.name.familyName], function (err, result) {
                 if (err) { return cb(err) }
-                let id = result.rows[0].customer_id;
+                let id = result.rows[0].user_id;
                 //create and link their google credentials in the federated credentials table (which stores social logins)
                 db.query('INSERT INTO federated_credentials (customer_id, provider, subject) VALUES ($1, $2, $3)', [
                     id,
@@ -64,10 +64,10 @@ function (issuer, profile, cb) {
             })
         } else {
             //the google account has previously logged in to the app. Get the linked user
-            return cb(null, {customerID: cred.rows[0].userId})
+            return cb(null, {userId: cred.rows[0].userId})
         } 
     })
-})); */
+})); 
 
 passport.serializeUser(function(user, done) { 
     done(null, user.userId);
