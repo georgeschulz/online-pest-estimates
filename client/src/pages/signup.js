@@ -27,7 +27,8 @@ function Signup() {
         (async () => {
             try {
                 if(process.env.NODE_ENV === 'production') {
-                    window.location.href = 'https://onlinepestestimates.herokuapp.com/auth/login-google'
+                    await fetch('http://onlinepestestimates.herokuapp.com/auth/login-google')
+                    //window.location.href = 'http://onlinepestestimates.herokuapp.com/auth/login-google'
                 } else {
                     window.location.href = 'http://localhost:4000/auth/login-google'
                 }

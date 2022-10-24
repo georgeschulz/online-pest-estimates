@@ -6,12 +6,6 @@ const loginLocalValidator = require('../helpers/loginLocalValidator');
 router.post('/register', controllers.signupLocal);
 router.post('/login', loginLocalValidator, passport.authenticate('local'), controllers.signinLocal);
 router.post('/logout', controllers.logout);
-router.post('/login-google', () => {
-    try {
-        passport.authenticate('google', {scope: ['email', 'profile']})
-    } catch (err) {
-        console.log(err)
-    }
-});
+router.post('/login-google', passport.authenticate('google', {scope: ['email', 'profile']}));
 
-module.exports = router;
+module.exports = router; 
