@@ -45,6 +45,7 @@ export const signInGoogle = createAsyncThunk(
     'user/signin-google',
     async(thunkAPI) => {
         const response = await onGoogleSignIn();
+        console.log(response)
         return response.data;
     }
 )

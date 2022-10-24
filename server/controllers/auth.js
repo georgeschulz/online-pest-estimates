@@ -37,6 +37,7 @@ passport.use(new GoogleStrategy({
 },
 function (issuer, profile, cb) {
     //check to see if a user with these google credentials exists
+    console.log('hit')
     db.query('SELECT * FROM federated_credentials WHERE provider = $1 AND subject = $2', [
         issuer,
         profile.id
