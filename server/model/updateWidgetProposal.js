@@ -7,7 +7,7 @@ module.exports.updateWidgetProposal = async (widgetId, legal, covered, notCovere
         const { rows: proposal} = await db.query(`
             UPDATE proposal_templates SET
                 legal = $1,
-                covered_pests = $2
+                coveredPests = $2
             WHERE widget_id = $3
             RETURNING *
         `, [legal, targetFull.join(), widgetId]);

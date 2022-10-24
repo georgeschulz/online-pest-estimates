@@ -14,7 +14,13 @@ module.exports = async (widgetId) => {
         FROM proposal_templates LEFT JOIN highlighted_features ON highlighted_features.proposal_template_id = proposal_templates.proposal_template_id WHERE widget_id = $1`, 
         [widgetId]);
 
-        const { legal, coveredPests, proposal_template_id } = proposal[0];
+        const { legal, proposal_template_id } = proposal[0];
+
+        let covered = ''
+
+        if(proposal[0].coveredPests) {
+            covered = proposal[0].coveredPests.split(',')
+        }
         
         const { rows: pricingStrategy } = await db.query(`SELECT * FROM pricing_strategies WHERE widget_id = $1`, [widgetId])
         const { rows: targetQuery }  = await db.query(`SELECT * FROM targets WHERE widget_id = $1`, [widgetId]);
@@ -24,7 +30,7 @@ module.exports = async (widgetId) => {
             widgetId, 
             widgetBasic[0], 
             details[0], 
-            { legal, covered_pests: coveredPests.split(','), proposal_template_id }, 
+            { legal, covered_pests: covered, proposal_template_id }, 
             pricingStrategy[0], 
             benefitQuery.map(benefit => benefit.text), 
             targetQuery.map(target => target.name),
