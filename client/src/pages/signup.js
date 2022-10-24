@@ -23,6 +23,20 @@ function Signup() {
         }
     }, [dispatch])
 
+    const handleGoogleClick = () => {
+        (async () => {
+            try {
+                if(process.env.NODE_ENV === 'production') {
+                    window.location.href = 'https://onlinepestestimates.herokuapp.com/auth/login-google'
+                } else {
+                    window.location.href = 'http://localhost:4000/auth/login-google'
+                }
+            } catch (err) {
+                console.log(err)
+            }
+        })();
+    }
+
 
     return (
         <div>
@@ -31,7 +45,7 @@ function Signup() {
                 header="Signup"
                 instructions="Let’s start by setting up a login for your account. You and coworkers can login into your widget dashboard to create and update pricing widgets."
             >
-                <LargeButton size={5} isPrimary={false} className="mb-4" handleClick={() => dispatch(signInGoogle())}>
+                <LargeButton size={5} isPrimary={false} className="mb-4" handleClick={() => handleGoogleClick()}>
                     <img src={googleIcon} className="w-6 h-6 mr-2" />
                     <span>Sign Up with Google</span>
                 </LargeButton>
