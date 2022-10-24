@@ -8,7 +8,7 @@ module.exports = async (widgetId) => {
         const { rows: proposal } = await db.query(`SELECT 
             proposal_templates.proposal_template_id,
             proposal_templates.legal,
-            proposal_templates.coveredPests,
+            proposal_templates.coveredpests,
             highlighted_features.text,
             highlighted_features.is_included
         FROM proposal_templates LEFT JOIN highlighted_features ON highlighted_features.proposal_template_id = proposal_templates.proposal_template_id WHERE widget_id = $1`, 
