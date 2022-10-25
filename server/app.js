@@ -11,7 +11,7 @@ const cors = require('cors');
 
 if(process.env.NODE_ENV != 'production') {
     const morgan = require('morgan');
-    app.use(morgan('tiny'))
+    app.use(morgan('dev'))
 }
 
 //routers

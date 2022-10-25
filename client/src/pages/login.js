@@ -17,13 +17,27 @@ function Login() {
     const loginError = useSelector(selectLoginError)
     const loginIsPending = useSelector(selectLoginIsPending);
 
+    const handleGoogleClick = () => {
+        (async () => {
+            try {
+                if(process.env.NODE_ENV === 'production') {
+                    window.location.href = 'https://onlinepestestimates.herokuapp.com/auth/login-google'
+                } else {
+                    window.location.href = 'http://localhost:4000/auth/login-google'
+                }
+            } catch (err) {
+                console.log(err)
+            }
+        })();
+    }
+
     return (
         <TwoColumnForm
             emoji={clapping}
             header="Login"
             instructions="Welcome back! Please login with either Google or your email. Please make sure to use the login type that you used before."
         >
-            <LargeButton size={5} isPrimary={false} className="mb-4">
+            <LargeButton size={5} isPrimary={false} className="mb-4" handleClick={() => handleGoogleClick()}>
                 <img src={googleIcon} className="w-6 h-6 mr-2" />
                 <span>Sign In with Google</span>
             </LargeButton>
