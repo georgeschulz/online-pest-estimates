@@ -33,7 +33,7 @@ passport.use(new LocalStrategy(
 passport.use(new GoogleStrategy({
     clientID: process.env['GOOGLECLIENTID'],
     clientSecret: process.env['GOOGLECLIENTSECRET'],
-    callbackURL: process.env.NODE_ENV === 'production' ? 'https://onlinepestestimates.herokuapp.com/signup/2' : 'http://localhost:3000/signup/2'
+    callbackURL: process.env.NODE_ENV === 'production' ? 'https://onlinepestestimates.herokuapp.com/auth/recieve-google' : 'http://localhost:4000/auth/recieve-google'
 },
 function (issuer, profile, cb) {
     //check to see if a user with these google credentials exists
@@ -69,6 +69,14 @@ function (issuer, profile, cb) {
         } 
     })
 })); 
+
+const recieveGoogleRedirect = (req, res) => {
+    if(process.env.NODE_ENV === 'production') {
+        res.redirect('/signup/2')
+    } else {
+        res.redirect('http://localhost:3000/signup/2');
+    }
+}
 
 passport.serializeUser(function(user, done) { 
     done(null, user.userId);
@@ -132,5 +140,6 @@ const logout = (req, res, next) => {
 module.exports = {
     signupLocal,
     signinLocal,
-    logout
+    logout,
+    recieveGoogleRedirect
 }
