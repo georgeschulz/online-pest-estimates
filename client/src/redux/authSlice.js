@@ -32,6 +32,14 @@ export const getLoggedInUser = createAsyncThunk(
     }
 )
 
+export const checkLoggedIn = createAsyncThunk(
+    'user/checkLoggedIn',
+    async(thunkAPI) => {
+        const response = await getUser();
+        return response.data;
+    }
+)
+
 export const signUpLocal = createAsyncThunk(
     'user/signup',
     async(signupData, thunkAPI) => {
@@ -151,10 +159,22 @@ const authSlice = createSlice({
         builder.addCase(signUpLocal.fulfilled, (state, action) => {
             state.isAuth = true;
             state.user = action.payload.data;
-            console.log(action.payload.data)
             if(action.payload.data.is_setup) {
                 state.isSetup = true;
             }
+        })
+
+        builder.addCase(checkLoggedIn.fulfilled, (state, action) => {
+            state.isAuth = true;
+            state.user = action.payload.data;
+            if(action.payload.data.is_setup) {
+                state.isSetup = true;
+            }
+        })
+
+        builder.addCase(checkLoggedIn.rejected, (state, action) => {
+            alert('rejected')
+            window.localation.href = "/" 
         })
 
         builder.addCase(addBusinessInfo.fulfilled, (state, action) => {

@@ -18,6 +18,7 @@ import Details from './pages/details';
 import Pricing from './pages/pricing';
 import ProposalConfig from './pages/proposalConfig';
 import Code from './pages/code';
+import GoogleAuth from './pages/googleAuth';
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
           <Route element={<RestrictedRoutes />}>
             <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/authorize" element={<GoogleAuth />} />
             <Route path="/signup/1" element={<Signup />} />
           </Route>
           <Route element={<PrivateRoutes />}>
