@@ -5,6 +5,7 @@ const bcrypt = require('bcrypt');
 const createUser = require('../model/createUser');
 const getUserById = require('../model/getUserById');
 const getAuthCredentials = require('../model/getAuthCredentials');
+const db = require('../model/db');
 
 passport.use(new LocalStrategy(
     {usernameField: 'email', passwordField: 'password'},
@@ -45,12 +46,14 @@ function (issuer, profile, cb) {
         if (err) { return cb(err) }
         //if we can't find the user, make a new user
         if (cred.rowCount === 0) {
+            console.log('none found')
             //create a user with the info from google and a timestamp. When this happens, we need to collect more complete user information before going through the signup flow
-            db.query('INSERT INTO customers (email, first_name, last_name) VALUES ($1, $2, $3) RETURNING user_id', [profile.emails[0].value, profile.name.givenName, profile.name.familyName], function (err, result) {
+            db.query('INSERT INTO users (email) VALUES ($1) RETURNING user_id', [profile.emails[0].value], function (err, result) {
+                console.log('insert')
                 if (err) { return cb(err) }
                 let id = result.rows[0].user_id;
                 //create and link their google credentials in the federated credentials table (which stores social logins)
-                db.query('INSERT INTO federated_credentials (customer_id, provider, subject) VALUES ($1, $2, $3)', [
+                db.query('INSERT INTO federated_credentials (user_id, provider, subject) VALUES ($1, $2, $3)', [
                     id,
                     issuer,
                     profile.id
@@ -60,12 +63,14 @@ function (issuer, profile, cb) {
                     let user = {
                         userId: id.toString()             
                     };
+                    console.log(user)
                     return cb(null, user);
                 })
             })
         } else {
             //the google account has previously logged in to the app. Get the linked user
-            return cb(null, {userId: cred.rows[0].userId})
+            console.log({userId: cred.rows[0].user_id})
+            return cb(null, {userId: cred.rows[0].user_id})
         } 
     })
 })); 
@@ -79,6 +84,7 @@ const recieveGoogleRedirect = (req, res) => {
 }
 
 passport.serializeUser(function(user, done) { 
+    console.log(user)
     done(null, user.userId);
 })
 
