@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addBusinessInfo, selectHasBusinessDetails } from "../redux/authSlice";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { createSession } from "../redux/billingSlice";
 
 function Biz() {
     const [name, setName] = useState('');
@@ -20,10 +21,12 @@ function Biz() {
     const naviate = useNavigate();
 
     useEffect(() => {
-        console.log(hasBusinessDetails)
-        if(hasBusinessDetails) {
-            naviate('/widgets')
-        }
+        (async () => {
+            if(hasBusinessDetails) {
+                const url = await dispatch(createSession())
+                window.location.href = url.payload.data;
+            }
+        })();
     }, [dispatch, hasBusinessDetails])
 
     return (

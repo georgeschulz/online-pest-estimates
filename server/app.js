@@ -18,6 +18,7 @@ if(process.env.NODE_ENV != 'production') {
 const authRouter = require('./routes/auth');
 const userRouter = require('./routes/user');
 const widgetRouter = require('./routes/widgets');
+const billingRouter = require('./routes/billing');
 
 app.use(cors({ credentials: true, origin: 'http://localhost:3000' }))
 app.use(express.static('../client/build'));
@@ -45,6 +46,7 @@ require('./controllers/auth');
 app.use('/auth', express.json(), authRouter);
 app.use('/user', express.json(), userRouter);
 app.use('/widget', express.json(), widgetRouter)
+app.use('/billing', express.json(), billingRouter);
 
 //general path for getting static pages
 app.get("/*", (req, res) => {
