@@ -5,3 +5,7 @@ import axios from 'axios';
 export const createStripeSession = async () => {
     return await axios.post(`${endpoint}/billing/create-session`);
 }
+
+export const getStripePortal = async (route) => {
+    return await axios.post(`${endpoint}/billing/create-portal-session`, {route});
+}

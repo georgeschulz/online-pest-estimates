@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 import { selectBusinessName, selectPhone, selectHexPrimary, selectHexSecondary, setName, setPhone, setHexPrimary, setHexSecondary, setEmail, setPasswordField } from "../redux/authSlice";
 import Loading from "../components/loading/loading";
 import UpdateMessage from "../components/notifications/UpdateMessage";
+import { getStripePortralLink } from "../redux/billingSlice";
 
 function Settings() {
     const styles = { 'minWidth': '500px' }
@@ -49,6 +50,15 @@ function Settings() {
             email: email,
             password: passwordField
         }))
+    }
+
+    const handleStripePortalRedirect = async () => {
+        try {
+            const response = await dispatch(getStripePortralLink({route: 'settings'}))
+            window.location.href = response.payload.data;
+        } catch (e) {
+            console.log(e)
+        }
     }
 
     return (
@@ -144,7 +154,7 @@ function Settings() {
                 <div className="w-full pr-48 py-4">
                     <h2 className="text-2xl font-semibold font-poppins mb-1">Billing</h2>
                     <p className="mb-1">Click below to manage your account’s billing information and view your order history.</p>
-                    <LargeButton size={0}>Open Billing</LargeButton>
+                    <LargeButton handleClick={() => handleStripePortalRedirect()} size={0}>Open Billing</LargeButton>
                 </div>
             </div>
         </ApplicationMainLayout>

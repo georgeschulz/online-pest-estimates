@@ -5,14 +5,20 @@ import gear from '../../../assets/gear.png'
 import gearOpen from '../../../assets/gear-open.png'
 import { useDispatch } from 'react-redux';
 import { deauthorize } from '../../../redux/authSlice';
+import { getStripePortralLink } from '../../../redux/billingSlice';
 
 function Nav({ currentPage }) {
     const selected = 'border-b-4 border-primary '
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const goToBilling = () => {
-        alert('Go to stripe billing!');
+    const goToBilling = async () => {
+        try {
+            const response = await dispatch(getStripePortralLink({route: 'widgets'}))
+            window.location.href = response.payload.data;
+        } catch (e) {
+            console.log(e)
+        }
     }
 
     const openAccount = () => {

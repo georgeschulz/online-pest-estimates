@@ -3,6 +3,7 @@ const { activateUser } = require('../model/activateUser');
 const { getUserByStripeCustomer } = require('../model/getUserByStripeCustomer');
 const { linkCustomerToStripe } = require('../model/linkCustomerToStripe');
 const { updateUserTerm } = require('../model/updateUserTerm');
+const getUserById = require('../model/getUserById');
 
 const stripe = require('stripe')(process.env.STRIPEKEY)
 
@@ -29,7 +30,30 @@ const createStripeSession = async (req, res) => {
     })
 }
 
-const fulfillInitialOrder = async (req, res) => {
+const createPortalSession = async (req, res) => {
+    try {
+        const { route } = req.body;
+        const user_id = req.user.user_id;
+        const user = await getUserById(user_id);
+
+        const session = await stripe.billingPortal.sessions.create({
+            customer: user.stripe_customer_id,
+            return_url: process.env.NODE_ENV === 'production' ? `https://onlinepestestimates.herokuapp.com/${route}` : `http://localhost:3000/${route}`
+        })
+        res.status(200).send({
+            message: 'Successfully created stripe portal session',
+            data: session.url
+        })
+    } catch (error) {
+        console.log(error)
+        res.status(404).send({
+            message: 'Error creating portal session',
+            data: {}
+        })
+    }
+}
+
+const fullfillOrder = async (req, res) => {
     let event;
     const endpointSecret = 'whsec_97b3fa91a298dc55a5024b690534e4bdb2f95c984b1d99a3fa720eef73076b12';
     const sig = req.headers['stripe-signature'];
@@ -44,8 +68,7 @@ const fulfillInitialOrder = async (req, res) => {
     try {
         switch (event.type) {
             case 'customer.subscription.deleted':
-                subscription = event.data.object;
-                status = subscription.status;
+                console.log('DELETED!')
                 // Then define and call a method to handle the subscription deleted.
                 // handleSubscriptionDeleted(subscriptionDeleted);
                 break;
@@ -57,13 +80,13 @@ const fulfillInitialOrder = async (req, res) => {
             case 'invoice.paid':
                 const session = event.data.object;
                 const subscriptionId = session.subscription;
-                const subscription = stripe.subscriptions.retrieve(subscriptionId);
+                const subscription = await stripe.subscriptions.retrieve(subscriptionId);
                 const userId = await getUserByStripeCustomer(subscription.customer);
                 //create a conditional statement based on whether it is the first payment or not
                 if(session.billing_reason === 'subscription_create') {
-                    activateUser(session, subscription, userId)
+                    await activateUser(session, subscription, userId)
                 } else {
-                    updateUserTerm(session, subscription, userId);
+                    await updateUserTerm(session, subscription, userId);
                 }
         } 
     } catch (err) {
@@ -74,5 +97,6 @@ const fulfillInitialOrder = async (req, res) => {
 
 module.exports = {
     createStripeSession,
-    fulfillInitialOrder
+    fullfillOrder,
+    createPortalSession
 }
