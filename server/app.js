@@ -8,6 +8,7 @@ const passport = require('passport');
 const session = require('express-session');
 const store = require('./helpers/session');
 const cors = require('cors');
+app.use(express.urlencoded({ extended: true }));
 
 if(process.env.NODE_ENV != 'production') {
     const morgan = require('morgan');
@@ -46,7 +47,7 @@ require('./controllers/auth');
 app.use('/auth', express.json(), authRouter);
 app.use('/user', express.json(), userRouter);
 app.use('/widget', express.json(), widgetRouter)
-app.use('/billing', express.json(), billingRouter);
+app.use('/billing', billingRouter);
 
 //general path for getting static pages
 app.get("/*", (req, res) => {
