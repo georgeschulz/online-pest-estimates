@@ -4,6 +4,7 @@ const { getUserByStripeCustomer } = require('../model/getUserByStripeCustomer');
 const { linkCustomerToStripe } = require('../model/linkCustomerToStripe');
 const { updateUserTerm } = require('../model/updateUserTerm');
 const getUserById = require('../model/getUserById');
+const { cancelPlan } = require('../model/cancelPlan');
 
 const stripe = require('stripe')(process.env.STRIPEKEY)
 
@@ -69,8 +70,8 @@ const fullfillOrder = async (req, res) => {
         switch (event.type) {
             case 'customer.subscription.deleted':
                 console.log('DELETED!')
-                // Then define and call a method to handle the subscription deleted.
-                // handleSubscriptionDeleted(subscriptionDeleted);
+                const userToCancel = await getUserByStripeCustomer(event.data.object.customer);
+                await cancelPlan(userToCancel);
                 break;
             case 'checkout.session.completed':
                 const clientReferenceId = event.data.object.client_reference_id;
