@@ -20,7 +20,7 @@ const createStripeSession = async (req, res) => {
             }
         ],
         mode: 'subscription',
-        success_url: process.env.NODE_ENV === 'production' ? 'https://onlinepestestimates.herokuapp.com/authorize' : 'http://localhost:3000/authorize',
+        success_url: process.env.NODE_ENV === 'production' ? 'https://onlinepestestimates.herokuapp.com/authorize?goto=widgets' : 'http://localhost:3000/authorize?goto=widgets',
         cancel_url: process.env.NODE_ENV === 'production' ? 'https://onlinepestestimates.herokuapp.com/login' : 'http://localhost:3000/login',
         client_reference_id: user_id
     });

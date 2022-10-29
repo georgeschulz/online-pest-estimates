@@ -76,10 +76,11 @@ function (issuer, profile, cb) {
 })); 
 
 const recieveGoogleRedirect = (req, res) => {
+    console.log('recieved')
     if(process.env.NODE_ENV === 'production') {
-        res.redirect('/signup/2')
+        res.redirect('/authorize?goto=signup/2')
     } else {
-        res.redirect('http://localhost:3000/signup/2');
+        res.redirect('http://localhost:3000/authorize?goto=signup/2');
     }
 }
 

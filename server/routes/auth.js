@@ -10,7 +10,7 @@ router.get('/login-google', passport.authenticate('google', {scope: ['email', 'p
 router.get('/recieve-google', passport.authenticate('google', {
     failureRedirect: '/signup', 
     failureMessage: true, 
-    successRedirect: process.env.NODE_ENV === 'production' ? '/authorize' : 'http://localhost:3000/authorize'
+    successRedirect: process.env.NODE_ENV === 'production' ? '/authorize?goto=signup/2' : 'http://localhost:3000/authorize?goto=signup/2'
 }));
 
 module.exports = router; 

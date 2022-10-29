@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux"
-import { getLoggedInUser } from "../redux/authSlice";
+import { getLoggedInUser, selectUnpaid, selectUser } from "../redux/authSlice";
 import { useSelector } from "react-redux";
 import ApplicationMainLayout from "../components/layout/ApplicationMainLayout/ApplicationMainLayout";
 import { useEffect } from "react";
@@ -14,17 +14,25 @@ function Widgets() {
     const navigate = useNavigate();
     const widgets = useSelector(selectUserWidgets);
     const isLoading = useSelector(selectIsWidgetListLoading)
+    const hasNotPaid = useSelector(selectUnpaid)
+    const user = useSelector(selectUser)
 
     useEffect(() => {
         (async () => {
             try {
                 const response = await dispatch(getUserWidgetList())
-                dispatch(getLoggedInUser())
+                await dispatch(getLoggedInUser())
             } catch (err) {
                 console.log(err)
             }
         })();
-    }, [dispatch])
+    }, [])
+
+    useEffect(() => {
+        if(hasNotPaid && Object.keys(user).length > 0) {
+            navigate('/signup/2')
+        }
+    }, [user, dispatch, hasNotPaid])
 
     const handleClick = () => {
         (async () => {

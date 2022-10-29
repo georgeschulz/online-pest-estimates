@@ -27,10 +27,10 @@ function App() {
         <Routes>
           <Route path="/terms" element={<Terms />} />
           <Route path="/privacy" element={<Privacy />} />
+          <Route path="/authorize" element={<GoogleAuth />} />
           <Route element={<RestrictedRoutes />}>
             <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/authorize" element={<GoogleAuth />} />
             <Route path="/signup/1" element={<Signup />} />
           </Route>
           <Route element={<PrivateRoutes />}>

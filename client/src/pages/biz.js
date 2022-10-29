@@ -5,7 +5,7 @@ import { useState } from "react";
 import LargeButton from "../components/buttons/button";
 import ColorPicker from "../components/Inputs/ColorPicker";
 import { useDispatch, useSelector } from "react-redux";
-import { addBusinessInfo, selectHasBusinessDetails } from "../redux/authSlice";
+import { addBusinessInfo, getLoggedInUser, selectHasBusinessDetails } from "../redux/authSlice";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { createSession } from "../redux/billingSlice";
@@ -28,6 +28,12 @@ function Biz() {
             }
         })();
     }, [dispatch, hasBusinessDetails])
+
+    useEffect(() => {
+        (async () => {
+            await dispatch(getLoggedInUser())
+        })();
+    }, [])
 
     return (
         <TwoColumnForm 

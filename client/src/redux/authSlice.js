@@ -166,9 +166,11 @@ const authSlice = createSlice({
 
         builder.addCase(checkLoggedIn.fulfilled, (state, action) => {
             state.isAuth = true;
+            localStorage.setItem('isAuth', true)
             state.user = action.payload.data;
             if(action.payload.data.is_setup) {
                 state.isSetup = true;
+                window.location.href = '/widgets';
             }
         })
 
@@ -177,13 +179,18 @@ const authSlice = createSlice({
         })
 
         builder.addCase(addBusinessInfo.fulfilled, (state, action) => {
+            localStorage.setItem('isAuth', true)
             state.businessInfo = action.payload.data;
             state.isSetup = true;
         })
 
         builder.addCase(getLoggedInUser.fulfilled, (state, action) => {
+            localStorage.setItem('isAuth', true)
             state.getUserDetailsIsPending = false;
             state.user = action.payload.data;
+            if(action.payload.data.is_setup) {
+                state.isSetup = true;
+            }
         });
 
         builder.addCase(getLoggedInUser.pending, (state, action) => {
@@ -223,5 +230,6 @@ export const selectPasswordField = state => state.auth.passwordField;
 export const selectEmail = state => state.auth.user.email;
 export const selectAccountMessage = state => state.auth.accountMessage;
 export const selectHasPaid = state => state.auth.user.active;
+export const selectUnpaid = state => (!state.auth.user.active) && state.auth.user != {};
 export const { setName, setHexPrimary, setHexSecondary, setPhone, setPasswordField, setEmail, dismissAccountMessage } = authSlice.actions;
 export default authSlice.reducer;
