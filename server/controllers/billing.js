@@ -20,7 +20,7 @@ const createStripeSession = async (req, res) => {
             }
         ],
         mode: 'subscription',
-        success_url: process.env.NODE_ENV === 'production' ? 'https://onlinepestestimates.herokuapp.com/widgets' : 'http://localhost:3000/widgets',
+        success_url: process.env.NODE_ENV === 'production' ? 'https://onlinepestestimates.herokuapp.com/authorize' : 'http://localhost:3000/authorize',
         cancel_url: process.env.NODE_ENV === 'production' ? 'https://onlinepestestimates.herokuapp.com/login' : 'http://localhost:3000/login',
         client_reference_id: user_id
     });
@@ -69,7 +69,6 @@ const fullfillOrder = async (req, res) => {
     try {
         switch (event.type) {
             case 'customer.subscription.deleted':
-                console.log('DELETED!')
                 const userToCancel = await getUserByStripeCustomer(event.data.object.customer);
                 await cancelPlan(userToCancel);
                 break;

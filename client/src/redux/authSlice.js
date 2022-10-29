@@ -90,7 +90,7 @@ const authSlice = createSlice({
         loginIsPending: false,
         user: {},
         passwordField: '',
-        isSetup: true,
+        isSetup: false,
         businessInfo: {},
         getUserDetailsIsPending: false,
         accountMessage: { isVisible: false, message: '', isSuccess: false }
@@ -173,7 +173,6 @@ const authSlice = createSlice({
         })
 
         builder.addCase(checkLoggedIn.rejected, (state, action) => {
-            alert('rejected')
             window.localation.href = "/" 
         })
 
@@ -223,5 +222,6 @@ export const selectUser = state => state.auth.user;
 export const selectPasswordField = state => state.auth.passwordField;
 export const selectEmail = state => state.auth.user.email;
 export const selectAccountMessage = state => state.auth.accountMessage;
+export const selectHasPaid = state => state.auth.user.active;
 export const { setName, setHexPrimary, setHexSecondary, setPhone, setPasswordField, setEmail, dismissAccountMessage } = authSlice.actions;
 export default authSlice.reducer;
