@@ -38,7 +38,6 @@ passport.use(new GoogleStrategy({
 },
 function (issuer, profile, cb) {
     //check to see if a user with these google credentials exists
-    console.log('hit')
     db.query('SELECT * FROM federated_credentials WHERE provider = $1 AND subject = $2', [
         issuer,
         profile.id
@@ -46,10 +45,8 @@ function (issuer, profile, cb) {
         if (err) { return cb(err) }
         //if we can't find the user, make a new user
         if (cred.rowCount === 0) {
-            console.log('none found')
             //create a user with the info from google and a timestamp. When this happens, we need to collect more complete user information before going through the signup flow
             db.query('INSERT INTO users (email) VALUES ($1) RETURNING user_id', [profile.emails[0].value], function (err, result) {
-                console.log('insert')
                 if (err) { return cb(err) }
                 let id = result.rows[0].user_id;
                 //create and link their google credentials in the federated credentials table (which stores social logins)
@@ -63,20 +60,17 @@ function (issuer, profile, cb) {
                     let user = {
                         userId: id.toString()             
                     };
-                    console.log(user)
                     return cb(null, user);
                 })
             })
         } else {
             //the google account has previously logged in to the app. Get the linked user
-            console.log({userId: cred.rows[0].user_id})
             return cb(null, {userId: cred.rows[0].user_id})
         } 
     })
 })); 
 
 const recieveGoogleRedirect = (req, res) => {
-    console.log('recieved')
     if(process.env.NODE_ENV === 'production') {
         res.redirect('/authorize?goto=signup/2')
     } else {
@@ -85,7 +79,6 @@ const recieveGoogleRedirect = (req, res) => {
 }
 
 passport.serializeUser(function(user, done) { 
-    console.log(user)
     done(null, user.userId);
 })
 
