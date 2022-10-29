@@ -728,6 +728,10 @@ video {
   display: grid;
 }
 
+.hidden {
+  display: none;
+}
+
 .aspect-video {
   aspect-ratio: 16 / 9;
 }
@@ -1137,6 +1141,10 @@ video {
   padding: 0.5rem;
 }
 
+.p-6 {
+  padding: 1.5rem;
+}
+
 .px-4 {
   padding-left: 1rem;
   padding-right: 1rem;
@@ -1298,6 +1306,18 @@ video {
   padding-left: 2rem;
 }
 
+.pl-6 {
+  padding-left: 1.5rem;
+}
+
+.pt-3 {
+  padding-top: 0.75rem;
+}
+
+.pl-4 {
+  padding-left: 1rem;
+}
+
 .text-left {
   text-align: left;
 }
@@ -1415,6 +1435,11 @@ video {
 .text-primary {
   --tw-text-opacity: 1;
   color: rgb(106 119 217 / var(--tw-text-opacity));
+}
+
+.text-blue-600 {
+  --tw-text-opacity: 1;
+  color: rgb(37 99 235 / var(--tw-text-opacity));
 }
 
 .underline {
