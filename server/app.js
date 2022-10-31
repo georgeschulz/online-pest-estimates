@@ -49,6 +49,15 @@ app.use('/user', express.json(), userRouter);
 app.use('/widget', express.json(), widgetRouter)
 app.use('/billing', billingRouter);
 
+app.get('/embed/script', (req, res) => {
+    try {
+        res.sendFile(path.join(__dirname, './resources/widget-embeed.js'));
+    } catch (err) {
+        res.status(404).send({message: 'Error getting embed script', data: {}})
+        console.log(err)
+    }
+})
+
 //general path for getting static pages
 app.get("/*", (req, res) => {
     if(process.env.NODE_ENV === 'production') {
