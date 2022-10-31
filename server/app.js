@@ -9,6 +9,7 @@ const session = require('express-session');
 const store = require('./helpers/session');
 const cors = require('cors');
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static('public'));
 
 if(process.env.NODE_ENV != 'production') {
     const morgan = require('morgan');
