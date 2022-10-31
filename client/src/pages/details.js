@@ -11,6 +11,7 @@ import LargeButton from "../components/buttons/button";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { useState } from "react";
+import SimpleFileUpload from 'react-simple-file-upload'
 import UpdateMessage from "../components/notifications/UpdateMessage";
 
 function Details() {
@@ -43,6 +44,10 @@ function Details() {
             }
         })
         return output;
+    }
+
+    const handleFile = (file) => {
+        console.log(file)
     }
 
     useEffect(() => {
@@ -192,6 +197,13 @@ function Details() {
                             state={billing}
                             setState={(e) => dispatch(toggleBilling(e))}
                         />
+                        <div className="upload-wrapper">
+                            <SimpleFileUpload
+                                apiKey="135b85b187ac2b91669b76d8a05c346e"
+                                onSuccess={() => console.log('success')}
+                                preview="false"
+                            />
+                        </div>
                         <LargeButton handleClick={() => handleSubmit()} size={0} className="justify-center">Save</LargeButton>
                     </div>
                     <div className="w-1/2 flex justify-center flex-wrap content-start">
