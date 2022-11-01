@@ -12,6 +12,7 @@ const { publishWidget } = require('../model/publishWidget');
 const { defaultSquareFeetConfig } = require('../model/dataStructures/squareFeetStrategy');
 const { defaultExteriorTimeConfig } = require('../model/dataStructures/exteriorTimeStrategy');
 const { defaultInteriorTimeConfig } = require('../model/dataStructures/interiorTimeStrategy');
+const { createContact } = require('../model/createContact');
 
 const createWidgetController = async (req, res, next) => {
     try {
@@ -183,6 +184,25 @@ const toggleActiveWidget = async (req, res, next) => {
     }
 }
 
+const createContactController = async (req, res) => {
+    try {
+        const { widgetId } = req.params;
+        const { name, email, phone } = req.body;
+        console.log(name)
+        const newContact = await createContact(widgetId, name, email, phone);
+        res.status(201).send({
+            message: 'Contact successfully created',
+            data: newContact
+        })
+    } catch (err) {
+        console.log(err);
+        res.status(400).send({
+            message: 'There was a problem creating the contact',
+            data: {}
+        })
+    }
+}
+
 module.exports = {
     createWidgetController,
     updatePriceStrategy,
@@ -191,5 +211,6 @@ module.exports = {
     getWidgetByIdController,
     updatePriceStrategyConfigController,
     deleteWidgetController,
-    toggleActiveWidget
+    toggleActiveWidget,
+    createContactController
 }

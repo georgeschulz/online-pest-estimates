@@ -21,8 +21,8 @@ const authRouter = require('./routes/auth');
 const userRouter = require('./routes/user');
 const widgetRouter = require('./routes/widgets');
 const billingRouter = require('./routes/billing');
+const publicWidgetRouter = require('./routes/publicWidget');
 
-app.use(cors({ credentials: true, origin: 'http://localhost:3000' }))
 app.use(express.static('../client/build'));
 
 //express session
@@ -45,22 +45,14 @@ app.use(passport.session());
 
 require('./controllers/auth');
 
-app.use('/auth', express.json(), authRouter);
-app.use('/user', express.json(), userRouter);
-app.use('/widget', express.json(), widgetRouter)
-app.use('/billing', billingRouter);
-
-app.get('/embed/script', (req, res) => {
-    try {
-        res.sendFile(path.join(__dirname, './resources/widget-embeed.js'));
-    } catch (err) {
-        res.status(404).send({message: 'Error getting embed script', data: {}})
-        console.log(err)
-    }
-})
+app.use('/auth', cors({ credentials: true, origin: 'http://localhost:3000' }), express.json(), authRouter);
+app.use('/user', cors({ credentials: true, origin: 'http://localhost:3000' }), express.json(), userRouter);
+app.use('/widget', cors({ credentials: true, origin: 'http://localhost:3000' }), express.json(), widgetRouter)
+app.use('/billing',cors ({ credentials: true, origin: 'http://localhost:3000' }), billingRouter);
+app.use('/public-widget', cors(), express.json(), publicWidgetRouter);
 
 //general path for getting static pages
-app.get("/*", (req, res) => {
+app.get("/*", cors({ credentials: true, origin: 'http://localhost:3000' }), (req, res) => {
     if(process.env.NODE_ENV === 'production') {
         res.sendFile(path.join(__dirname, "../client/build", "index.html"), (err) => {
             if(err) {
