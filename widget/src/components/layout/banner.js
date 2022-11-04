@@ -1,7 +1,9 @@
-function Banner({ img }) {
+import defaultBanner from '../../assets/demoBanner.JPG';
+
+function Banner({ img = defaultBanner }) {
     return (
-        <div class="pricing-widget-banner">
-            <img src={img} class="pest-widget-banner" />
+        <div className="pricing-widget-banner">
+            <img src={img} className="pest-widget-banner" />
         </div>
     );
 }

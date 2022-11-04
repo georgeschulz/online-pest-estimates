@@ -12,7 +12,10 @@ const { publishWidget } = require('../model/publishWidget');
 const { defaultSquareFeetConfig } = require('../model/dataStructures/squareFeetStrategy');
 const { defaultExteriorTimeConfig } = require('../model/dataStructures/exteriorTimeStrategy');
 const { defaultInteriorTimeConfig } = require('../model/dataStructures/interiorTimeStrategy');
+const { getProposalTemplate } = require('../model/getProposalTemplate');
 const { createContact } = require('../model/createContact');
+const { createProposal } = require('../model/createProposal');
+const { addProposalFeatures } = require('../model/addProposalFeatures');
 
 const createWidgetController = async (req, res, next) => {
     try {
@@ -188,7 +191,6 @@ const createContactController = async (req, res) => {
     try {
         const { widgetId } = req.params;
         const { name, email, phone } = req.body;
-        console.log(name)
         const newContact = await createContact(widgetId, name, email, phone);
         res.status(201).send({
             message: 'Contact successfully created',
@@ -203,6 +205,40 @@ const createContactController = async (req, res) => {
     }
 }
 
+const createProposalController = async (req, res, next) => {
+    try {
+        //get the widet id so we can get the proposal template
+        const { widgetId } = req.params;
+        //get the pricing and the response id from the request body so we can generate the proposal and link tables
+        const { recurringPrice, setupFee, frequency, billingFrequency, responseId, proposalTemplateId, description, program } = req.body;
+
+        //get the proposal template from proposal_templates table and the highlighted_features
+        const proposalTemplate = await getProposalTemplate(widgetId);
+
+        //create the proposal in the proposals table
+        const newProposal = await createProposal(responseId, proposalTemplateId, setupFee, recurringPrice, description, proposalTemplate[0].legal, billingFrequency, frequency, program);
+
+        //add the highlighted features to the proposal__features table
+        const highlightedFeatures = await addProposalFeatures(newProposal.proposal_id, proposalTemplate);
+
+        res.status(201).send({
+            message: 'Proposal successfully created',
+            data: {
+                ...newProposal,
+                included: highlightedFeatures.filter(feature => feature.is_included),
+                notIncluded: highlightedFeatures.filter(feature => !feature.is_included)
+            }
+        })
+
+    } catch (err) {
+        console.log(err);
+        res.status(400).send({
+            message: 'There was a problem creating the proposal',
+            data: {}
+        })
+    }
+}
+
 module.exports = {
     createWidgetController,
     updatePriceStrategy,
@@ -212,5 +248,6 @@ module.exports = {
     updatePriceStrategyConfigController,
     deleteWidgetController,
     toggleActiveWidget,
-    createContactController
+    createContactController,
+    createProposalController
 }

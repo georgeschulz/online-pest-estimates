@@ -1,6 +1,6 @@
-function ContentContainer({ children }) {
+function ContentContainer({ children, type = 'full' }) {
     return (
-        <div class="pricing-widget-content">
+        <div className={`pricing-widget-content ${type == 'full' ? 'pricing-widget-content-full' : ''}`}>
             {children}
         </div>
     )

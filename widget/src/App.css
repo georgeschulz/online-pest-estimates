@@ -95,15 +95,17 @@
     font-family: 'Poppins';
     font-style: normal;
     font-weight: 700;
-    font-size: 19px;
+    font-size: 18px;
     line-height: 135.19%;
 }
 
 .pricing-widget-pricestart-enlarged {
-    font-size: 28px;
+    font-size: 24px;
 }
 
-.pricing-widget-header, .pricing-widget-pricestart, .pricing-widget-button {
+.pricing-widget-header,
+.pricing-widget-pricestart,
+.pricing-widget-button {
     height: 6%;
 }
 
@@ -127,7 +129,9 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    height: 35%;
+    min-height: 20%;
+    margin-bottom: 20px;
+    ;
 }
 
 .pricing-widget-form-group input {
@@ -165,4 +169,152 @@
 
 .pricing-widget-button:hover {
     background: #5A67C9;
+}
+
+.pricing-widget-button-secondary {
+    background: #FFFFFF;
+    border-radius: 7px;
+    color: #000000;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Poppins', sans-serif;
+    font-size: 20px;
+    width: 100%;
+    cursor: pointer;
+    border: 2px solid #5A67C9;
+}
+
+.pricing-widget-dynamic-form {
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+}
+
+.pricing-widget-multiple-select-options {
+    display: flex;
+    flex-wrap: wrap;
+
+}
+
+.pricing-widget-multipe-select-option {
+    background: #EEEEEE;
+    border: 1px solid #AAA6A6;
+    border-radius: 3px;
+    width: 90px;
+    margin: 8px 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px 2px;
+    cursor: pointer;
+}
+
+.pricing-widget-selected {
+    background: #d5d5d5;
+    border: 1px solid #5A67C9;
+    box-shadow: 0px 0px 2px 2px #5a67c9ab;
+}
+
+.pricing-widget-pricing-container {
+    height: 350px;
+}
+
+.pricing-widget-pricing-highlight {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20.6892px;
+    line-height: 135.19%;
+    margin-bottom: 15px;
+}
+
+.pricing-widget-pricing-summary {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 146.19%;
+}
+
+.pricing-widget-pricing-strikethrough {
+    color: #BF3737;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 135.19%;
+    /* or 20px */
+    margin: 0px 4px;
+    text-decoration-line: line-through;
+}
+
+.pricing-widget-billing-toggler {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.pricing-widget-billing-toggler-button {
+    background: #EEEEEE;
+    border: 1px solid #AAA6A6;
+    border-radius: 2px;
+    color: #000000;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    padding: 15px 20px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.pricing-widget-billing-toggler-label {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    margin-bottom: 5px;
+    color: #000000;
+}
+
+.pricing-widget-discount {
+    font-size: 16px;
+}
+
+.pricing-widget-confirmation-check {
+    width: 100px;
+}
+
+.pricing-widget-confirmation-check-container {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.pricing-widget-confirmed-container {
+    height: 350px;
+}
+
+.pricing-widget-confirmation-header {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 21.6892px;
+    line-height: 135.19%;
+    text-align: center;
+    color: #000000;
+}
+
+.pricing-widget-confirmation-subheader {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 21.6892px;
+    line-height: 135.19%;
+    color: #000000;
 }

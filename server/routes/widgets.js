@@ -9,5 +9,6 @@ router.put('/:widgetId/proposal', controllers.updateWidgetProposalController);
 router.put('/:widgetId/price-strategy-config', controllers.updatePriceStrategyConfigController)
 router.delete('/:widgetId', controllers.deleteWidgetController)
 router.put('/:widgetId/publish', controllers.toggleActiveWidget)
+router.post('/:widgetId/create-proposal', controllers.createProposalController);
 
 module.exports = router;

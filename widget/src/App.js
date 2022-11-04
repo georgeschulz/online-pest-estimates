@@ -1,25 +1,25 @@
 import './App.css';
-import Frame from './components/layout/frame';
-import Banner from './components/layout/banner';
-import demoBanner from './assets/demoBanner.JPG';
-import ContentContainer from './components/layout/contentContainer';
-import BenefitsList from './components/presentational/benefitsList';
+import StartPane from './components/panes/startPane';
+import ContactPane from './components/panes/contactPane';
+import CalculatorPane from './components/panes/calculatorPane';
+import QuotePane from './components/panes/quotePane';
+import SignupConfirmationPane from './components/panes/signupConfirmationPane';
+import EmailedConfirmationPane from './components/panes/emailedConfirmationPane';
+import { useSelector } from 'react-redux';
+import { selectPane } from './redux/paneSlice';
 
 function App() {
+  const pane = useSelector(selectPane);
+
   return (
     <div className="App">
       <header className="App-header">
-        <Frame>
-          <Banner img={demoBanner} />
-          <ContentContainer>
-            <span class="pricing-widget-header flex-row">All in One Program</span>
-            <BenefitsList list={['All in One helps kill bugs', 'Termite control!', 'Rodent Control']} />
-            <span class="pricing-widget-pricestart flex-row">Prices Starting At <span class="pricing-widget-pricestart-enlarged">$75 / Mo</span></span>
-            <div class="pricing-widget-button">
-              <div id="pricing-widget-start-session" class="pricing-widget-button">Get My Quote Online</div>
-            </div>
-          </ContentContainer>
-        </Frame>
+          {pane === 'start' ? <StartPane /> : null}
+          {pane === 'contact' ? <ContactPane /> : null}
+          {pane === 'calculator' ? <CalculatorPane /> : null}
+          {pane === 'quote' ? <QuotePane /> : null}
+          {pane === 'signup-confirmed' ? <SignupConfirmationPane /> : null}
+          {pane === 'emailed-confirmation' ? <EmailedConfirmationPane /> : null}
       </header>
     </div>
   );
