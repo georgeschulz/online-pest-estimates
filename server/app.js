@@ -22,6 +22,7 @@ const userRouter = require('./routes/user');
 const widgetRouter = require('./routes/widgets');
 const billingRouter = require('./routes/billing');
 const publicWidgetRouter = require('./routes/publicWidget');
+const proposalRouter = require('./routes/proposal');
 
 app.use(express.static('../client/build'));
 
@@ -50,6 +51,7 @@ app.use('/user', cors({ credentials: true, origin: 'http://localhost:3000' }), e
 app.use('/widget', cors({ credentials: true, origin: 'http://localhost:3000' }), express.json(), widgetRouter)
 app.use('/billing',cors ({ credentials: true, origin: 'http://localhost:3000' }), billingRouter);
 app.use('/public-widget', cors(), express.json(), publicWidgetRouter);
+app.use('/proposal', cors(), express.json(), proposalRouter);
 
 //general path for getting static pages
 app.get("/*", cors({ credentials: true, origin: 'http://localhost:3000' }), (req, res) => {
