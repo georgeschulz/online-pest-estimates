@@ -1,10 +1,11 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { endpoint } from './config';
 
 export const createProposal = createAsyncThunk(
     'proposal/createProposal',
     async (data) => {
-        const response = await axios.post(`http://localhost:4000/public-widget/${data.widget_id}/create-proposal`, data);
+        const response = await axios.post(`${endpoint}/public-widget/${data.widget_id}/create-proposal`, data);
         return response.data;
     }
 );
@@ -12,7 +13,7 @@ export const createProposal = createAsyncThunk(
 export const agreeToProposalThunk = createAsyncThunk(
     'proposal/agreeToProposal',
     async (widgetId) => {
-        const response = await axios.put(`http://localhost:4000/public-widget/proposal/${widgetId}/agree`);
+        const response = await axios.put(`${endpoint}/public-widget/proposal/${widgetId}/agree`);
         return response.data;
     }
 )

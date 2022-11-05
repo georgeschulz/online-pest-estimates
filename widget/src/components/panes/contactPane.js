@@ -7,17 +7,19 @@ import SingleLineText from "../form/singleLineText";
 import { useSelector, useDispatch } from "react-redux";
 import { selectName, selectEmail, selectPhone, setName, setEmail, setPhone, createContact } from "../../redux/contactSlice";
 import { setPane } from "../../redux/paneSlice";
+import { selectWidgetId } from "../../redux/configSlice";
 
 function ContactPane() {
     const name = useSelector(selectName);
     const email = useSelector(selectEmail);
     const phone = useSelector(selectPhone);
+    const widgetId = useSelector(selectWidgetId);
     const dispatch = useDispatch();
 
     const handleSubmit = () => {
         (async () => {
             try {
-                await dispatch(createContact({ name, email, phone }));
+                await dispatch(createContact({ name, email, phone, widgetId }));
                 dispatch(setPane('calculator'));
             } catch (e) {
                 console.log(e);
