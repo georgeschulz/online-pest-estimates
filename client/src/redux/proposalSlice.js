@@ -40,4 +40,5 @@ export const selectProposalId = state => state.proposal.proposal !== null ? stat
 export const selectCovered = state => state.proposal.proposal !== null ? state.proposal.proposal.covered : [];
 export const selectNotCovered = state => state.proposal.proposal !== null ? state.proposal.proposal.not_covered : [];
 export const selectTargetList = state => state.proposal.proposal !== null ? state.proposal.proposal.target_list.split(',') : [];
+export const selectIsLoading = state => state.proposal.isLoading;
 export default proposalSlice.reducer;
