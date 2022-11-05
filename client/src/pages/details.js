@@ -80,8 +80,8 @@ function Details() {
         let error = 'No Errors';
         if(name.length <= 5 || name.length > 80) {
             error = 'Program name must be between 5 and 80 characters long'
-        } else if (description.length < 10 || description.length > 300) {
-            error = 'Program description must be between 10 and 300 characeters long'
+        } else if (description.length < 10 || description.length > 225) {
+            error = 'Program description must be between 10 and 225 characeters long'
         } else if (targets.length <= 0) {
             error = 'Please add one or more targets. Make sure you click the add button to add them to your widget!'
         } else if (benefitOne.length < 5 || benefitTwo.length > 150) {

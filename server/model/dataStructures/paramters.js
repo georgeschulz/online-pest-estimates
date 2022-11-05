@@ -4,7 +4,8 @@ module.exports.hourlyRate = {
     description: 'How many dollars in revenue should your technician bring in for every hour in front of a customer?',
     helperText: '130',
     type: 'config',
-    value: 130
+    value: 130,
+    customerLabel: 'Hourly Rate'
 }
 
 module.exports.thoasandSquareFeet = {
@@ -13,7 +14,8 @@ module.exports.thoasandSquareFeet = {
     description: 'For the average 1000 square foot home house completing this services takes how many minutes to complete a stop',
     helperText: '33',
     type: 'config',
-    value: 33
+    value: 33,
+    customerLabel: 'Time to Complete a Small Home'
 }
 
 module.exports.twoThoasandSquareFeet = {
@@ -22,7 +24,8 @@ module.exports.twoThoasandSquareFeet = {
     description: 'For the average 2000 square foot house completing this services takes how many minutes to complete a stop',
     helperText: '38',
     type: 'config',
-    value: 38
+    value: 38,
+    customerLabel: 'Time to Complete a Medium Home'
 }
 
 module.exports.difficultSurcharge = {
@@ -36,7 +39,8 @@ module.exports.difficultSurcharge = {
         { option: 'ants', value: 0 },
         { option: 'rodents', value: 6 },
         { option: 'roaches', value: 10 }
-    ]
+    ],
+    customerLabel: 'What are you having issus with? (Select All That Apply)'
 }
 
 module.exports.squareFeetCoefficient = {
@@ -54,7 +58,8 @@ module.exports.acres = {
     description: 'How many acres is the property we will be servicing?',
     helperText: 1.5,
     type: 'value',
-    value: 0.75
+    value: 0.75,
+    customerLabel: 'How many acres is your property?'
 }
 
 module.exports.smallYard = {
@@ -63,7 +68,7 @@ module.exports.smallYard = {
     description: 'How many minutes would it take to complete an exterior service for a 1/4 acre property.',
     helperText: 'Minutes to complete 1/4 acre',
     type: 'config',
-    value: 20
+    value: 20,
 }
 
 module.exports.largeYard = {
@@ -80,5 +85,6 @@ module.exports.squareFeet = {
     inputType: 'number',
     description: 'How many square feet is your home',
     helperText: 2500,
-    type: 'value'
+    type: 'value',
+    customerLabel: 'Home Square Feet'
 }

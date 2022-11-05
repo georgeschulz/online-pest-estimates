@@ -25,7 +25,7 @@ function DynamicForm() {
                             key={index}
                             name={item.name}
                             type="number"
-                            label={item.name}
+                            label={item.customerLabel}
                             placeholder={item.placeholder}
                             value={form[index]}
                             onChange={handleChange}
@@ -33,7 +33,7 @@ function DynamicForm() {
                     )
                 } else if (item.inputType === 'multipleSelect') {
                     return (
-                        <MultiSelect name={'How much more would you like to charge for each possible target they say they are seeing?'} options={item.options} />
+                        <MultiSelect name={item.name} label={item.customerLabel} options={item.options} />
                     )
                 }
                 

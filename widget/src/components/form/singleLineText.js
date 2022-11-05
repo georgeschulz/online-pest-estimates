@@ -1,7 +1,7 @@
 function SingleLineText({ name, type, label, placeholder, value, onChange }) {
     return (
         <div class="pricing-widget-form-group">
-            <label for={name}>{label}</label>
+            <label for={name} className='pricing-widget-label'>{label}</label>
             <input 
                 type={type} 
                 name={name} 

@@ -3,7 +3,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import { selectForm, setFormValue } from '../../redux/configSlice';
 import Loading from '../loading/loading';
 
-function MultiSelect({ options, name, value, onChange, ...props }) {
+function MultiSelect({ options, name, value, onChange, label }) {
     const dispatch = useDispatch();
     const form = useSelector(selectForm);
     
@@ -28,7 +28,6 @@ function MultiSelect({ options, name, value, onChange, ...props }) {
             return item;
         })
 
-        console.log(updatedForm);
         dispatch(setFormValue({
             name: name,
             value: updatedForm
@@ -40,7 +39,7 @@ function MultiSelect({ options, name, value, onChange, ...props }) {
     if(form[name]) {
         return (
             <div className="pricing-widget-multi-select pricing-widget-form-group">
-                <label>{name}</label>
+                <label className='pricing-widget-label'>{label}</label>
                 <div className="pricing-widget-multiple-select-options">
                     {form[name].map((item) => {
                         return (
