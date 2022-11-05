@@ -6,6 +6,7 @@ import { selectProgram, selectLegal, selectDescription, selectDidAgree, selectRe
 import LargeButton from '../components/buttons/button';
 import Check from '../assets/check.png'
 import X from '../assets/x.png'
+import BillingTable from '../components/billingTable/billingTable';
 
 function Proposal() {
     const dispatch = useDispatch();
@@ -35,10 +36,11 @@ function Proposal() {
                 <p className='text-xl'>Proposal</p>
             </div>
             <div className="flex justify-center mt-24">
-                <div className="w-2/3 flex flex-wrap justify-center" style={{ 'minWidth': '380px' }}>
+                <div className="w-2/3 flex flex-wrap justify-center" style={{ 'minWidth': '380px', 'maxWidth': '1200px' }}>
                     {/**Summary Section */}
                     <div className="w-1/2 px-8" style={{ 'minWidth': '380px' }}>
                         <p className='font-semibold text-lg font-poppins mb-6'>Highlights</p>
+                        <br />
                         <p className='text-md font-roboto'>{description}</p>
                         <br />
                         <p><span className='font-semibold text-lg font-poppins mb-8'>1st Service:</span> ${setup}</p>
@@ -52,8 +54,12 @@ function Proposal() {
                     {/** Charges Section*/}
                     <div className="flex justify-end w-1/2 px-8" style={{ 'minWidth': '380px' }} >
                         <div>
-                        <p><span className='font-semibold text-lg font-poppins mb-6'>Charges</span></p>
-                        <div className='bg-tableBody h-96' style={{'width': '400px'}}></div>
+                            <BillingTable 
+                                setup={setup}
+                                recurringPrice={recurringPrice}
+                                billingFrequency={billingFrequency}
+                                frequency={frequency}
+                            />
                         </div>
                     </div>
                     {/** Benefits Section*/}
