@@ -37,7 +37,7 @@ const agree = async (req, res) => {
                   "product_name": "Online Pest Estimates",
                   "email": proposal.email,
                   "phone": proposal.phone,
-                  "action_url": `http://localhost:3000/proposal-view/${proposalId}`,
+                  "action_url": `${process.env.NODE_ENV === 'production' ? 'https://onlinepestestimates.herokuapp.com' : 'http://localhost:3000'}/proposal-view/${proposalId}`,
                   "company_name": "Online Pest Estimates",
                   "company_address": "123 ABC Street",
                   "name": proposal.name,
