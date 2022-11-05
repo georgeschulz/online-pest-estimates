@@ -58,7 +58,10 @@ const fullfillOrder = async (req, res) => {
     let event;
     const sig = req.headers['stripe-signature'];
     try {
-        event = stripe.webhooks.constructEvent(req.body, sig, process.env.STRIPEWEBHOOKSECRET);
+        event = stripe.webhooks.constructEvent(
+            req.body, 
+            sig, 
+            process.env.NODE_ENV === 'production' ? process.env.STRIPEWEBHOOKSECRET : 'whsec_97b3fa91a298dc55a5024b690534e4bdb2f95c984b1d99a3fa720eef73076b12');
     } catch (err) {
         return response.status(400).send(`Webhook Error: ${err.message}`)
     }

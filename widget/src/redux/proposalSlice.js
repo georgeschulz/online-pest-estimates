@@ -4,7 +4,7 @@ import axios from 'axios';
 export const createProposal = createAsyncThunk(
     'proposal/createProposal',
     async (data) => {
-        const response = await axios.post(`http://localhost:4000/widget/${data.widget_id}/create-proposal`, data);
+        const response = await axios.post(`http://localhost:4000/public-widget/${data.widget_id}/create-proposal`, data);
         return response.data;
     }
 );

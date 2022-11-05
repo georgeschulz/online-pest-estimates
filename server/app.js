@@ -51,7 +51,7 @@ app.use('/user', cors({ credentials: true, origin: 'http://localhost:3000' }), e
 app.use('/widget', cors({ credentials: true, origin: 'http://localhost:3000' }), express.json(), widgetRouter)
 app.use('/billing',cors ({ credentials: true, origin: 'http://localhost:3000' }), billingRouter);
 app.use('/public-widget', cors(), express.json(), publicWidgetRouter);
-app.use('/proposal', cors(), express.json(), proposalRouter);
+app.use('/proposal', cors({ credentials: true, origin: 'http://localhost:3000' }), express.json(), proposalRouter);
 
 //general path for getting static pages
 app.get("/*", cors({ credentials: true, origin: 'http://localhost:3000' }), (req, res) => {

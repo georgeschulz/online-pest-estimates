@@ -16,6 +16,7 @@ router.get('/:widgetId', async (req, res) => {
     }
 })
 
+router.post('/:widgetId/create-proposal', controllers.createProposalController);
 router.post('/:widgetId/contact', controllers.createContactController)
 
 module.exports = router;

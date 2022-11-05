@@ -6,7 +6,7 @@ export const fetchConfig = createAsyncThunk(
     'config/fetchConfig',
     async () => {
        try {
-            const response = await axios.get('http://localhost:4000/public-widget/338f4e3f-fba0-4e10-bc24-4c95878d1804');
+            const response = await axios.get('http://localhost:4000/public-widget/9026cefa-0624-42aa-917a-d43a709ca047');
             console.log(response.data.data);
             return response.data.data;
        } catch (err) {

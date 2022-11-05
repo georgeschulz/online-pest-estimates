@@ -19,6 +19,7 @@ import Pricing from './pages/pricing';
 import ProposalConfig from './pages/proposalConfig';
 import Code from './pages/code';
 import GoogleAuth from './pages/googleAuth';
+import Proposal from './pages/proposal';
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
           <Route path="/terms" element={<Terms />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/authorize" element={<GoogleAuth />} />
+          <Route path="/proposal/:proposalId" element={<Proposal />} />
           <Route element={<RestrictedRoutes />}>
             <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<Login />} />
