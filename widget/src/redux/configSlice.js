@@ -7,7 +7,7 @@ export const fetchConfig = createAsyncThunk(
     'config/fetchConfig',
     async (widgetId) => {
        try {
-            const response = await axios.get(`${endpoint}/public-widget/${widgetId}}`);
+            const response = await axios.get(`${endpoint}/public-widget/${widgetId}`);
             console.log(response.data.data);
             return response.data.data;
        } catch (err) {
