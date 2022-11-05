@@ -16,6 +16,8 @@ const { getProposalTemplate } = require('../model/getProposalTemplate');
 const { createContact } = require('../model/createContact');
 const { createProposal } = require('../model/createProposal');
 const { addProposalFeatures } = require('../model/addProposalFeatures');
+const postmark = require('postmark');
+const client = new postmark.ServerClient(process.env.POSTMARK_API_KEY);
 
 const createWidgetController = async (req, res, next) => {
     try {
@@ -192,6 +194,31 @@ const createContactController = async (req, res) => {
         const { widgetId } = req.params;
         const { name, email, phone } = req.body;
         const newContact = await createContact(widgetId, name, email, phone);
+
+        if(process.env.FEATURE_CONTACT_SUCCESS_EMAIL === 'on') {
+            client.sendEmailWithTemplate({
+                "From": "service@bettertermite.com",
+                "To": "service@bettertermite.com",
+                "TemplateAlias": "user-invitation-1",
+                "TemplateModel": {
+                  "product_url": "https://onlinepestestimates.herokuapp.com/",
+                  "product_name": "Online Pest Estimates",
+                  "name": name,
+                  "email": email,
+                  "phone": phone,
+                  "program": "Unlimitted Plan",
+                  "company_name": "Online Pest Estimates",
+                  "company_address": "123 ABC Lane",
+                  "invite_sender_name": "Online Pest Estimates",
+                  "invite_sender_organization_name": "Online Pest Estimates",
+                  "action_url": "https://onlinepestestimates.herokuapp.com/",
+                  "support_email": "https://onlinepestestimates.herokuapp.com/",
+                  "live_chat_url": "https://onlinepestestimates.herokuapp.com/",
+                  "help_url": "https://onlinepestestimates.herokuapp.com/"
+                }
+              });
+        }
+
         res.status(201).send({
             message: 'Contact successfully created',
             data: newContact
@@ -210,7 +237,7 @@ const createProposalController = async (req, res, next) => {
         //get the widet id so we can get the proposal template
         const { widgetId } = req.params;
         //get the pricing and the response id from the request body so we can generate the proposal and link tables
-        const { recurringPrice, setupFee, frequency, billingFrequency, responseId, proposalTemplateId, description, program, isAgreed } = req.body;
+        const { recurringPrice, setupFee, frequency, billingFrequency, responseId, proposalTemplateId, description, program, isAgreed, name } = req.body;
         const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 
         //get the proposal template from proposal_templates table and the highlighted_features
@@ -221,6 +248,28 @@ const createProposalController = async (req, res, next) => {
 
         //add the highlighted features to the proposal__features table
         const highlightedFeatures = await addProposalFeatures(newProposal.proposal_id, proposalTemplate);
+
+        //send them a copy of the proposal if they have not yet agreed but resquest one
+        if((!isAgreed) && process.env.FEATURE_REQUEST_EMAIL_PROPOSAL_ONLY === "on") {
+            client.sendEmailWithTemplate({
+                "From": "service@bettertermite.com",
+                "To": "service@bettertermite.com",
+                "TemplateAlias": "user-invitation",
+                "TemplateModel": {
+                  "product_url": "http://bettertermite.com/all",
+                  "product_name": program,
+                  "name": name,
+                  "action_url": `http://localhost:3000/proposal/${newProposal.proposal_id}`,
+                  "invite_sender_name": "Online Pest Estimates",
+                  "support_email": "service@bettertermite.com",
+                  "company_name": "ABC Pest Control",
+                  "company_address": "www.abcpestcontrol.com",
+                  "invite_sender_organization_name": "ABC Pest Control",
+                  "live_chat_url": "www.abcpestcontrol.com",
+                  "help_url": "www.abcpestcontrol.com"
+                }
+              });
+        }
 
         res.status(201).send({
             message: 'Proposal successfully created',

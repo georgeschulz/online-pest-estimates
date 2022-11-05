@@ -11,6 +11,7 @@ import SecondaryActionButton from "../buttons/secondaryActionButton";
 import { agreeToProposalThunk, selectIsProposalSent, toggleSent, selectProposalId } from "../../redux/proposalSlice";
 import { createProposal } from "../../redux/proposalSlice";
 import { selectResponseId } from "../../redux/contactSlice";
+import { selectEmail, selectName } from "../../redux/contactSlice";
 
 function QuotePane() {
     const dispatch = useDispatch();
@@ -26,6 +27,8 @@ function QuotePane() {
     const billingFrequency = useSelector(selectChosenBillingOption)
     const proposalTemplateId = useSelector(selectProposalTemplateId)
     const responseId = useSelector(selectResponseId)
+    const email = useSelector(selectEmail)
+    const name = useSelector(selectName)
     const proposalId = useSelector(selectProposalId)
 
     const handleSubmit = async () => {
@@ -62,7 +65,9 @@ function QuotePane() {
             proposalTemplateId,
             recurringPrice: quote.pricing[chosenBillingOption].billingAmount,
             setupFee: quote.pricing[chosenBillingOption].initial,
-            isAgreed: isAgreed
+            isAgreed: isAgreed,
+            name: name,
+            email: email
         }))
     }
 
