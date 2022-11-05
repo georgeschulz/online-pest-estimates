@@ -46,6 +46,7 @@ function MultiSelect({ options, name, value, onChange, label }) {
                             <div 
                                 className={`pricing-widget-multipe-select-option ${item.isSelected ? 'pricing-widget-selected' : ''}`} 
                                 onClick={() => handleClick(item.name)}
+                                key={item.name}
                             >
                                     {item.name}
                             </div>

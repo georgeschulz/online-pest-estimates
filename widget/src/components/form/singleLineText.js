@@ -1,12 +1,12 @@
 function SingleLineText({ name, type, label, placeholder, value, onChange }) {
     return (
-        <div class="pricing-widget-form-group">
-            <label for={name} className='pricing-widget-label'>{label}</label>
+        <div className="pricing-widget-form-group">
+            <label htmlFor={name} className='pricing-widget-label'>{label}</label>
             <input 
                 type={type} 
                 name={name} 
                 placeholder={placeholder} 
-                class="pricing-widget-input" 
+                className="pricing-widget-input" 
                 value={value} 
                 onChange={(e) => onChange(e) } 
             />

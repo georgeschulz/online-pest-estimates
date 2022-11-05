@@ -22,18 +22,18 @@ function DynamicForm() {
                 if(item.inputType === 'number') {
                     return (
                         <SingleLineText
-                            key={index}
                             name={item.name}
                             type="number"
                             label={item.customerLabel}
                             placeholder={item.placeholder}
                             value={form[index]}
                             onChange={handleChange}
+                            key={'single-line-text-' + index}
                         />
                     )
                 } else if (item.inputType === 'multipleSelect') {
                     return (
-                        <MultiSelect name={item.name} label={item.customerLabel} options={item.options} />
+                        <MultiSelect name={item.name} label={item.customerLabel} options={item.options} key={'multiselect-' + index} />
                     )
                 }
                 
