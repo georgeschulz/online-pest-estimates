@@ -8,6 +8,7 @@ import LargeButton from '../components/buttons/button';
 import Check from '../assets/check.png'
 import X from '../assets/x.png'
 import BillingTable from '../components/billingTable/billingTable';
+import { useNavigate } from 'react-router-dom';
 
 function Proposal() {
     const dispatch = useDispatch();
@@ -24,6 +25,7 @@ function Proposal() {
     const notCovered = useSelector(selectNotCovered);
     const targetList = useSelector(selectTargetList);
     const isLoading = useSelector(selectIsLoading);
+    const navigate = useNavigate();
 
     useEffect(() => {
         // Get proposal data
@@ -33,6 +35,7 @@ function Proposal() {
     const handleSubmit = () => {
         // Agree to proposal
         dispatch(agreeToProposalThunk(proposalId))
+        navigate('/proposal-confirmed/' + proposalId)
     }
 
     return (
@@ -45,6 +48,12 @@ function Proposal() {
                     <Loading />
                 </div>) : (
                 <div>
+                    {didAgree ? (
+                        <div className='text-black text-center font-poppins py-5 bg-green-400'>
+                            This proposal has been agreed to. If you have not yet recieved a call to schedule your appointment, please give us a call 123-123-1234.
+                        </div>
+                    ) : ""}
+
                     <div className="bg-primary text-white text-center font-poppins py-5">
                         <p className='text-xl'>ABC Pest</p>
                         <p className='text-2xl font-semibold'>{program}</p>
@@ -138,8 +147,8 @@ function Proposal() {
                             {/** Signature Section*/}
                             <div id="agree" className='w-full mb-96 mt-12 flex justify-center'>
                                 {didAgree ? (
-                                    <div className='w-4/5 bg-green-700 flex justify-center align-middle py-4'>
-                                        <p className='text-xl w-4/5 text-white text-center semibold'>This proposal has been agreed to. Our Office will contact you shortly to schedule your initial service and setup your billing.</p>
+                                    <div className='w-4/5 bg-green-400 flex justify-center align-middle py-4'>
+                                        <p className='text-xl w-4/5 text-black text-center semibold'>This proposal has been agreed to. Our Office will contact you shortly to schedule your initial service and setup your billing.</p>
                                     </div>
                                 ) : <LargeButton size={0} handleClick={handleSubmit}>I Agree</LargeButton>}
                             </div>

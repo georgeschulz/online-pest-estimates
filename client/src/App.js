@@ -20,6 +20,7 @@ import ProposalConfig from './pages/proposalConfig';
 import Code from './pages/code';
 import GoogleAuth from './pages/googleAuth';
 import Proposal from './pages/proposal';
+import ProposalConfirmed from './pages/proposalConfirmed';
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/authorize" element={<GoogleAuth />} />
           <Route path="/proposal/:proposalId" element={<Proposal />} />
+          <Route path="/proposal-confirmed/:proposalId" element={<ProposalConfirmed />} />
           <Route element={<RestrictedRoutes />}>
             <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<Login />} />
