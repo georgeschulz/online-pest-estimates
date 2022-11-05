@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { getProposal } from '../api/proposalApi';
+import { getProposal, agreeToProposal } from '../api/proposalApi';
 
 export const getProposalThunk = createAsyncThunk(
     'proposal/getProposal',
@@ -7,7 +7,15 @@ export const getProposalThunk = createAsyncThunk(
         const response = await getProposal(proposalId);
         return response.data;
     }
-) 
+)
+
+export const agreeToProposalThunk = createAsyncThunk(
+    'proposal/agreeToProposal',
+    async (proposalId) => {
+        const response = await agreeToProposal(proposalId);
+        return response.data;
+    }
+)
 
 const proposalSlice = createSlice({
     name: 'proposal',
@@ -21,6 +29,13 @@ const proposalSlice = createSlice({
             state.isLoading = true;
         });
         builder.addCase(getProposalThunk.fulfilled, (state, action) => {
+            state.isLoading = false;
+            state.proposal = action.payload.data;
+        });
+        builder.addCase(agreeToProposalThunk.pending, (state, action) => {
+            state.isLoading = true;
+        });
+        builder.addCase(agreeToProposalThunk.fulfilled, (state, action) => {
             state.isLoading = false;
             state.proposal = action.payload.data;
         });

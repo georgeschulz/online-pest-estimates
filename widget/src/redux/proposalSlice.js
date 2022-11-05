@@ -9,12 +9,19 @@ export const createProposal = createAsyncThunk(
     }
 );
 
+export const agreeToProposalThunk = createAsyncThunk(
+    'proposal/agreeToProposal',
+    async (widgetId) => {
+        const response = await axios.put(`http://localhost:4000/public-widget/proposal/${widgetId}/agree`);
+        return response.data;
+    }
+)
+
 const proposalSlice = createSlice({
     name: 'proposal',
     initialState: {
         isLoading: false,
         isSent: false,
-        proposalId: null,
         proposal: null
     },
     reducers: {
@@ -35,5 +42,6 @@ const proposalSlice = createSlice({
 });
 
 export const selectIsProposalSent = state => state.proposal.isSent;
+export const selectProposalId = state => state.proposal.proposal != null ? state.proposal.proposal.proposal_id : null; 
 export const { toggleSent } = proposalSlice.actions;
 export default proposalSlice.reducer;

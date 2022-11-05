@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const controllers = require('../controllers/widget');
 const getWidget = require('../model/getWidget');
+const proposalController = require('../controllers/proposal');
 
 router.get('/:widgetId', async (req, res) => {
     try {
@@ -18,5 +19,6 @@ router.get('/:widgetId', async (req, res) => {
 
 router.post('/:widgetId/create-proposal', controllers.createProposalController);
 router.post('/:widgetId/contact', controllers.createContactController)
+router.put('/proposal/:proposalId/agree', proposalController.agree);
 
 module.exports = router;

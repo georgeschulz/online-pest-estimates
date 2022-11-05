@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { getProposalThunk } from '../redux/proposalSlice';
 import { useParams } from 'react-router-dom';
-import { selectProgram, selectLegal, selectDescription, selectDidAgree, selectRecurringPrice, selectBillingFrequency, selectFrequency, selectSetup, selectCovered, selectNotCovered, selectTargetList, selectIsLoading } from '../redux/proposalSlice';
+import { selectProgram, selectLegal, selectDescription, selectDidAgree, selectRecurringPrice, selectBillingFrequency, selectFrequency, selectSetup, selectCovered, selectNotCovered, selectTargetList, selectIsLoading, agreeToProposalThunk } from '../redux/proposalSlice';
 import Loading from '../components/loading/loading';
 import LargeButton from '../components/buttons/button';
 import Check from '../assets/check.png'
@@ -29,6 +29,11 @@ function Proposal() {
         // Get proposal data
         dispatch(getProposalThunk(proposalId));
     }, [proposalId]);
+
+    const handleSubmit = () => {
+        // Agree to proposal
+        dispatch(agreeToProposalThunk(proposalId))
+    }
 
     return (
         <div>
@@ -59,7 +64,7 @@ function Proposal() {
                                 <p><span className='font-semibold text-lg font-poppins mb-6'>Frequency:</span> {frequency}</p>
                                 <br />
                                 <br />
-                                <a href="#agree"><LargeButton size={0}>Skip to Signature</LargeButton></a>
+                                {didAgree ? "" : <a href="#agree"><LargeButton size={0}>Skip to Signature</LargeButton></a>}
                             </div>
                             {/** Charges Section*/}
                             <div className="flex justify-end w-1/2 px-8" style={{ 'minWidth': '380px' }} >
@@ -132,7 +137,11 @@ function Proposal() {
                             </div>
                             {/** Signature Section*/}
                             <div id="agree" className='w-full mb-96 mt-12 flex justify-center'>
-                                <LargeButton size={0}>I Agree</LargeButton>
+                                {didAgree ? (
+                                    <div className='w-4/5 bg-green-700 flex justify-center align-middle py-4'>
+                                        <p className='text-xl w-4/5 text-white text-center semibold'>This proposal has been agreed to. Our Office will contact you shortly to schedule your initial service and setup your billing.</p>
+                                    </div>
+                                ) : <LargeButton size={0} handleClick={handleSubmit}>I Agree</LargeButton>}
                             </div>
                         </div>
                     </div>

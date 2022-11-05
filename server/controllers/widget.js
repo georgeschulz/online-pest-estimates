@@ -210,13 +210,14 @@ const createProposalController = async (req, res, next) => {
         //get the widet id so we can get the proposal template
         const { widgetId } = req.params;
         //get the pricing and the response id from the request body so we can generate the proposal and link tables
-        const { recurringPrice, setupFee, frequency, billingFrequency, responseId, proposalTemplateId, description, program } = req.body;
+        const { recurringPrice, setupFee, frequency, billingFrequency, responseId, proposalTemplateId, description, program, isAgreed } = req.body;
+        const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 
         //get the proposal template from proposal_templates table and the highlighted_features
         const proposalTemplate = await getProposalTemplate(widgetId);
 
         //create the proposal in the proposals table
-        const newProposal = await createProposal(responseId, proposalTemplateId, setupFee, recurringPrice, description, proposalTemplate[0].legal, billingFrequency, frequency, program, proposalTemplate[0].coveredpests);
+        const newProposal = await createProposal(responseId, proposalTemplateId, setupFee, recurringPrice, description, proposalTemplate[0].legal, billingFrequency, frequency, program, proposalTemplate[0].coveredpests, isAgreed, ip);
 
         //add the highlighted features to the proposal__features table
         const highlightedFeatures = await addProposalFeatures(newProposal.proposal_id, proposalTemplate);

@@ -8,7 +8,7 @@ import { setPane } from "../../redux/paneSlice";
 import { selectQuote, selectProgramSummary, setBillingOption, selectBillingOptions, selectChosenBillingOption, selectProgramName, selectWidgetId, selectFrequency, selectProposalTemplateId } from "../../redux/configSlice";
 import { useState } from "react";
 import SecondaryActionButton from "../buttons/secondaryActionButton";
-import { selectIsProposalSent, toggleSent } from "../../redux/proposalSlice";
+import { agreeToProposalThunk, selectIsProposalSent, toggleSent, selectProposalId } from "../../redux/proposalSlice";
 import { createProposal } from "../../redux/proposalSlice";
 import { selectResponseId } from "../../redux/contactSlice";
 
@@ -26,13 +26,15 @@ function QuotePane() {
     const billingFrequency = useSelector(selectChosenBillingOption)
     const proposalTemplateId = useSelector(selectProposalTemplateId)
     const responseId = useSelector(selectResponseId)
+    const proposalId = useSelector(selectProposalId)
 
-    const handleSubmit = () => {
-        dispatch(setPane('signup-confirmed'));
+    const handleSubmit = async () => {
+        await addProposalToDatabase(true);
+        dispatch(setPane('signup-confirmed'))
     }
 
     const handleProposalButton = async () => {
-        await addProposalToDatabase();
+        await addProposalToDatabase(false);
         dispatch(toggleSent())
     }
 
@@ -49,7 +51,7 @@ function QuotePane() {
         } 
     }
 
-    const addProposalToDatabase = async () => {
+    const addProposalToDatabase = async (isAgreed) => {
         await dispatch(createProposal({
             widget_id,
             program,
@@ -60,6 +62,7 @@ function QuotePane() {
             proposalTemplateId,
             recurringPrice: quote.pricing[chosenBillingOption].billingAmount,
             setupFee: quote.pricing[chosenBillingOption].initial,
+            isAgreed: isAgreed
         }))
     }
 
