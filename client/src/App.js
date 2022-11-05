@@ -30,7 +30,7 @@ function App() {
           <Route path="/terms" element={<Terms />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/authorize" element={<GoogleAuth />} />
-          <Route path="/proposal/:proposalId" element={<Proposal />} />
+          <Route path="/proposal-view/:proposalId" element={<Proposal />} />
           <Route path="/proposal-confirmed/:proposalId" element={<ProposalConfirmed />} />
           <Route element={<RestrictedRoutes />}>
             <Route path="/" element={<HomePage />} />
