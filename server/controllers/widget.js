@@ -259,7 +259,7 @@ const createProposalController = async (req, res, next) => {
                   "product_url": "http://bettertermite.com/all",
                   "product_name": program,
                   "name": name,
-                  "action_url": `http://localhost:3000/proposal/${newProposal.proposal_id}`,
+                  "action_url": `http://localhost:3000/proposal-view/${newProposal.proposal_id}`,
                   "invite_sender_name": "Online Pest Estimates",
                   "support_email": "service@bettertermite.com",
                   "company_name": "ABC Pest Control",
