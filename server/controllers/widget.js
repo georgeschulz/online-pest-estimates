@@ -255,7 +255,7 @@ const createProposalController = async (req, res, next) => {
         console.log(proposalTemplate)
 
         //create the proposal in the proposals table
-        const newProposal = await createProposal(responseId, proposalTemplateId, setupFee, recurringPrice, description, proposalTemplate[0].legal, billingFrequency, frequency, program, proposalTemplate[0].coveredpests, isAgreed, ip);
+        const newProposal = await createProposal(responseId, proposalTemplate[0].proposal_template_id, setupFee, recurringPrice, description, proposalTemplate[0].legal, billingFrequency, frequency, program, proposalTemplate[0].coveredpests, isAgreed, ip);
 
         //add the highlighted features to the proposal__features table
         const highlightedFeatures = await addProposalFeatures(newProposal.proposal_id, proposalTemplate);
