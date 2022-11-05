@@ -7,9 +7,18 @@ import SignupConfirmationPane from './components/panes/signupConfirmationPane';
 import EmailedConfirmationPane from './components/panes/emailedConfirmationPane';
 import { useSelector } from 'react-redux';
 import { selectPane } from './redux/paneSlice';
+import { useEffect } from 'react';
+import { fetchConfig } from './redux/configSlice';
+import { useDispatch } from 'react-redux';
 
-function App() {
+function App({ domElement }) {
   const pane = useSelector(selectPane);
+  const widgetId = domElement.getAttribute("widget-id");
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchConfig(widgetId));
+  }, [widgetId]);
 
   return (
     <div className="App">

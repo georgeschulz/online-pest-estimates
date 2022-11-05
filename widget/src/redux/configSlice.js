@@ -1,12 +1,13 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import PricingStrategy from '../components/PriceStrategy/PriceStrategy';
+import { endpoint } from './config';
 
 export const fetchConfig = createAsyncThunk(
     'config/fetchConfig',
-    async () => {
+    async (widgetId) => {
        try {
-            const response = await axios.get('http://localhost:4000/public-widget/9026cefa-0624-42aa-917a-d43a709ca047');
+            const response = await axios.get(`${endpoint}/public-widget/${widgetId}}`);
             console.log(response.data.data);
             return response.data.data;
        } catch (err) {

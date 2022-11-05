@@ -4,12 +4,15 @@ import App from './App';
 import { Provider } from 'react-redux';
 import store from './redux/store';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <Provider store={store}>
-        <App />
-    </Provider>
-  </React.StrictMode>,
-  document.getElementById('pricing-widget-container')
-);
+const WidgetDivs = document.querySelectorAll('.pricing-widget-container');
 
+WidgetDivs.forEach((widgetDiv) => {
+  ReactDOM.render(
+    <React.StrictMode>
+      <Provider store={store}>
+          <App domElement={widgetDiv} />
+      </Provider>
+    </React.StrictMode>,
+    widgetDiv
+  )
+})  

@@ -5,8 +5,6 @@ import BenefitsList from "../presentational/benefitsList";
 import SubmitButton from "../buttons/submitButton";
 import { setPane } from "../../redux/paneSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
-import { fetchConfig } from "../../redux/configSlice";
 import { selectBenefits, selectIsLoading, selectProgramName, selectStartingPrice, selectInterval } from "../../redux/configSlice";
 
 function StartPane() {
@@ -16,10 +14,6 @@ function StartPane() {
     const startingPrice = useSelector(selectStartingPrice);
     const interval = useSelector(selectInterval);
     const isLoading = useSelector(selectIsLoading);
-
-    useEffect(() => {
-        dispatch(fetchConfig())
-    }, []);
 
     return (
         <Frame isLoading={isLoading}>

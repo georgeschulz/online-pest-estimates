@@ -1,11 +1,12 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { endpoint } from './config';
 
 export const createContact = createAsyncThunk(
     'contact/createContact',
     async (contact) => {
         try {
-            const response = await axios.post('http://localhost:4000/public-widget/338f4e3f-fba0-4e10-bc24-4c95878d1804/contact', contact);
+            const response = await axios.post(`http://localhost:4000/public-widget/338f4e3f-fba0-4e10-bc24-4c95878d1804/contact`, contact);
             return response.data.data;
         } catch (err) {
             console.log(err)
