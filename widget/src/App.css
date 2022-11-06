@@ -20,12 +20,18 @@
     padding-bottom: 20px;
 }
 
+.pricing-widget-banner-container {
+    width: 100%;
+    overflow-y: hidden;
+    height: 160px;
+}
+
 .pest-widget-banner {
     width: 100%;
 }
 
 .pricing-widget-content {
-    padding: 15px 20px;
+    padding: 5px 20px 30px 20px;
     display: flex;
     align-items: flex-start;
     flex-wrap: wrap;

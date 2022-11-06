@@ -1,9 +1,14 @@
-import defaultBanner from '../../assets/demoBanner.JPG';
+import { useSelector } from "react-redux";
+import { selectCoverImageUrl } from "../../redux/configSlice";
 
-function Banner({ img = defaultBanner }) {
+function Banner() {
+    const image = useSelector(selectCoverImageUrl);
+
     return (
         <div className="pricing-widget-banner">
-            <img src={'https://onlinepestestimates.herokuapp.com/images/banner.JPG'} className="pest-widget-banner" />
+            <div className="pricing-widget-banner-container">
+                <img src={image} className="pest-widget-banner" />
+            </div>
         </div>
     );
 }

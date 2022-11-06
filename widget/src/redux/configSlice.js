@@ -104,5 +104,6 @@ export const selectProposalTemplateId = state => state.config.widget != null ? s
 export const selectIsActive = state => state.config.widget != null ? state.config.widget.active : true;
 export const selectHexPrimary = state => state.config.widget != null ? '#' + state.config.widget.businessDetails.hex_primary : '#6A77D9';
 export const selectHexSecondary = state => state.config.widget != null ? '#' + state.config.widget.businessDetails.hex_secondary : '#6A77D9';
+export const selectCoverImageUrl = state => state.config.widget != null ? state.config.widget.details.cover_image_url : '';
 export const { setFormValue, submitForm, setBillingOption } = configSlice.actions;
 export default configSlice.reducer;
