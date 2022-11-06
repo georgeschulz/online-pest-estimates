@@ -8,12 +8,14 @@ import EmailedConfirmationPane from './components/panes/emailedConfirmationPane'
 import { useSelector } from 'react-redux';
 import { selectPane } from './redux/paneSlice';
 import { useEffect } from 'react';
-import { fetchConfig } from './redux/configSlice';
+import { fetchConfig, selectIsActive } from './redux/configSlice';
 import { useDispatch } from 'react-redux';
+import InactivePane from './components/panes/inactivePane';
 
 function App({ domElement }) {
   const pane = useSelector(selectPane);
   const widgetId = domElement.getAttribute("widget-id");
+  const isActive = useSelector(selectIsActive)
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -23,12 +25,13 @@ function App({ domElement }) {
   return (
     <div className="App">
       <header className="App-header">
-          {pane === 'start' ? <StartPane /> : null}
-          {pane === 'contact' ? <ContactPane /> : null}
-          {pane === 'calculator' ? <CalculatorPane /> : null}
-          {pane === 'quote' ? <QuotePane /> : null}
-          {pane === 'signup-confirmed' ? <SignupConfirmationPane /> : null}
-          {pane === 'emailed-confirmation' ? <EmailedConfirmationPane /> : null}
+          {!isActive ? <InactivePane /> : null}
+          {pane && isActive === 'start' ? <StartPane /> : null}
+          {pane && isActive === 'contact' ? <ContactPane /> : null}
+          {pane && isActive === 'calculator' ? <CalculatorPane /> : null}
+          {pane && isActive === 'quote' ? <QuotePane /> : null}
+          {pane && isActive === 'signup-confirmed' ? <SignupConfirmationPane /> : null}
+          {pane && isActive === 'emailed-confirmation' ? <EmailedConfirmationPane /> : null}
       </header>
     </div>
   );

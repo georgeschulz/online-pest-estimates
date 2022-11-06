@@ -101,5 +101,6 @@ export const selectChosenBillingOption = state => state.config.billingOption;
 export const selectWidgetId = state => state.config.widget != null ? state.config.widget.widgetId : '';
 export const selectFrequency = state => state.config.widget != null ? state.config.widget.details.frequency : '';
 export const selectProposalTemplateId = state => state.config.widget != null ? state.config.widget.proposal.proposal_template_id : '';
+export const selectIsActive = state => state.config.widget != null ? state.config.widget.active : true;
 export const { setFormValue, submitForm, setBillingOption } = configSlice.actions;
 export default configSlice.reducer;
