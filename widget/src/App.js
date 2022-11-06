@@ -26,12 +26,12 @@ function App({ domElement }) {
     <div className="App">
       <header className="App-header">
           {!isActive ? <InactivePane /> : null}
-          {pane && isActive === 'start' ? <StartPane /> : null}
-          {pane && isActive === 'contact' ? <ContactPane /> : null}
-          {pane && isActive === 'calculator' ? <CalculatorPane /> : null}
-          {pane && isActive === 'quote' ? <QuotePane /> : null}
-          {pane && isActive === 'signup-confirmed' ? <SignupConfirmationPane /> : null}
-          {pane && isActive === 'emailed-confirmation' ? <EmailedConfirmationPane /> : null}
+          {pane === 'start'  && isActive ? <StartPane /> : null}
+          {pane === 'contact' && isActive ? <ContactPane /> : null}
+          {pane === 'calculator' && isActive ? <CalculatorPane /> : null}
+          {pane === 'quote'&& isActive ? <QuotePane /> : null}
+          {pane === 'signup-confirmed' && isActive ? <SignupConfirmationPane /> : null}
+          {pane === 'emailed-confirmation' && isActive ? <EmailedConfirmationPane /> : null}
       </header>
     </div>
   );
