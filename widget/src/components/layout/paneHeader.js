@@ -4,22 +4,22 @@ import Heart from '../../assets/heart-eye-emoji.png';
 import Rocket from '../../assets/rocket.png';
 
 function PaneHeader({ text, supportingText, emoji, ...props }) {
-    let img;
+    let img = 'https://onlinepestestimates.herokuapp.com/images/';
     switch (emoji) {
         case 'clap':
-            img = Clap;
+            img += 'clap.png';
             break;
         case 'confetti':
-            img = Confetti;
+            img += 'confetti.png';
             break;
         case 'heart':
-            img = Heart;
+            img += 'heart-eye-emoji.png';
             break;
         case 'rocket':
-            img = Rocket;
+            img += 'rocket.png';
             break;
         default:
-            img = Clap;
+            img += 'rocket.png';
     }
 
     return (
