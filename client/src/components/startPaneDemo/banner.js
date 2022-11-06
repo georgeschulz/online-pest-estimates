@@ -6,7 +6,9 @@ function Banner() {
 
     return (
         <div className="pricing-widget-banner">
-            <img src={image} className="pest-widget-banner" />
+            <div className="pricing-widget-banner-container">
+                <img src={image} className="pest-widget-banner" />
+            </div>
         </div>
     );
 }

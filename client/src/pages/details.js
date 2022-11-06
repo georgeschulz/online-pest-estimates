@@ -59,9 +59,6 @@ function Details() {
                 }
                 else{
                     alert('Could not get signed URL.');
-                    const response = JSON.parse(xhr.responseText);
-                    console.log(response);
-                    
                 }
             }
         }
@@ -79,8 +76,6 @@ function Details() {
               
             }
             else{
-                console.log(xhr.responseText);
-                console.log(xhr)
               alert('Could not upload file.');
             }
           }
