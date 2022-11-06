@@ -111,7 +111,7 @@ const widgetSlice = createSlice({
             benefitThree: '',
             frequency: 'Quarterly',
             billing: [{ type: 'Monthly Billing Program', allowed: false }, { type: 'Annual Billing', allowed: false }, { type: 'Billed After Service', allowed: false }],
-            image: null,
+            image: 'https://onlinepestestimates.herokuapp.com/images/banner.JPG',
             imageFile: null,
             covered: [],
             notCovered: [],

@@ -1,7 +1,7 @@
 import SingleLineText from "../components/Inputs/SingleLineText";
 import ApplicationMainLayout from "../components/layout/ApplicationMainLayout/ApplicationMainLayout";
 import { useDispatch, useSelector } from "react-redux";
-import { getWidgetByIdReload, removeTarget, seelctBilling, selectBenefitOne, selectBenefitThree, selectBenefitTwo, selectFrequency, selectImage, selectImageFile, selectIsWidgetLoaded, selectProgramDescription, selectProgramName, selectTargets, toggleBilling, updateConfigTargets, updateDraft, updateWidgetDetails } from "../redux/widgetSlice";
+import { getWidgetByIdReload, removeTarget, seelctBilling, selectBenefitOne, selectBenefitThree, selectBenefitTwo, selectFrequency, selectImage, selectImageFile, selectIsWidgetLoaded, selectProgramDescription, selectProgramName, selectTargets, toggleBilling, updateConfigTargets, updateDraft, updateImage, updateWidgetDetails } from "../redux/widgetSlice";
 import MultiLineText from "../components/Inputs/MultiLineText";
 import TagBuilder from "../components/Inputs/TagBuilder";
 import SingleSelect from "../components/Inputs/SingleSelect";
@@ -13,7 +13,6 @@ import { useEffect } from "react";
 import { useState } from "react";
 import UpdateMessage from "../components/notifications/UpdateMessage";
 import StartPaneDemo from "../components/startPaneDemo/startPaneDemo";
-import { getSignedRequest } from "../components/aws/getSignedRequest";
 
 function Details() {
     const name = useSelector(selectProgramName);
@@ -47,6 +46,46 @@ function Details() {
             }
         })
         return output;
+    }
+
+    function getSignedRequest(file) {
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', `https://onlinepestestimates.herokuapp.com/sign-s3?file-name=${file.name}&file-type=${file.type}`);
+        xhr.onreadystatechange = () => {
+            if(xhr.readyState === 4){
+                if(xhr.status === 200){
+                    const response = JSON.parse(xhr.responseText);
+                    uploadFile(file, response.signedRequest, response.url);
+                }
+                else{
+                    alert('Could not get signed URL.');
+                    const response = JSON.parse(xhr.responseText);
+                    console.log(response);
+                    
+                }
+            }
+        }
+        xhr.send();
+    }
+
+    function uploadFile(file, signedRequest, url){
+        const xhr = new XMLHttpRequest();
+        xhr.open('PUT', signedRequest);
+        xhr.onreadystatechange = () => {
+          if(xhr.readyState === 4){
+            if(xhr.status === 200){
+              console.log(url)
+              dispatch(updateImage(url))
+              
+            }
+            else{
+                console.log(xhr.responseText);
+                console.log(xhr)
+              alert('Could not upload file.');
+            }
+          }
+        };
+        xhr.send(file);
     }
 
 
@@ -206,9 +245,9 @@ function Details() {
                             state={billing}
                             setState={(e) => dispatch(toggleBilling(e))}
                         />
-                        <div className="upload-wrapper">
-                            <label htmlFor="banner_img">Upload a Banner Image</label>
-                            <input type="file" name="banner_img" id="banner_img" onChange={handleFileUpload} />
+                        <div className="upload-wrapper flex flex-wrap mb-12">
+                            <label htmlFor="banner_img" className="w-full text-xl font-roboto font-semibold ml-6 mb-4">Upload a Banner Image</label>
+                            <input type="file" name="banner_img" id="banner_img" onChange={handleFileUpload} className="w-full ml-8" />
                         </div>
                         <LargeButton handleClick={() => handleSubmit()} size={0} class="justify-center">Save</LargeButton>
                     </div>

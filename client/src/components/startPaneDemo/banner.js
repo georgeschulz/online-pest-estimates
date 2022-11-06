@@ -1,7 +1,12 @@
-function Banner({ img }) {
+import { useSelector } from "react-redux";
+import { selectImage } from "../../redux/widgetSlice";
+
+function Banner() {
+    const image = useSelector(selectImage);
+
     return (
         <div className="pricing-widget-banner">
-            <img src={'https://onlinepestestimates.herokuapp.com/images/banner.JPG'} className="pest-widget-banner" />
+            <img src={image} className="pest-widget-banner" />
         </div>
     );
 }
