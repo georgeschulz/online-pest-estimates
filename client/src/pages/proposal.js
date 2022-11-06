@@ -61,9 +61,9 @@ function Proposal() {
                         <p className='text-xl'>Proposal</p>
                     </div>
                     <div className="flex justify-center mt-24">
-                        <div className="w-2/3 flex flex-wrap justify-center" style={{ 'minWidth': '380px', 'maxWidth': '1200px' }}>
+                        <div className="w-2/3 md:w-full sm:w-full flex flex-wrap justify-center" style={{ 'minWidth': '380px', 'maxWidth': '1200px' }}>
                             {/**Summary Section */}
-                            <div className="w-1/2 px-8" style={{ 'minWidth': '380px' }}>
+                            <div className="w-1/2 sm:w-full md:w-full px-8" style={{ 'minWidth': '380px' }}>
                                 <p className='font-semibold text-lg font-poppins mb-6'>Highlights</p>
                                 <br />
                                 <p className='text-md font-roboto'>{description}</p>
@@ -77,7 +77,7 @@ function Proposal() {
                                 {didAgree ? "" : <a href="#agree"><LargeButton backgroundColor={hexSecondary} size={0}>Skip to Signature</LargeButton></a>}
                             </div>
                             {/** Charges Section*/}
-                            <div className="flex justify-end w-1/2 px-8" style={{ 'minWidth': '380px' }} >
+                            <div className="flex justify-end w-1/2 px-8  md:justify-start sm:justify-start" style={{ 'minWidth': '380px' }} >
                                 <div>
                                     <BillingTable
                                         setup={setup}
@@ -88,7 +88,7 @@ function Proposal() {
                                 </div>
                             </div>
                             {/** Benefits Section*/}
-                            <div className="flex justify-center mt-24 mb-24 flex-wrap px-24">
+                            <div className="flex justify-center mt-24 mb-24 flex-wrap px-12">
                                 <p className='font-semibold text-lg font-poppins mb-12 text-center w-full'>The Program</p>
                                 <div className="flex flex-wrap justify-center" style={{ 'minWidth': '380px' }}>
                                     <div className="w-1/2 px-8" style={{ 'minWidth': '380px' }}>
