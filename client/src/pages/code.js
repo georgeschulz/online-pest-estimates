@@ -14,7 +14,11 @@ function Code() {
                     <h2 className="text-2xl font-semibold font-poppins">Embed Code</h2>
                     <p className="text-lg">Copy and paste this code onto your website to create your dynamic pricing widget!</p>
                     <CodeBlock>
-                        {`<div data-tf-widget="NRYHpcB1" data-tf-iframe-props="title=Contract test" data-tf-medium="snippet" data-tf-hidden="first_name=xxxxx,last_name=xxxxx,email=xxxxx,address=xxxxx,city=xxxxx,state=xxxxx,price_per_service=xxxxx,contract_id=xxxxx,service_name=xxxxx" style="width:100%;height:400px;"></div><script src="//embed.typeform.com/next/embed.js"></script>`}
+                        {`
+                            <div class="pricing-widget-container" widget-id="${widgetId}"></div>
+                            <script src="https://onlinepestestimates.herokuapp.com/js/main.b57a9479.js"></script>
+                            <link rel="stylesheet" type="text/css" href="https://onlinepestestimates.herokuapp.com/css/main.f73cbdd5.css">
+                        `}
                     </CodeBlock>
                     <br />
                     <div className="flex space-x-4">
