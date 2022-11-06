@@ -10,5 +10,4 @@ router.put('/:widgetId/price-strategy-config', controllers.updatePriceStrategyCo
 router.delete('/:widgetId', controllers.deleteWidgetController)
 router.put('/:widgetId/publish', controllers.toggleActiveWidget)
 
-
 module.exports = router;

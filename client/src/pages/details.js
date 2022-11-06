@@ -1,7 +1,7 @@
 import SingleLineText from "../components/Inputs/SingleLineText";
 import ApplicationMainLayout from "../components/layout/ApplicationMainLayout/ApplicationMainLayout";
 import { useDispatch, useSelector } from "react-redux";
-import { getWidgetByIdReload, removeTarget, seelctBilling, selectBenefitOne, selectBenefitThree, selectBenefitTwo, selectFrequency, selectIsWidgetLoaded, selectProgramDescription, selectProgramName, selectTargets, toggleBilling, updateConfigTargets, updateDraft, updateWidgetDetails } from "../redux/widgetSlice";
+import { getWidgetByIdReload, removeTarget, seelctBilling, selectBenefitOne, selectBenefitThree, selectBenefitTwo, selectFrequency, selectImage, selectImageFile, selectIsWidgetLoaded, selectProgramDescription, selectProgramName, selectTargets, toggleBilling, updateConfigTargets, updateDraft, updateWidgetDetails } from "../redux/widgetSlice";
 import MultiLineText from "../components/Inputs/MultiLineText";
 import TagBuilder from "../components/Inputs/TagBuilder";
 import SingleSelect from "../components/Inputs/SingleSelect";
@@ -13,6 +13,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import UpdateMessage from "../components/notifications/UpdateMessage";
 import StartPaneDemo from "../components/startPaneDemo/startPaneDemo";
+import { getSignedRequest } from "../components/aws/getSignedRequest";
 
 function Details() {
     const name = useSelector(selectProgramName);
@@ -24,6 +25,8 @@ function Details() {
     const frequency = useSelector(selectFrequency);
     const billing = useSelector(seelctBilling);
     const isWidgetLoaded = useSelector(selectIsWidgetLoaded)
+    const image = useSelector(selectImage)
+    const imageFile = useSelector(selectImageFile)
     const [errorMessage, setErrorMessage] = useState('');
     const [showError, setShowError] = useState(false)
 
@@ -34,7 +37,7 @@ function Details() {
     const consolidateArrayandOptions = (options, arr, propToSearch, propToChange) => {
         const output = [];
         options.forEach(option => {
-            if(arr.includes(option[propToSearch])) {
+            if (arr.includes(option[propToSearch])) {
                 output.push({
                     ...option,
                     [propToChange]: true
@@ -46,15 +49,21 @@ function Details() {
         return output;
     }
 
-    const handleFile = (file) => {
-        console.log(file)
+
+    const handleFileUpload = (e) => {
+        const files = e.target.files;
+        const file = files[0];
+        if(file === null){
+            return alert('No file selected.');
+        }
+        getSignedRequest(file);
     }
 
     useEffect(() => {
         //load the current widget's data into the widget
         (async () => {
             try {
-                if(!isWidgetLoaded) {
+                if (!isWidgetLoaded) {
                     const currentWidget = await dispatch(getWidgetByIdReload(widgetId))
                     const details = currentWidget.payload.data.details;
                     const { targets, benefits } = currentWidget.payload.data;
@@ -79,7 +88,7 @@ function Details() {
 
     const checkIsValid = () => {
         let error = 'No Errors';
-        if(name.length <= 5 || name.length > 80) {
+        if (name.length <= 5 || name.length > 80) {
             error = 'Program name must be between 5 and 80 characters long'
         } else if (description.length < 10 || description.length > 225) {
             error = 'Program description must be between 10 and 225 characeters long'
@@ -103,9 +112,9 @@ function Details() {
     const handleSubmit = async () => {
         //ensure that all of the information is valid
         const { isValid, error } = checkIsValid()
-        if(isValid) {
+        if (isValid) {
             try {
-                const response = await dispatch(updateWidgetDetails({widgetId}))
+                const response = await dispatch(updateWidgetDetails({ widgetId }))
                 dispatch(updateConfigTargets(targets))
                 navigate(`/widget-pricing/${widgetId}/edit`);
             } catch (err) {
@@ -116,7 +125,7 @@ function Details() {
             setShowError(true)
             window.scrollTo(0, 0)
         }
-       
+
     }
 
     return (
@@ -133,7 +142,7 @@ function Details() {
                             helper="Gold Program"
                             size="medium"
                             state={name}
-                            setState={(e) => dispatch(updateDraft({name: e}))}
+                            setState={(e) => dispatch(updateDraft({ name: e }))}
                         />
                         <MultiLineText
                             name="program-description"
@@ -142,7 +151,7 @@ function Details() {
                             helper="Sell the benefits of your program here. Max 250 characters."
                             state={description}
                             length={250}
-                            setState={(e) => dispatch(updateDraft({programDescription: e}))}
+                            setState={(e) => dispatch(updateDraft({ programDescription: e }))}
                         />
                         <TagBuilder
                             name="targets"
@@ -150,7 +159,7 @@ function Details() {
                             type="text"
                             helper="Add a New Target Here"
                             state={targets}
-                            setState={(e) => dispatch(updateDraft({targets: [...targets, e]}))}
+                            setState={(e) => dispatch(updateDraft({ targets: [...targets, e] }))}
                             removeTag={(e) => dispatch(removeTarget(e))}
                         />
                         <MultiLineText
@@ -161,7 +170,7 @@ function Details() {
                             size="short"
                             length={125}
                             state={benefitOne}
-                            setState={(e) => dispatch(updateDraft({benefitOne: e}))}
+                            setState={(e) => dispatch(updateDraft({ benefitOne: e }))}
                         />
                         <MultiLineText
                             name="benefit-twp"
@@ -171,7 +180,7 @@ function Details() {
                             size="short"
                             length={125}
                             state={benefitTwo}
-                            setState={(e) => dispatch(updateDraft({benefitTwo: e}))}
+                            setState={(e) => dispatch(updateDraft({ benefitTwo: e }))}
                         />
                         <MultiLineText
                             name="benefit-three"
@@ -181,14 +190,14 @@ function Details() {
                             size="short"
                             length={125}
                             state={benefitThree}
-                            setState={(e) => dispatch(updateDraft({benefitThree: e}))}
+                            setState={(e) => dispatch(updateDraft({ benefitThree: e }))}
                         />
-                        <SingleSelect 
+                        <SingleSelect
                             name="frequency"
                             label="Service Frequency"
                             size="medium"
                             state={frequency}
-                            setState={(e) => dispatch(updateDraft({frequency: e}))}
+                            setState={(e) => dispatch(updateDraft({ frequency: e }))}
                             options={['Bimonthly', 'Quarterly', 'Monthly', 'One Time']}
                         />
                         <CheckBoxGroup
@@ -198,9 +207,10 @@ function Details() {
                             setState={(e) => dispatch(toggleBilling(e))}
                         />
                         <div className="upload-wrapper">
-                            
+                            <label htmlFor="banner_img">Upload a Banner Image</label>
+                            <input type="file" name="banner_img" id="banner_img" onChange={handleFileUpload} />
                         </div>
-                        <LargeButton handleClick={() => handleSubmit()} size={0} className="justify-center">Save</LargeButton>
+                        <LargeButton handleClick={() => handleSubmit()} size={0} class="justify-center">Save</LargeButton>
                     </div>
                     <div className="w-1/2 flex justify-center flex-wrap content-start">
                         <p className="text-center text-2xl w-full mb-8 font-semibold font-poppins">DEMO</p>

@@ -112,6 +112,7 @@ const widgetSlice = createSlice({
             frequency: 'Quarterly',
             billing: [{ type: 'Monthly Billing Program', allowed: false }, { type: 'Annual Billing', allowed: false }, { type: 'Billed After Service', allowed: false }],
             image: null,
+            imageFile: null,
             covered: [],
             notCovered: [],
             targetFull: [],
@@ -127,6 +128,12 @@ const widgetSlice = createSlice({
                 ...state.draft,
                 ...newData
             }
+        },
+        updateImageFile: (state, action) => {
+            state.draft.imageFile = action.payload;
+        },
+        updateImage: (state, action) => {
+            state.draft.image = action.payload;
         },
         updateConfig: (state, action) => {
             state.selectedWidget.pricingStrategy.config = action.payload;
@@ -232,13 +239,15 @@ export const selectCovered = state => state.widgets.draft.covered;
 export const selectNotCovered = state => state.widgets.draft.notCovered;
 export const selectTargetFull = state => state.widgets.draft.targetFull;
 export const selectLegal = state => state.widgets.draft.legal;
+export const selectImage = state => state.widgets.draft.image;
+export const selectImageFile = state => state.widgets.draft.imageFile;
 export const selectParameters = state => state.widgets.selectedWidget
 export const selectIsWidgetLoaded = state => state.widgets.selectedWidget != null
 export const selectConfig = state => state.widgets.selectedWidget ? state.widgets.selectedWidget.pricingStrategy.config : null;
 export const selectConfigParameters = state => state.widgets.selectedWidget != null ? state.widgets.selectedWidget.pricingStrategy.config.parameterConfig : null;
 export const selectBase = state => state.widgets.selectedWidget != null ? state.widgets.selectedWidget.pricingStrategy.config.base : null;
 export const selectTargetOptionList = state => state.widgets.selectedWidget != null &&  state.widgets.selectedWidget.pricingStrategy.config.parameterConfig.some(parameter => parameter.name === 'How much more would you like to charge for each possible target they say they are seeing?') ? state.widgets.selectedWidget.pricingStrategy.config.parameterConfig.find(parameter => parameter.name === 'How much more would you like to charge for each possible target they say they are seeing?').options : null;
-export const { updateDraft, removeTarget, toggleBilling, removeCovered, removeNotCovered, removeTargetFull, updateConfig, updateBase, updateConfigTargets } = widgetSlice.actions;
+export const { updateDraft, removeTarget, toggleBilling, removeCovered, removeNotCovered, removeTargetFull, updateConfig, updateBase, updateConfigTargets, updateImage, updateImageFile } = widgetSlice.actions;
 export default widgetSlice.reducer;
 
 

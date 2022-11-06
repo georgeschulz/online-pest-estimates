@@ -10,6 +10,9 @@ const store = require('./helpers/session');
 const cors = require('cors');
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
+const S3_BUCKET = process.env.S3_BUCKET;
+const aws = require('aws-sdk');
+aws.config.region = 'us-east-1';
 
 if(process.env.NODE_ENV != 'production') {
     const morgan = require('morgan');
@@ -52,6 +55,33 @@ app.use('/widget', cors({ credentials: true, origin: 'http://localhost:3000' }),
 app.use('/billing',cors ({ credentials: true, origin: 'http://localhost:3000' }), billingRouter);
 app.use('/public-widget', cors(), express.json(), publicWidgetRouter);
 app.use('/proposal', cors({ credentials: true, origin: 'http://localhost:3000' }), express.json(), proposalRouter);
+
+//create the path to get the signed url from aws
+app.get('/sign-s3', (req, res) => {
+    const s3 = new aws.S3();
+    const fileName = req.query['file-name'];
+    const fileType = req.query['file-type'];
+    const s3Params = {
+      Bucket: S3_BUCKET,
+      Key: fileName,
+      Expires: 60,
+      ContentType: fileType,
+      ACL: 'public-read'
+    };
+  
+    s3.getSignedUrl('putObject', s3Params, (err, data) => {
+      if(err){
+        console.log(err);
+        return res.end();
+      }
+      const returnData = {
+        signedRequest: data,
+        url: `https://${S3_BUCKET}.s3.amazonaws.com/${fileName}`
+      };
+      res.write(JSON.stringify(returnData));
+      res.end();
+    });
+  });
 
 //general path for getting static pages
 app.get("/*", cors({ credentials: true, origin: 'http://localhost:3000' }), (req, res) => {
