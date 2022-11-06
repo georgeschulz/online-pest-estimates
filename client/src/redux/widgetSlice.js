@@ -53,7 +53,8 @@ export const updateWidgetDetails = createAsyncThunk(
             benefitOne: d.benefitOne,
             benefitTwo: d.benefitTwo,
             benefitThree: d.benefitThree,
-            targets: d.targets
+            targets: d.targets,
+            image: d.image
         })
 
         return response.data;

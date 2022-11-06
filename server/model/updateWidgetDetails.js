@@ -2,7 +2,7 @@ const db = require('./db')
 const format = require('pg-format');
 const getWidget = require('./getWidget');
 
-module.exports.updateWidgetDetails = async (widgetId, name, shortDescription, frequency, billingFrequency, benefitOne, benefitTwo, benefitThree, targets) => {
+module.exports.updateWidgetDetails = async (widgetId, name, shortDescription, frequency, billingFrequency, benefitOne, benefitTwo, benefitThree, targets, image) => {
     try {
         //update the widget_details table
         await db.query(`
@@ -10,9 +10,10 @@ module.exports.updateWidgetDetails = async (widgetId, name, shortDescription, fr
                 program = $1,
                 short_description = $2,
                 frequency = $3,
-                billing_frequency = $4
-            WHERE widget_id = $5`,
-        [name, shortDescription, frequency, billingFrequency.join(', '), widgetId])
+                billing_frequency = $4,
+                cover_image_url = $5
+            WHERE widget_id = $6`,
+        [name, shortDescription, frequency, billingFrequency.join(', '), image, widgetId])
 
         //add benefits and link them via benefits table
         const benefits = [benefitOne, benefitTwo, benefitThree]
