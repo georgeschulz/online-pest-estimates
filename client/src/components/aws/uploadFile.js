@@ -7,6 +7,8 @@ export function uploadFile(file, signedRequest, url){
           console.log(url)
         }
         else{
+            console.log(xhr.responseText);
+            console.log(xhr)
           alert('Could not upload file.');
         }
       }
