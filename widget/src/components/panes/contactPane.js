@@ -2,7 +2,6 @@ import Frame from "../layout/frame";
 import ContentContainer from "../layout/contentContainer";
 import SubmitButton from "../buttons/submitButton";
 import PaneHeader from "../layout/paneHeader";
-import Clap from '../../assets/clap.png'
 import SingleLineText from "../form/singleLineText";
 import { useSelector, useDispatch } from "react-redux";
 import { selectName, selectEmail, selectPhone, setName, setEmail, setPhone, createContact } from "../../redux/contactSlice";
