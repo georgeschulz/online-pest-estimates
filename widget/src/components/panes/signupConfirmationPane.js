@@ -31,7 +31,7 @@ function SignupConfirmationPane() {
                     <PaneHeader
                         text="Wow that was easy!"
                         supportingText="Your all signed up. One of our staff members will contact you shortly to schedule you. Payment will be collected by your technician."
-                        emoji={Hearts}
+                        emoji={'heart'}
                         emojiConstraint="35px"
                     />
                 </div>

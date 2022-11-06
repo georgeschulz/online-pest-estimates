@@ -24,7 +24,7 @@ function CalculatorPane() {
                 <PaneHeader
                     text="Tell Us About You"
                     supportingText=""
-                    emoji={Rocket}
+                    emoji={'rocket'}
                 />
                 <DynamicForm />
                 <SubmitButton text="Finish" onClick={handleSubmit} />

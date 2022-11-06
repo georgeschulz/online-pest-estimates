@@ -238,21 +238,11 @@ const createProposalController = async (req, res, next) => {
         const { widgetId } = req.params;
         //get the pricing and the response id from the request body so we can generate the proposal and link tables
         const { recurringPrice, setupFee, frequency, billingFrequency, responseId, proposalTemplateId, description, program, isAgreed, name } = req.body;
-        console.log(recurringPrice)
-        console.log(setupFee)
-        console.log(frequency)
-        console.log(billingFrequency)
-        console.log(responseId)
-        console.log(proposalTemplateId)
-        console.log(description)
-        console.log(program)
-        console.log(isAgreed)
-        console.log(name)
+
         const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 
         //get the proposal template from proposal_templates table and the highlighted_features
         const proposalTemplate = await getProposalTemplate(widgetId);
-        console.log(proposalTemplate)
 
         //create the proposal in the proposals table
         const newProposal = await createProposal(responseId, proposalTemplate[0].proposal_template_id, setupFee, recurringPrice, description, proposalTemplate[0].legal, billingFrequency, frequency, program, proposalTemplate[0].coveredpests, isAgreed, ip);

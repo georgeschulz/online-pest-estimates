@@ -35,7 +35,7 @@ function ContactPane() {
                     text="My Online Quote"
                     supportingText="Fill out your information below so we can email a copy of your
                 estimate"
-                    emoji={Clap}
+                    emoji={'clap'}
                 />
                 <form className="pricing-widget-form flex-row">
                     <SingleLineText

@@ -77,7 +77,7 @@ function QuotePane() {
                 <PaneHeader
                     text="My Online Quote"
                     supportingText=""
-                    emoji={Confetti}
+                    emoji={'confetti'}
                 />
                 
                 <div className="pricing-widget-pricing-container">
