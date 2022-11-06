@@ -111,7 +111,8 @@ function Details() {
                         benefitTwo: benefits[1],
                         benefitThree: benefits[2],
                         frequency: details.frequency,
-                        billing: billingFrequency
+                        billing: billingFrequency,
+                        image: details.cover_image_url
                     }))
                 }
             } catch (err) {
