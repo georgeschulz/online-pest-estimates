@@ -9,3 +9,7 @@ export const getProposal = async (proposalId) => {
 export const agreeToProposal = async (proposalId) => {
     return await axios.put(`${endpoint}/proposal/${proposalId}/agree`);
 }
+
+export const getBranding = async (proposalId) => {
+    return await axios.get(`${endpoint}/proposal/${proposalId}/branding`);
+}

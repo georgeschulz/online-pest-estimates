@@ -5,7 +5,7 @@ import Confetti from '../../assets/confetti.png'
 import SubmitButton from "../buttons/submitButton";
 import { useDispatch, useSelector } from "react-redux";
 import { setPane } from "../../redux/paneSlice";
-import { selectQuote, selectProgramSummary, setBillingOption, selectBillingOptions, selectChosenBillingOption, selectProgramName, selectWidgetId, selectFrequency, selectProposalTemplateId } from "../../redux/configSlice";
+import { selectQuote, selectProgramSummary, setBillingOption, selectBillingOptions, selectChosenBillingOption, selectProgramName, selectWidgetId, selectFrequency, selectProposalTemplateId, selectHexSecondary } from "../../redux/configSlice";
 import { useState } from "react";
 import SecondaryActionButton from "../buttons/secondaryActionButton";
 import { agreeToProposalThunk, selectIsProposalSent, toggleSent, selectProposalId } from "../../redux/proposalSlice";
@@ -30,6 +30,7 @@ function QuotePane() {
     const email = useSelector(selectEmail)
     const name = useSelector(selectName)
     const proposalId = useSelector(selectProposalId)
+    const hexSecondary = useSelector(selectHexSecondary)
 
     const handleSubmit = async () => {
         await addProposalToDatabase(true);
@@ -84,7 +85,11 @@ function QuotePane() {
                 <p className="pricing-widget-billing-toggler-label"><b>Billing Options</b></p>
                     <div className="pricing-widget-billing-toggler">
                         {billingOptions.map((option, index) => (
-                            <div key={index} className={`pricing-widget-billing-toggler-button ${index === selectedOptionIndex ? 'pricing-widget-selected' : '' }`} onClick={() => handleBillingClick(option)}>
+                            <div key={index} 
+                                className={`pricing-widget-billing-toggler-button 
+                                ${index === selectedOptionIndex ? 'pricing-widget-selected' : '' }`} 
+                                onClick={() => handleBillingClick(option)}
+                                style={{'border': index === selectedOptionIndex ? `1px solid ${hexSecondary}` : '1px solid #AAA6A6', 'boxShadow': index === selectedOptionIndex ? `0px 0px 2px 2px ${hexSecondary}` : null }}>
                                 {option}
                             </div>
                         ))}

@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function LargeButton({children, isPrimary = true, size = 1, className = "", handleClick = () => {}}, isPending = false) {
+function LargeButton({children, isPrimary = true, size = 1, className = "", handleClick = () => {}, backgroundColor}, isPending = false) {
     const [color, setColor] = useState((isPrimary ? 'bg-primary' : 'bg-white'));
     const [border, setBorder] = useState((isPrimary ? '' : 'border border-lightmatte'));
     const [fontColor, setFontColor] = useState((isPrimary ? 'text-white' : 'text-matte'));
@@ -26,7 +26,7 @@ function LargeButton({children, isPrimary = true, size = 1, className = "", hand
     }   
 
     return (
-        <span onClick={() => handleClick()} className={`
+        <span onClick={() => handleClick()} style={{'backgroundColor': backgroundColor}} className={`
             text-center 
             cursor-pointer 
             shadow-sm 

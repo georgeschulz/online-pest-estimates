@@ -6,7 +6,9 @@ function SubmitButton({ text, onClick }) {
 
     return (
         <div className="pricing-widget-button">
-            <div id="pricing-widget-start-session" style={{'backgroundColor': backgroundColor}} className="pricing-widget-button" onClick={onClick}>{text}</div>
+            <div id="pricing-widget-start-session" style={{'backgroundColor': backgroundColor}} className="pricing-widget-button" onClick={onClick}>
+                <span>{text}</span>    
+            </div>
         </div>
     )
 }

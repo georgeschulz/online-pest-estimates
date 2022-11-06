@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { getProposal, agreeToProposal } from '../api/proposalApi';
+import { getProposal, agreeToProposal, getBranding } from '../api/proposalApi';
 
 export const getProposalThunk = createAsyncThunk(
     'proposal/getProposal',
@@ -17,11 +17,22 @@ export const agreeToProposalThunk = createAsyncThunk(
     }
 )
 
+export const getBrandingThunk = createAsyncThunk(
+    'proposal/getBranding',
+    async (proposalId) => {
+        const response = await getBranding(proposalId);
+        return response.data;
+    }
+)
+
 const proposalSlice = createSlice({
     name: 'proposal',
     initialState: {
         isLoading: false,
-        proposal: null
+        proposal: null,
+        hexPrimary: '#6A77D9',
+        hexSecondary: '#6A77D9',
+        businessName: 'Online Pest Estimates'
     },
     reducers: {},
     extraReducers: (builder) => {
@@ -39,6 +50,15 @@ const proposalSlice = createSlice({
             state.isLoading = false;
             state.proposal = action.payload.data;
         });
+        builder.addCase(getBrandingThunk.pending, (state, action) => {
+            state.isLoading = true;
+        });
+        builder.addCase(getBrandingThunk.fulfilled, (state, action) => {
+            state.isLoading = false;
+            state.hexPrimary = action.payload.data.hex_primary;
+            state.hexSecondary = action.payload.data.hex_secondary;
+            state.businessName = action.payload.data.name;
+        })
     }
 });
 
@@ -55,5 +75,8 @@ export const selectProposalId = state => state.proposal.proposal !== null ? stat
 export const selectCovered = state => state.proposal.proposal !== null ? state.proposal.proposal.covered : [];
 export const selectNotCovered = state => state.proposal.proposal !== null ? state.proposal.proposal.not_covered : [];
 export const selectTargetList = state => state.proposal.proposal !== null ? state.proposal.proposal.target_list.split(',') : [];
+export const selectHexPrimary = state => '#' + state.proposal.hexPrimary;
+export const selectHexSecondary = state => '#' + state.proposal.hexSecondary;
+export const selectBusinessName = state => state.proposal.businessName;
 export const selectIsLoading = state => state.proposal.isLoading;
 export default proposalSlice.reducer;

@@ -1,13 +1,16 @@
-import { selectProgram } from "../redux/proposalSlice"
+import { selectProgram, selectHexPrimary, selectHexSecondary, selectBusinessName } from "../redux/proposalSlice"
 import { useSelector } from "react-redux"
 
 function ProposalConfirmed() {
     const program = useSelector(selectProgram)
+    const hexPrimary = useSelector(selectHexPrimary)
+    const hexSecondary = useSelector(selectHexSecondary)
+    const businessName = useSelector(selectBusinessName)
 
     return (
         <div>
-            <div className="bg-primary text-white text-center font-poppins py-5">
-                <p className='text-xl'>ABC Pest</p>
+            <div className="text-white text-center font-poppins py-5" style={{'backgroundColor': hexPrimary}}>
+                <p className='text-xl'>{businessName}</p>
                 <p className='text-2xl font-semibold'>{program}</p>
                 <p className='text-xl'>Proposal</p>
             </div>

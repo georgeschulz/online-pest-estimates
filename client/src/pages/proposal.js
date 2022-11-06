@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { getProposalThunk } from '../redux/proposalSlice';
 import { useParams } from 'react-router-dom';
-import { selectProgram, selectLegal, selectDescription, selectDidAgree, selectRecurringPrice, selectBillingFrequency, selectFrequency, selectSetup, selectCovered, selectNotCovered, selectTargetList, selectIsLoading, agreeToProposalThunk } from '../redux/proposalSlice';
+import { selectProgram, selectLegal, selectDescription, selectDidAgree, selectRecurringPrice, selectBillingFrequency, selectFrequency, selectSetup, selectCovered, selectNotCovered, selectTargetList, selectIsLoading, agreeToProposalThunk, getBrandingThunk, selectHexPrimary, selectHexSecondary, selectBusinessName } from '../redux/proposalSlice';
 import Loading from '../components/loading/loading';
 import LargeButton from '../components/buttons/button';
 import Check from '../assets/check.png'
@@ -25,12 +25,16 @@ function Proposal() {
     const notCovered = useSelector(selectNotCovered);
     const targetList = useSelector(selectTargetList);
     const isLoading = useSelector(selectIsLoading);
+    const hexPrimary = useSelector(selectHexPrimary);
+    const hexSecondary = useSelector(selectHexSecondary);
+    const businessName = useSelector(selectBusinessName);
     const navigate = useNavigate();
 
     useEffect(() => {
         // Get proposal data
         dispatch(getProposalThunk(proposalId));
-    }, [proposalId]);
+        dispatch(getBrandingThunk(proposalId));
+    }, [proposalId, hexPrimary]);
 
     const handleSubmit = () => {
         // Agree to proposal
@@ -42,9 +46,6 @@ function Proposal() {
         <div>
             {isLoading ? (
                 <div>
-                    <div className="bg-primary text-white text-center font-poppins py-5 mb-24">
-                        <p className='text-xl'>Proposal</p>
-                    </div>
                     <Loading />
                 </div>) : (
                 <div>
@@ -54,8 +55,8 @@ function Proposal() {
                         </div>
                     ) : ""}
 
-                    <div className="bg-primary text-white text-center font-poppins py-5">
-                        <p className='text-xl'>ABC Pest</p>
+                    <div className=" text-white text-center font-poppins py-5" style={{'backgroundColor': hexPrimary}}>
+                        <p className='text-xl'>{businessName}</p>
                         <p className='text-2xl font-semibold'>{program}</p>
                         <p className='text-xl'>Proposal</p>
                     </div>
@@ -73,7 +74,7 @@ function Proposal() {
                                 <p><span className='font-semibold text-lg font-poppins mb-6'>Frequency:</span> {frequency}</p>
                                 <br />
                                 <br />
-                                {didAgree ? "" : <a href="#agree"><LargeButton size={0}>Skip to Signature</LargeButton></a>}
+                                {didAgree ? "" : <a href="#agree"><LargeButton backgroundColor={hexSecondary} size={0}>Skip to Signature</LargeButton></a>}
                             </div>
                             {/** Charges Section*/}
                             <div className="flex justify-end w-1/2 px-8" style={{ 'minWidth': '380px' }} >
@@ -150,7 +151,7 @@ function Proposal() {
                                     <div className='w-4/5 bg-green-400 flex justify-center align-middle py-4'>
                                         <p className='text-xl w-4/5 text-black text-center semibold'>This proposal has been agreed to. Our Office will contact you shortly to schedule your initial service and setup your billing.</p>
                                     </div>
-                                ) : <LargeButton size={0} handleClick={handleSubmit}>I Agree</LargeButton>}
+                                ) : <LargeButton backgroundColor={hexSecondary} size={0} handleClick={handleSubmit}>I Agree</LargeButton>}
                             </div>
                         </div>
                     </div>

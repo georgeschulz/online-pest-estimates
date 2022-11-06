@@ -1,11 +1,12 @@
 import { useEffect } from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import { selectForm, setFormValue } from '../../redux/configSlice';
+import { selectForm, setFormValue, selectHexSecondary } from '../../redux/configSlice';
 import Loading from '../loading/loading';
 
 function MultiSelect({ options, name, value, onChange, label }) {
     const dispatch = useDispatch();
     const form = useSelector(selectForm);
+    const hexSecondary = useSelector(selectHexSecondary);
     
     //initialize the form values in the form state
     useEffect(() => {
@@ -45,6 +46,7 @@ function MultiSelect({ options, name, value, onChange, label }) {
                         return (
                             <div 
                                 className={`pricing-widget-multipe-select-option ${item.isSelected ? 'pricing-widget-selected' : ''}`} 
+                                style={{border: item.isSelected ? `1px solid ${hexSecondary}` : `1px solid #AAA6A6`, boxShadow: item.isSelected ? `0px 0px 2px 2px ${hexSecondary}` : null}}
                                 onClick={() => handleClick(item.name)}
                                 key={item.name}
                             >

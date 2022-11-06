@@ -169,7 +169,7 @@
 }
 
 .pricing-widget-button:hover {
-    background: #5A67C9;
+    filter: brightness(0.9);
 }
 
 .pricing-widget-button-secondary {
@@ -213,7 +213,7 @@
 }
 
 .pricing-widget-selected {
-    background: #d5d5d5;
+    background: #dfdfdf;
     border: 1px solid #5A67C9;
     box-shadow: 0px 0px 2px 2px #5a67c9ab;
 }
