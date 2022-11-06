@@ -12,7 +12,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 const S3_BUCKET = process.env.S3_BUCKET;
 const aws = require('aws-sdk');
-aws.config.region = 'us-east-1';
 
 if(process.env.NODE_ENV != 'production') {
     const morgan = require('morgan');

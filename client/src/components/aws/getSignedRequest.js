@@ -11,6 +11,9 @@ export function getSignedRequest(file) {
             }
             else{
                 alert('Could not get signed URL.');
+                const response = JSON.parse(xhr.responseText);
+                console.log(response);
+                
             }
         }
     }
