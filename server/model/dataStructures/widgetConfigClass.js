@@ -1,5 +1,5 @@
 class WidgetConfig {
-    constructor(id, basic, detail, proposal, pricingStrategy, benefits = [], targets = [], highlightedFeatures = []) {
+    constructor(id, basic, detail, proposal, pricingStrategy, benefits = [], targets = [], highlightedFeatures = [], businessDetails) {
         this.widgetId = id;
         //this.strategyId = pricingStrategy.strategy_id;
         this.pricingStrategyType = pricingStrategy.type || null,
@@ -18,6 +18,7 @@ class WidgetConfig {
             ...proposal,
             highlightedFeatures: highlightedFeatures
         };
+        this.businessDetails = businessDetails;
     }
 }
 

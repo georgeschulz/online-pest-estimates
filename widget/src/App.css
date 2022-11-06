@@ -89,6 +89,8 @@
     width: 40px;
     height: 40px;
     margin-right: 10px;
+    border-radius: 100%;
+    padding: 5px;
 }
 
 .pricing-widget-pricestart {
@@ -154,7 +156,6 @@
 }
 
 .pricing-widget-button {
-    background: #6A77D9;
     border-radius: 7px;
     color: #FFFFFF;
     height: 50px;
@@ -183,7 +184,7 @@
     font-size: 20px;
     width: 100%;
     cursor: pointer;
-    border: 2px solid #5A67C9;
+    border: 2px solid;
 }
 
 .pricing-widget-dynamic-form {

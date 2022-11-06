@@ -4,6 +4,16 @@ const db = require('./db');
 module.exports = async (widgetId) => {
     try {
         const { rows: widgetBasic } = await db.query(`SELECT * FROM widgets WHERE widget_id = $1`, [widgetId]);
+        const { rows: businessDetails } = await db.query(`
+            SELECT 
+                businesses.name,
+                businesses.hex_primary,
+                businesses.hex_secondary
+            FROM users
+            INNER JOIN businesses
+                ON users.user_id = businesses.user_id
+            WHERE users.user_id = $1;
+        `, [widgetBasic[0].user_id])
         const { rows: details } = await db.query(`SELECT * FROM widget_details WHERE widget_id = $1`, [widgetId])
         const { rows: proposal } = await db.query(`SELECT 
             proposal_templates.proposal_template_id,
@@ -34,7 +44,8 @@ module.exports = async (widgetId) => {
             pricingStrategy[0], 
             benefitQuery.map(benefit => benefit.text), 
             targetQuery.map(target => target.name),
-            proposal.map(feature => [feature.text, feature.is_included]))
+            proposal.map(feature => [feature.text, feature.is_included]),
+            businessDetails[0])
         return widget;
         
     } catch (err) {
