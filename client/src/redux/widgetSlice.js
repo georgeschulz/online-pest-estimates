@@ -225,6 +225,7 @@ export const selectTargets = state => state.widgets.draft.targets;
 export const selectBenefitOne = state => state.widgets.draft.benefitOne;
 export const selectBenefitTwo = state => state.widgets.draft.benefitTwo;
 export const selectBenefitThree = state => state.widgets.draft.benefitThree;
+export const selectBenefitList = state => [state.widgets.draft.benefitOne, state.widgets.draft.benefitTwo, state.widgets.draft.benefitThree];
 export const selectFrequency = state => state.widgets.draft.frequency;
 export const seelctBilling = state => state.widgets.draft.billing;
 export const selectCovered = state => state.widgets.draft.covered;

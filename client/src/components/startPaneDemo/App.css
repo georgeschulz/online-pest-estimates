@@ -1,0 +1,321 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+* {
+    box-sizing: border-box;
+    margin: 0px;
+    padding: 0px;
+}
+
+.flex-row {
+    width: 100%;
+}
+
+.pricing-widget-inner-container {
+    width: 350px;
+    height: 600px;
+    background: #FFFFFF;
+    border: 1px solid #BBB8B8;
+    box-shadow: 3px 5px 1px rgba(0, 0, 0, 0.25);
+    border-radius: 0px 0px 24px 24px;
+    padding-bottom: 20px;
+}
+
+.pest-widget-banner {
+    width: 100%;
+}
+
+.pricing-widget-content {
+    padding: 15px 20px;
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    height: 80%;
+}
+
+.pricing-widget-header-group {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    margin-bottom: 5px;
+    justify-content: space-between;
+}
+
+.pricing-widget-header {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 30px;
+}
+
+.pricing-widget-header-medium {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 23px;
+}
+
+.pricing-widget-subheader {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+}
+
+.pricing-widget-heading-emoji {
+    width: 50px;
+    height: 50px;
+}
+
+.pricing-widget-benefits-list {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: #000000;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.pricing-widget-benefits-list li {
+    display: flex;
+}
+
+.pricing-widget-content-full {
+    padding: 40px 20px 2px 20px;
+    height: 100%;
+    display: flex;
+    align-content: space-between
+}
+
+.pricing-widget-check {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+    border-radius: 100%;
+    padding: 5px;
+}
+
+.pricing-widget-pricestart {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 135.19%;
+}
+
+.pricing-widget-pricestart-enlarged {
+    font-size: 24px;
+}
+
+.pricing-widget-header,
+.pricing-widget-pricestart,
+.pricing-widget-button {
+    height: 6%;
+}
+
+.pricing-widget-benefits-list {
+    margin-top: 30px;
+    display: flex;
+    justify-items: space-between;
+    flex-wrap: wrap;
+    height: 55%;
+}
+
+.pricing-widget-form {
+    width: 100%;
+    height: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.pricing-widget-form-group {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-height: 20%;
+    margin-bottom: 20px;
+    ;
+}
+
+.pricing-widget-form-group input {
+    width: 100%;
+    height: 50px;
+    background: #FFFFFF;
+    border: 1px solid #8A8A8A;
+    border-radius: 5px;
+    padding: 0 10px;
+    margin-bottom: 10px;
+}
+
+.pricing-widget-form-group label {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    margin-bottom: 5px;
+    color: #464646;
+}
+
+.pricing-widget-button {
+    border-radius: 7px;
+    color: #FFFFFF;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Poppins', sans-serif;
+    font-size: 20px;
+    width: 100%;
+    cursor: pointer;
+}
+
+.pricing-widget-button:hover {
+    filter: brightness(0.9);
+}
+
+.pricing-widget-button-secondary {
+    background: #FFFFFF;
+    border-radius: 7px;
+    color: #000000;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Poppins', sans-serif;
+    font-size: 20px;
+    width: 100%;
+    cursor: pointer;
+    border: 2px solid;
+}
+
+.pricing-widget-dynamic-form {
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+}
+
+.pricing-widget-multiple-select-options {
+    display: flex;
+    flex-wrap: wrap;
+
+}
+
+.pricing-widget-multipe-select-option {
+    background: #EEEEEE;
+    border: 1px solid #AAA6A6;
+    border-radius: 3px;
+    width: 90px;
+    margin: 8px 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px 2px;
+    cursor: pointer;
+}
+
+.pricing-widget-selected {
+    background: #dfdfdf;
+    border: 1px solid #5A67C9;
+    box-shadow: 0px 0px 2px 2px #5a67c9ab;
+}
+
+.pricing-widget-pricing-container {
+    height: 350px;
+}
+
+.pricing-widget-pricing-highlight {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20.6892px;
+    line-height: 135.19%;
+    margin-bottom: 15px;
+}
+
+.pricing-widget-pricing-summary {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 146.19%;
+}
+
+.pricing-widget-pricing-strikethrough {
+    color: #BF3737;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 135.19%;
+    /* or 20px */
+    margin: 0px 4px;
+    text-decoration-line: line-through;
+}
+
+.pricing-widget-billing-toggler {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.pricing-widget-billing-toggler-button {
+    background: #EEEEEE;
+    border: 1px solid #AAA6A6;
+    border-radius: 2px;
+    color: #000000;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    padding: 15px 20px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.pricing-widget-billing-toggler-label {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    margin-bottom: 5px;
+    color: #000000;
+}
+
+.pricing-widget-discount {
+    font-size: 16px;
+}
+
+.pricing-widget-confirmation-check {
+    width: 100px;
+}
+
+.pricing-widget-confirmation-check-container {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.pricing-widget-confirmed-container {
+    height: 350px;
+}
+
+.pricing-widget-confirmation-header {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 21.6892px;
+    line-height: 135.19%;
+    text-align: center;
+    color: #000000;
+}
+
+.pricing-widget-confirmation-subheader {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 21.6892px;
+    line-height: 135.19%;
+    color: #000000;
+}

@@ -12,6 +12,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { useState } from "react";
 import UpdateMessage from "../components/notifications/UpdateMessage";
+import StartPaneDemo from "../components/startPaneDemo/startPaneDemo";
 
 function Details() {
     const name = useSelector(selectProgramName);
@@ -203,7 +204,7 @@ function Details() {
                     </div>
                     <div className="w-1/2 flex justify-center flex-wrap content-start">
                         <p className="text-center text-2xl w-full mb-8 font-semibold font-poppins">DEMO</p>
-                        <img src={example} className="w-96 h-fit" />
+                        <StartPaneDemo />
                     </div>
                 </div>
             </ApplicationMainLayout>
